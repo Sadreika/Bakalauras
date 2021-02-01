@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4E3CBEF7-E145-479E-BE3D-BA1A1DAE8C62}</ProjectGuid>
+    <ProjectGuid>{F01724A2-505B-4B76-9478-15CC806D7FDD}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>MainFunctions</RootNamespace>
-    <AssemblyName>MainFunctions</AssemblyName>
+    <RootNamespace>MainDataExtractionFunctions</RootNamespace>
+    <AssemblyName>MainDataExtractionFunctions</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,8 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IFlightInformation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegexFunctions.cs" />
+    <Compile Include="SearchCriteria.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

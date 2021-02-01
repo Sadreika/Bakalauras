@@ -7,3 +7,4 @@ C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Flights_Recommendatio
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Flights_Recommendation_System_GUI\Flights_Recommendation_System_GUI\obj\Debug\Flights_Recommendation_System_GUI.csproj.CoreCompileInputs.cache
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Flights_Recommendation_System_GUI\Flights_Recommendation_System_GUI\obj\Debug\Flights_Recommendation_System_GUI.exe
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Flights_Recommendation_System_GUI\Flights_Recommendation_System_GUI\obj\Debug\Flights_Recommendation_System_GUI.pdb
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Flights_Recommendation_System_GUI\Flights_Recommendation_System_GUI\obj\Debug\Flights_Recommendation_System_GUI.csprojAssemblyReference.cache

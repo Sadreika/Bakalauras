@@ -1,4 +1,4 @@
-﻿namespace Flights_Recommendation_System_GUI.Main_functions
+﻿namespace MainDataExtractionFunctions
 {
     using System.Collections.Generic;
     using System.Linq;
