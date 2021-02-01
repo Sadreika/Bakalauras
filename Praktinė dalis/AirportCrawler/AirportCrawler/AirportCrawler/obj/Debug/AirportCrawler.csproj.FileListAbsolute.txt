@@ -1,0 +1,10 @@
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirportCrawler\AirportCrawler\AirportCrawler\bin\Debug\AirportCrawler.exe.config
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirportCrawler\AirportCrawler\AirportCrawler\bin\Debug\AirportCrawler.exe
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirportCrawler\AirportCrawler\AirportCrawler\bin\Debug\AirportCrawler.pdb
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirportCrawler\AirportCrawler\AirportCrawler\bin\Debug\RestSharp.dll
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirportCrawler\AirportCrawler\AirportCrawler\bin\Debug\RestSharp.xml
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirportCrawler\AirportCrawler\AirportCrawler\obj\Debug\AirportCrawler.csprojAssemblyReference.cache
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirportCrawler\AirportCrawler\AirportCrawler\obj\Debug\AirportCrawler.csproj.CoreCompileInputs.cache
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirportCrawler\AirportCrawler\AirportCrawler\obj\Debug\AirportCrawler.csproj.CopyComplete
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirportCrawler\AirportCrawler\AirportCrawler\obj\Debug\AirportCrawler.exe
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirportCrawler\AirportCrawler\AirportCrawler\obj\Debug\AirportCrawler.pdb

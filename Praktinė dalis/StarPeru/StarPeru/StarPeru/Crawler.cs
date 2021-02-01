@@ -6,7 +6,7 @@ namespace StarPeru
 {
     public class Crawler
     {
-        private RestClient client = new RestClient();
+        private RestClient Client = new RestClient();
         private Afo _afo;
         private List<Combinations> combinationsList = new List<Combinations>();
         private List<Flight> outboundData = new List<Flight>();
@@ -14,16 +14,16 @@ namespace StarPeru
 
         public Crawler()
         {
-            client.AddDefaultHeader("Host", "www.starperu.com");
-            client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:82.0) Gecko/20100101 Firefox/82.0";
-            client.AddDefaultHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-            client.AddDefaultHeader("Accept-Language", "lt,en-US;q=0.8,en;q=0.6,ru;q=0.4,pl;q=0.2");
-            client.AddDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
-            client.AddDefaultHeader("Origin", "https://www.starperu.com");
-            client.AddDefaultHeader("DNT", "1");
-            client.AddDefaultHeader("Connection", "keep-alive");
-            client.AddDefaultHeader("Referer", "https://www.starperu.com/es");
-            client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
+            Client.AddDefaultHeader("Host", "www.starperu.com");
+            Client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:82.0) Gecko/20100101 Firefox/82.0";
+            Client.AddDefaultHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+            Client.AddDefaultHeader("Accept-Language", "lt,en-US;q=0.8,en;q=0.6,ru;q=0.4,pl;q=0.2");
+            Client.AddDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
+            Client.AddDefaultHeader("Origin", "https://www.starperu.com");
+            Client.AddDefaultHeader("DNT", "1");
+            Client.AddDefaultHeader("Connection", "keep-alive");
+            Client.AddDefaultHeader("Referer", "https://www.starperu.com/es");
+            Client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
         }
 
         private void ExtractSearchCriterias(string searchCriteria)
@@ -81,11 +81,11 @@ namespace StarPeru
 
         private string TryLoadPage()
         {
-            client.BaseUrl = new Uri(Urls.StartPage, UriKind.Absolute);
+            Client.BaseUrl = new Uri(Urls.StartPage, UriKind.Absolute);
             RestRequest request = new RestRequest("Booking1", Method.POST);
             string postBody = FormPostBody();
             request.AddParameter("text/xml", postBody, ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);
+            IRestResponse response = Client.Execute(request);
             return response.Content;
         }
 
