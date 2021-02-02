@@ -1,13 +1,15 @@
 ﻿namespace AirportCrawler
 {
+    using AirportCrawler.Functions;
     using RestSharp;
     using System;
-    using System.IO;
+    using System.Text.RegularExpressions;
 
     public class Crawler
     {
         private RestClient Client = new RestClient();
-        private string Path = @"C:\Users\mariu\Desktop\Games\" + DateTime.Today.ToString("yyyyMMdd") + ".txt"; // REIKIA SUTVARKYTI
+
+        private DatasaveFunctions DatasaveFunctionsObject = new DatasaveFunctions(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=FlightsRecommendationSystemDatabase;Integrated Security=True");
         public Crawler()
         {
             Client.AddDefaultHeader("Host", "www.world-airport-codes.com");
@@ -20,11 +22,11 @@
 
         public void StartCrawler()
         {
-            StreamWriter streamWriter = new StreamWriter(Path);
-           
-            for(char c = 'a'; c <= 'z'; c++)
+            DatasaveFunctionsObject.TryCreateTable();
+
+            for (char c = 'a'; c <= 'z'; c++)
             {
-                int pageNumber = 0;
+                int pageNumber = 1;
                 do
                 {
                     if(!TryLoadAirports(c, pageNumber))
@@ -34,10 +36,6 @@
                 }
                 while (true);
             }
-          
-
-
-            streamWriter.Close();
         }
 
         public bool TryLoadAirports(char c, int pageNumber)
@@ -45,31 +43,24 @@
             Client.BaseUrl = new Uri(Urls.airportCodeUrl + $"{c}.html?page={pageNumber}", UriKind.Absolute);
             RestRequest request = new RestRequest("", Method.GET);
             IRestResponse response = Client.Execute(request);
-            TryExtractData(response.Content);
 
-
-            return false;
+            return TryExtractData(response.Content);
         }
 
-        public bool TryExtractData(string content /*, StreamWriter streamWriter*/)
+        public bool TryExtractData(string content)
         {
-
-            //string[][] allGames = Regexes.RegexToMultiStringArray(content, Regexes.TitleAndPrice);
-
-            //foreach (string[] game in allGames)
-            //{
-            //    streamWriter.WriteLine("Title: " + game[0] + " Price: " + game[1]);
-            //}
-
-            //if (allGames.Length != 0)
-            //{
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
-            return false;
+            if(Regex.IsMatch(content, Regexes.UnavailablePage))
+            {
+                return false;
+            }
+            string[] rowDataArray = RegexFunctions.RegexToStringArray(content, Regexes.DataRow);
+            string[][] airportInfo;
+            foreach (string rowData in rowDataArray)
+            {
+                airportInfo = RegexFunctions.RegexToMultiStringArray(content, Regexes.AirportData);
+            }
+            
+            return true;
         }
     }
 }

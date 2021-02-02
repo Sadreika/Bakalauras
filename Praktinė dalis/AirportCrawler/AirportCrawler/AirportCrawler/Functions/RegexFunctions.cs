@@ -1,4 +1,4 @@
-﻿namespace MainDataExtractionFunctions
+﻿namespace AirportCrawler.Functions
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -25,7 +25,7 @@
             int matchNumber = 0;
             foreach (Match match in regex.Matches(content))
             {
-                contentMultiArray[matchNumber] = new string[2];
+                contentMultiArray[matchNumber] = new string[valueNumber];
 
                 for (int i = 0; i < valueNumber; i++)
                 {
