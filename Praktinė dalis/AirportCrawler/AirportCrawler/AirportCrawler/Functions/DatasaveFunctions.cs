@@ -1,6 +1,5 @@
 ﻿namespace AirportCrawler.Functions
 {
-    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
@@ -43,17 +42,7 @@
             {
                 Command.CommandText = $"CREATE TABLE {tableName} \u0028";
 
-                for(int i = 0; i < sqlColumnCodes.Count; i++)
-                {
-                    if(i - 1 == sqlColumnCodes.Count)
-                    {
-                        Command.CommandText += sqlColumnCodes[i] + "\u0029";
-                    }
-                    else
-                    {
-                        Command.CommandText += sqlColumnCodes[i] + ", ";
-                    }
-                }
+                AddSqlColumns(sqlColumnCodes);
 
                 Command.ExecuteNonQuery();
 
@@ -78,29 +67,17 @@
                 return false;
             }
         }
-        public bool TryFillTableWithData(string tableName, List<string> columnNames)
+        public bool TryFillTableWithData(string tableName, List<string> columnNames, List<string> dataList)
         {
             try
             {
                 Command.CommandText = $"INSERT INTO {tableName} \u0028";
 
-                for (int i = 0; i < columnNames.Count; i++)
-                {
-                    if (i - 1 == columnNames.Count)
-                    {
-                        Command.CommandText += columnNames[i] + "\u0029 ";
-                    }
-                    else
-                    {
-                        Command.CommandText += columnNames[i] + ", ";
-                    }
-                }
+                AddSqlColumns(columnNames);
 
-                //Command.CommandText +=
+                Command.CommandText += " VALUES \u0028";
 
-                //"VALUES (1001, 'Puneet Nehra', 'A 449 Sect 19, DELHI', 23.98 ) ";
-
-                //REIKIA SUKURTI METODA KURIS LISTO DUOMENIS PAVERSTU I SQL CODA TOKIO FORMATO (..., ..., ..., ...)
+                AddSqlValues(dataList);
 
                 Command.ExecuteNonQuery();
 
@@ -109,6 +86,34 @@
             catch
             {
                 return false;
+            }
+        }
+        public void AddSqlColumns(List<string> valuesToAdd)
+        {
+            for (int i = 0; i < valuesToAdd.Count; i++)
+            {
+                if (i == valuesToAdd.Count - 1)
+                {
+                    Command.CommandText += valuesToAdd[i].Trim() + "\u0029";
+                }
+                else
+                {
+                    Command.CommandText += valuesToAdd[i].Trim() + ", ";
+                }
+            }
+        }
+        public void AddSqlValues(List<string> valuesToAdd)
+        {
+            for (int i = 0; i < valuesToAdd.Count; i++)
+            {
+                if (i == valuesToAdd.Count - 1)
+                {
+                    Command.CommandText += "'" + valuesToAdd[i].Trim() + "'" + "\u0029";
+                }
+                else
+                {
+                    Command.CommandText += "'" + valuesToAdd[i].Trim() + "'" + ", ";
+                }
             }
         }
     }

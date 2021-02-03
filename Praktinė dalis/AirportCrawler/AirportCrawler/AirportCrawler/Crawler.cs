@@ -3,13 +3,15 @@
     using AirportCrawler.Functions;
     using RestSharp;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Text.RegularExpressions;
 
     public class Crawler
     {
         private RestClient Client = new RestClient();
 
-        private DatasaveFunctions DatasaveFunctionsObject = new DatasaveFunctions(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=FlightsRecommendationSystemDatabase;Integrated Security=True");
+        private DatasaveFunctions Datasave = new DatasaveFunctions(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=FlightsRecommendationSystemDatabase;Integrated Security=True");
         public Crawler()
         {
             Client.AddDefaultHeader("Host", "www.world-airport-codes.com");
@@ -22,20 +24,35 @@
 
         public void StartCrawler()
         {
-            DatasaveFunctionsObject.TryCreateTable();
-
-            for (char c = 'a'; c <= 'z'; c++)
+            Datasave.StartConnection();
+            List<string> sqlColumnCodes = new List<string>()
             {
-                int pageNumber = 1;
-                do
+                { "Id int IDENTITY(1,1) NOT NULL PRIMARY KEY" },
+                { "Airport varchar(255) NOT NULL" },
+                { "Type varchar(255)" },
+                { "City varchar(255)" },
+                { "Country varchar(255) NOT NULL" },
+                { "IATA varchar(255) NOT NULL" },
+            };
+
+            Datasave.TryRemoveTable("Airports");
+            if (Datasave.TryCreateTable($"Airports", sqlColumnCodes))
+            {
+                for (char c = 'a'; c <= 'z'; c++)
                 {
-                    if(!TryLoadAirports(c, pageNumber))
+                    int pageNumber = 1;
+                    do
                     {
-                        break;
+                        if (!TryLoadAirports(c, pageNumber))
+                        {
+                            break;
+                        }
+                        pageNumber += 1;
                     }
+                    while (true);
                 }
-                while (true);
             }
+            Datasave.EndConnection();
         }
 
         public bool TryLoadAirports(char c, int pageNumber)
@@ -44,20 +61,35 @@
             RestRequest request = new RestRequest("", Method.GET);
             IRestResponse response = Client.Execute(request);
 
+            Console.WriteLine(Urls.airportCodeUrl + $"{c}.html?page={pageNumber} {response.StatusCode}");
+
             return TryExtractData(response.Content);
         }
-
         public bool TryExtractData(string content)
         {
-            if(Regex.IsMatch(content, Regexes.UnavailablePage))
+            List<string> columnNames = new List<string>()
+            {
+                { "Airport" },
+                { "Type" },
+                { "City" },
+                { "Country" },
+                { "IATA" },
+            };
+            if (Regex.IsMatch(content, Regexes.UnavailablePage))
             {
                 return false;
             }
+
             string[] rowDataArray = RegexFunctions.RegexToStringArray(content, Regexes.DataRow);
-            string[][] airportInfo;
+            string[][] airportsInfo = new string[rowDataArray.Length][];
             foreach (string rowData in rowDataArray)
             {
-                airportInfo = RegexFunctions.RegexToMultiStringArray(content, Regexes.AirportData);
+                airportsInfo = RegexFunctions.RegexToMultiStringArray(content, Regexes.AirportData);
+            }
+
+            foreach(string[] airportInfo in airportsInfo)
+            {
+                Datasave.TryFillTableWithData("Airports", columnNames, airportInfo.ToList());
             }
             
             return true;
