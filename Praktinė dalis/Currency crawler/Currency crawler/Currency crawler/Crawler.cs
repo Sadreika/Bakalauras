@@ -1,6 +1,7 @@
 ﻿namespace Currency_crawler
 {
     using Currency_crawler.Functions;
+    using Newtonsoft.Json.Linq;
     using RestSharp;
     using System;
     using System.Collections.Generic;
@@ -20,11 +21,32 @@
             Client.AddDefaultHeader("Connection", "keep-alive");
         }
 
-        public void StartCrawler()
+        public void StartCurrencyCrawler()
         {
             TryLoadBasePage(out string javaScriptCacheCode);
-            TryLoadCurrencyList(javaScriptCacheCode, out List<string> currencies);
+            TryLoadCurrencyList(javaScriptCacheCode, out List<CurrencyInfo> currencies);
+        }
+
+        public void StartConversionCrawler(string convertToCurrencyCode, string convertFromCurrencyCode) //2021-02-04
+        {
+            Client.BaseUrl = new Uri(Urls.BasePageUrl + $"update?base_currency_0={convertToCurrencyCode}&quote_currency={convertFromCurrencyCode}&end_date={DateTime.Now.ToString("yyyy-MM-dd")}&view=details&id=1&action=C&", UriKind.Absolute);
+            RestRequest request = new RestRequest("", Method.GET);
+            request.AddHeader("Accept", "text/javascript, text/html, application/xml, text/xml, */*");
+            request.AddHeader("X-Requested-With", "XMLHttpRequest");
+            request.AddHeader("Referer", Urls.BasePageUrl);
+
+            IRestResponse response = Client.Execute(request);
+            JToken conversionJson = JToken.Parse(response.Content);
+
+            var a = double.Parse((string)conversionJson.SelectToken("data.rate_data.bidRates[0]"));
             
+            foreach(JToken chartPoint in conversionJson.SelectToken("data.chart_data"))
+            {
+                string year = (string)chartPoint.SelectToken("[0]");
+                string month = (string)chartPoint.SelectToken("[1]");
+                string day = (string)chartPoint.SelectToken("[2]");
+                string value = (string)chartPoint.SelectToken("[3]");
+            }
         }
 
         public bool TryLoadBasePage(out string javaScriptCacheCode)
@@ -40,18 +62,37 @@
             return javaScriptCacheCode != null;
         }
 
-        public bool TryLoadCurrencyList(string javaScriptCacheCode, out List<string> currencies)
+        public bool TryLoadCurrencyList(string javaScriptCacheCode, out List<CurrencyInfo> currencies)
         {
-            currencies = new List<string>();
+            currencies = new List<CurrencyInfo>();
             Client.BaseUrl = new Uri(Urls.BasePageUrl + $"cache{javaScriptCacheCode}.js", UriKind.Absolute);
             RestRequest request = new RestRequest("", Method.GET);
             request.AddHeader("Accept", "*/*");
-            request.AddHeader("Referer", "https://www1.oanda.com/currency/converter/");
+            request.AddHeader("Referer", "Urls.BasePageUrl");
             IRestResponse response = Client.Execute(request);
             string currencyJson = RegexFunctions.RegexToString(response.Content, Regexes.CurrencyJson);
+            if(currencyJson != null)
+            {
+                JToken currencyJsonJToken = JToken.Parse(currencyJson);
+                foreach(JToken currencyData in currencyJsonJToken.SelectToken("currency_list"))
+                {
+                    if((string)currencyData.SelectToken("value") != null)
+                    {
+                        CurrencyInfo currencyInfo = new CurrencyInfo
+                            ((string)currencyData.SelectToken("search"),
+                            (string)currencyData.SelectToken("value"),
+                            (string)currencyData.SelectToken("display"));
 
+                        currencies.Add(currencyInfo);
+                    }
+                }
 
-            return false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

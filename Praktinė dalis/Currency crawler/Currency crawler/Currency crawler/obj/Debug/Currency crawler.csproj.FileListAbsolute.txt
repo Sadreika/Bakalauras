@@ -8,3 +8,5 @@ C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Curr
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\obj\Debug\Currency crawler.csproj.CopyComplete
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\obj\Debug\Currency crawler.exe
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\obj\Debug\Currency crawler.pdb
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\bin\Debug\Newtonsoft.Json.dll
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\bin\Debug\Newtonsoft.Json.xml
