@@ -6,7 +6,7 @@
 
     class DatasaveFunctions
     {
-        public static string ConnectionString { get; set; }
+        public string ConnectionString { get; set; }
         public SqlConnection Connection { get; set; }
         public SqlCommand Command { get; set; }
         public DatasaveFunctions(string connectionString)
@@ -36,20 +36,85 @@
         {
             Connection.Close();
         }
-        public bool TryCreateTable()
+        public bool TryCreateTable(string tableName, List<string> sqlColumnCodes)
         {
-          
-            return false;
-        }
+            try
+            {
+                Command.CommandText = $"CREATE TABLE {tableName} \u0028";
 
-        public bool TryRemoveTable()
-        {
-            return false;
-        }
+                AddSqlColumns(sqlColumnCodes);
 
-        public bool TryFillTableWithData()
+                Command.ExecuteNonQuery();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public bool TryRemoveTable(string tableName)
         {
-            return false;
+            try
+            {
+                Command.CommandText = $"DROP TABLE {tableName}";
+                Command.ExecuteNonQuery();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public bool TryFillTableWithData(string tableName, List<string> columnNames, List<string> dataList)
+        {
+            try
+            {
+                Command.CommandText = $"INSERT INTO {tableName} \u0028";
+
+                AddSqlColumns(columnNames);
+
+                Command.CommandText += " VALUES \u0028";
+
+                AddSqlValues(dataList);
+
+                Command.ExecuteNonQuery();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public void AddSqlColumns(List<string> valuesToAdd)
+        {
+            for (int i = 0; i < valuesToAdd.Count; i++)
+            {
+                if (i == valuesToAdd.Count - 1)
+                {
+                    Command.CommandText += valuesToAdd[i].Trim() + "\u0029";
+                }
+                else
+                {
+                    Command.CommandText += valuesToAdd[i].Trim() + ", ";
+                }
+            }
+        }
+        public void AddSqlValues(List<string> valuesToAdd)
+        {
+            for (int i = 0; i < valuesToAdd.Count; i++)
+            {
+                if (i == valuesToAdd.Count - 1)
+                {
+                    Command.CommandText += "'" + valuesToAdd[i].Trim() + "'" + "\u0029";
+                }
+                else
+                {
+                    Command.CommandText += "'" + valuesToAdd[i].Trim() + "'" + ", ";
+                }
+            }
         }
     }
 }
