@@ -17,17 +17,6 @@
             Command.CommandType = CommandType.Text;
             Command.Connection = Connection;
         }
-        public void RenewConnection(string connectionString)
-        {
-            ConnectionString = connectionString;
-            Connection = new SqlConnection(ConnectionString);
-        }
-        public void RenewCommand()
-        {
-            Command = new SqlCommand();
-            Command.CommandType = CommandType.Text;
-            Command.Connection = Connection;
-        }
         public void StartConnection()
         {
             Connection.Open();
