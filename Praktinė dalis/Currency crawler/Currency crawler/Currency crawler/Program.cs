@@ -5,8 +5,8 @@
         static void Main(string[] args)
         {
             Crawler crawler = new Crawler();
-            crawler.StartCurrencyCrawler();
-            crawler.StartConversionCrawler("USD", "CAD");
+            //crawler.StartCurrencyCrawler();
+            //crawler.StartConversionCrawler("USD", "CAD", out double tradeRate, out double[][] chartData);
         }
     }
 }

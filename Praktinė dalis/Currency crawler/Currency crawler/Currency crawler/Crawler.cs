@@ -1,16 +1,17 @@
 ﻿namespace Currency_crawler
 {
     using Currency_crawler.Functions;
+    using MainDataExtractionFunctions;
     using Newtonsoft.Json.Linq;
     using RestSharp;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text.RegularExpressions;
 
     public class Crawler
     {
         private RestClient Client = new RestClient();
+
+        private DatasaveFunctions Datasave = new DatasaveFunctions(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=FlightsRecommendationSystemDatabase;Integrated Security=True");
 
         public Crawler()
         {
@@ -23,11 +24,24 @@
 
         public void StartCurrencyCrawler()
         {
-            TryLoadBasePage(out string javaScriptCacheCode);
-            TryLoadCurrencyList(javaScriptCacheCode, out List<CurrencyInfo> currencies);
+            List<string> sqlColumnCodes = new List<string>()
+            {
+                { "Id int IDENTITY(1,1) NOT NULL PRIMARY KEY" },
+                { "Search varchar(510) NOT NULL" },
+                { "Value varchar(255) NOT NULL" },
+                { "Display varchar(255) NOT NULL" },
+            };
+
+            Datasave.StartConnection();
+            Datasave.TryRemoveTable("Currencies");
+            if (Datasave.TryCreateTable($"Currencies", sqlColumnCodes))
+            {
+                TryLoadBasePage(out string javaScriptCacheCode);
+                TryLoadCurrencyList(javaScriptCacheCode);
+            }
         }
 
-        public void StartConversionCrawler(string convertToCurrencyCode, string convertFromCurrencyCode) //2021-02-04
+        public void StartConversionCrawler(string convertToCurrencyCode, string convertFromCurrencyCode, out double tradeRate, out double[][] chartData)
         {
             Client.BaseUrl = new Uri(Urls.BasePageUrl + $"update?base_currency_0={convertToCurrencyCode}&quote_currency={convertFromCurrencyCode}&end_date={DateTime.Now.ToString("yyyy-MM-dd")}&view=details&id=1&action=C&", UriKind.Absolute);
             RestRequest request = new RestRequest("", Method.GET);
@@ -38,15 +52,22 @@
             IRestResponse response = Client.Execute(request);
             JToken conversionJson = JToken.Parse(response.Content);
 
-            var a = double.Parse((string)conversionJson.SelectToken("data.rate_data.bidRates[0]"));
-            
-            foreach(JToken chartPoint in conversionJson.SelectToken("data.chart_data"))
+            tradeRate = double.Parse((string)conversionJson.SelectToken("data.rate_data.bidRates[0]"));
+
+            chartData = new double[((JArray)conversionJson.SelectToken("data.chart_data")).Count][];
+
+            int arrayElement = 0;
+            foreach (JToken chartPoint in conversionJson.SelectToken("data.chart_data"))
             {
-                string year = (string)chartPoint.SelectToken("[0]");
-                string month = (string)chartPoint.SelectToken("[1]");
-                string day = (string)chartPoint.SelectToken("[2]");
-                string value = (string)chartPoint.SelectToken("[3]");
-            }
+                chartData[arrayElement] = new double[4];
+
+                chartData[arrayElement][0] = (double)chartPoint.SelectToken("[0]");
+                chartData[arrayElement][1] = (double)chartPoint.SelectToken("[1]") + 1;
+                chartData[arrayElement][2] = (double)chartPoint.SelectToken("[2]");
+                chartData[arrayElement][3] = (double)chartPoint.SelectToken("[3]");
+
+                arrayElement += 1;
+            }   
         }
 
         public bool TryLoadBasePage(out string javaScriptCacheCode)
@@ -62,9 +83,16 @@
             return javaScriptCacheCode != null;
         }
 
-        public bool TryLoadCurrencyList(string javaScriptCacheCode, out List<CurrencyInfo> currencies)
+        public bool TryLoadCurrencyList(string javaScriptCacheCode)
         {
-            currencies = new List<CurrencyInfo>();
+            List<string> columnNames = new List<string>()
+            {
+                { "Search" },
+                { "Value" },
+                { "Display" },
+            };
+
+            List<CurrencyInfo> currencies = new List<CurrencyInfo>();
             Client.BaseUrl = new Uri(Urls.BasePageUrl + $"cache{javaScriptCacheCode}.js", UriKind.Absolute);
             RestRequest request = new RestRequest("", Method.GET);
             request.AddHeader("Accept", "*/*");
@@ -86,6 +114,8 @@
                         currencies.Add(currencyInfo);
                     }
                 }
+
+                Datasave.TryFillTableWithData("Currencies", columnNames, currencies);
 
                 return true;
             }

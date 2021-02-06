@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Crawler.cs" />
     <Compile Include="CurrencyInfo.cs" />
+    <Compile Include="Functions\DatasaveFunctions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Functions\RegexFunctions.cs" />
