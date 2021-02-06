@@ -145,11 +145,14 @@ namespace Flights_Recommendation_System_GUI
             // 
             // departureAirportTextBox
             // 
+            this.departureAirportTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.departureAirportTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.departureAirportTextBox.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.departureAirportTextBox.Location = new System.Drawing.Point(444, 38);
             this.departureAirportTextBox.Name = "departureAirportTextBox";
             this.departureAirportTextBox.Size = new System.Drawing.Size(125, 22);
             this.departureAirportTextBox.TabIndex = 16;
+            this.departureAirportTextBox.TextChanged += new System.EventHandler(this.departureAirportTextBox_TextChanged);
             // 
             // arrivalAirportTextBox
             // 

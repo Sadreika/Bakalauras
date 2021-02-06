@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace Flights_Recommendation_System_GUI
+﻿namespace Flights_Recommendation_System_GUI
 {
+    using System;
+    using System.Windows.Forms;
     static class Program
     {
         /// <summary>
