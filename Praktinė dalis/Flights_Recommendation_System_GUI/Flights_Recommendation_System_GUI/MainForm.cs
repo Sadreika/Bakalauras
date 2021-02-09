@@ -9,13 +9,10 @@
     public partial class MainForm : Form
     {
         private DatasaveFunctions Datasave = new DatasaveFunctions(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=FlightsRecommendationSystemDatabase;Integrated Security=True");
-        private List<string> AirportSuggestionsList;
-        private List<string> CitySuggestionsList;
-        private List<string> CountrySuggestionsList;
         private List<string> IATASuggestionsList;
-        private List<string> AllSuggestionsList = new List<string>();
         private AutoCompleteStringCollection Collection = new AutoCompleteStringCollection();
-        
+        private DataTable dataFromDatabase;
+
         public MainForm()
         {
             InitializeComponent();
@@ -26,11 +23,8 @@
         private void LoadAirports()
         {
             Datasave.StartConnection();
-            if(Datasave.TryGetDataFromTable("Airports", "*", out DataTable dataFromDatabase))
+            if(Datasave.TryGetDataFromTable("Airports", "*", out dataFromDatabase))
             {
-                AirportSuggestionsList = dataFromDatabase.Rows.OfType<DataRow>().Select(x => x.Field<string>("Airport")).ToList();
-                CitySuggestionsList = dataFromDatabase.Rows.OfType<DataRow>().Select(x => x.Field<string>("City")).ToList();
-                CountrySuggestionsList = dataFromDatabase.Rows.OfType<DataRow>().Select(x => x.Field<string>("Country")).ToList();
                 IATASuggestionsList = dataFromDatabase.Rows.OfType<DataRow>().Select(x => x.Field<string>("IATA")).ToList();
 
                 Collection.AddRange(IATASuggestionsList.ToArray());
@@ -49,13 +43,13 @@
 
         private void departureAirportTextBox_DoubleClick(object sender, EventArgs e)
         {
-            LocationSelectionForm locationSelectionForm = new LocationSelectionForm(this);
+            LocationSelectionForm locationSelectionForm = new LocationSelectionForm(this, dataFromDatabase);
             locationSelectionForm.Show();
         }
 
         private void arrivalAirportTextBox_DoubleClick(object sender, EventArgs e)
         {
-            LocationSelectionForm locationSelectionForm = new LocationSelectionForm(this);
+            LocationSelectionForm locationSelectionForm = new LocationSelectionForm(this, dataFromDatabase);
             locationSelectionForm.Show();
         }
 
