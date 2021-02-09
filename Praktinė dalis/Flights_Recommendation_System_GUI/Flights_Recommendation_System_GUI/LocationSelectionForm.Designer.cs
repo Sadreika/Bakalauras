@@ -40,9 +40,9 @@ namespace Flights_Recommendation_System_GUI
             // 
             // selectionButton
             // 
-            this.selectionButton.Location = new System.Drawing.Point(21, 388);
+            this.selectionButton.Location = new System.Drawing.Point(32, 388);
             this.selectionButton.Name = "selectionButton";
-            this.selectionButton.Size = new System.Drawing.Size(177, 30);
+            this.selectionButton.Size = new System.Drawing.Size(166, 30);
             this.selectionButton.TabIndex = 0;
             this.selectionButton.Text = "Pasirinkti pažymėtą";
             this.selectionButton.UseVisualStyleBackColor = true;
@@ -97,14 +97,14 @@ namespace Flights_Recommendation_System_GUI
             this.locationsDataGridView.Name = "locationsDataGridView";
             this.locationsDataGridView.RowHeadersWidth = 51;
             this.locationsDataGridView.RowTemplate.Height = 24;
-            this.locationsDataGridView.Size = new System.Drawing.Size(240, 387);
+            this.locationsDataGridView.Size = new System.Drawing.Size(549, 387);
             this.locationsDataGridView.TabIndex = 5;
             // 
             // LocationSelectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(482, 453);
+            this.ClientSize = new System.Drawing.Size(797, 453);
             this.Controls.Add(this.locationsDataGridView);
             this.Controls.Add(this.locationTextBox);
             this.Controls.Add(this.airportRadioButton);

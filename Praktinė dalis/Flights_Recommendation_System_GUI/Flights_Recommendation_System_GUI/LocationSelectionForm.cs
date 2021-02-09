@@ -43,7 +43,7 @@ namespace Flights_Recommendation_System_GUI
 
         private void locationTextBox_TextChanged(object sender, EventArgs e)
         {
-            if(locationTextBox.Text.Length >= 3)
+            //if(locationTextBox.Text.Length >= 3)
             {
                 DataTable data = new DataTable();
 
@@ -52,32 +52,29 @@ namespace Flights_Recommendation_System_GUI
                 data.Columns.Add("Oro uostas");
                 data.Columns.Add("IATA");
 
-                //List<string> fix
+                List<string> listToCheck;
                 if(countryRadioButton.Checked)
+                {
+                    listToCheck = CountrySuggestionsList;
+                }
+                else if(cityRadioButton.Checked)
+                {
+                    listToCheck = CitySuggestionsList;
+                }
+                else
+                {
+                    listToCheck = AirportSuggestionsList;
+                }
 
                 for (int i = 0; i < IATASuggestionsList.Count; i++)
                 {
-                    if (countryRadioButton.Checked && locationTextBox.Text != null)
+                    if (locationTextBox.Text != null)
                     {
-                        if (CountrySuggestionsList[i].Contains(locationTextBox.Text))
+                        if (listToCheck[i].ToLower().Contains(locationTextBox.Text.ToLower()))
                         {
                             data.Rows.Add(CountrySuggestionsList[i], CitySuggestionsList[i], AirportSuggestionsList[i], IATASuggestionsList[i]);
                         }
-                    }
-                    if (cityRadioButton.Checked && locationTextBox.Text != null)
-                    {
-                        if (CitySuggestionsList[i].Contains(locationTextBox.Text))
-                        {
-                            data.Rows.Add(CountrySuggestionsList[i], CitySuggestionsList[i], AirportSuggestionsList[i], IATASuggestionsList[i]);
-                        }
-                    }
-                    if (airportRadioButton.Checked && locationTextBox.Text != null)
-                    {
-                        if (AirportSuggestionsList[i].Contains(locationTextBox.Text))
-                        {
-                            data.Rows.Add(CountrySuggestionsList[i], CitySuggestionsList[i], AirportSuggestionsList[i], IATASuggestionsList[i]);
-                        }
-                    }
+                    } 
                 }
 
                 locationsDataGridView.DataSource = data;
