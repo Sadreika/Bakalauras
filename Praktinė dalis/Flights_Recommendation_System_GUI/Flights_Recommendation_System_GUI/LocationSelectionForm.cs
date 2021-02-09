@@ -12,9 +12,17 @@ namespace Flights_Recommendation_System_GUI
 {
     public partial class LocationSelectionForm : Form
     {
-        public LocationSelectionForm()
+        private MainForm Mainform { get; set; }
+        public LocationSelectionForm(MainForm mainform)
         {
             InitializeComponent();
+            this.Mainform = mainform;
+            mainform.Enabled = false;
+        }
+
+        private void LocationSelectionForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Mainform.Enabled = true;
         }
     }
 }

@@ -49,12 +49,14 @@
 
         private void departureAirportTextBox_DoubleClick(object sender, EventArgs e)
         {
-            
+            LocationSelectionForm locationSelectionForm = new LocationSelectionForm(this);
+            locationSelectionForm.Show();
         }
 
         private void arrivalAirportTextBox_DoubleClick(object sender, EventArgs e)
         {
-
+            LocationSelectionForm locationSelectionForm = new LocationSelectionForm(this);
+            locationSelectionForm.Show();
         }
 
         private void PrepareComboBoxes()
