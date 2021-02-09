@@ -20,6 +20,7 @@
         {
             InitializeComponent();
             LoadAirports();
+            PrepareComboBoxes();
         }
 
         private void LoadAirports()
@@ -54,6 +55,13 @@
         private void arrivalAirportTextBox_DoubleClick(object sender, EventArgs e)
         {
 
+        }
+
+        private void PrepareComboBoxes()
+        {
+            string[] suggestionsArray = new string[] { "Ekonominė", "Verslo", "Premium", "Pirma" };
+            classComboBox.Items.AddRange(suggestionsArray);
+            Controls.Add(classComboBox);
         }
     }
 }

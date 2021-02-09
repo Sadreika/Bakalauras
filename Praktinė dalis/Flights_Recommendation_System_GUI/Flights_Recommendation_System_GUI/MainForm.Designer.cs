@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Windows.Forms;
 
 namespace Flights_Recommendation_System_GUI
 {
@@ -144,6 +145,7 @@ namespace Flights_Recommendation_System_GUI
             this.classComboBox.Name = "classComboBox";
             this.classComboBox.Size = new System.Drawing.Size(125, 24);
             this.classComboBox.TabIndex = 14;
+            this.classComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             // 
             // departureAirportTextBox
             // 
