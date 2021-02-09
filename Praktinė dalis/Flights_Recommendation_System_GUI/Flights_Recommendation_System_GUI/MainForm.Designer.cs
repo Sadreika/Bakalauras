@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace Flights_Recommendation_System_GUI
 {
     partial class MainForm
@@ -149,18 +151,23 @@ namespace Flights_Recommendation_System_GUI
             this.departureAirportTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.departureAirportTextBox.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.departureAirportTextBox.Location = new System.Drawing.Point(444, 38);
+            this.departureAirportTextBox.MaxLength = 3;
             this.departureAirportTextBox.Name = "departureAirportTextBox";
             this.departureAirportTextBox.Size = new System.Drawing.Size(125, 22);
             this.departureAirportTextBox.TabIndex = 16;
-            this.departureAirportTextBox.TextChanged += new System.EventHandler(this.departureAirportTextBox_TextChanged);
+            this.departureAirportTextBox.DoubleClick += new System.EventHandler(this.departureAirportTextBox_DoubleClick);
             // 
             // arrivalAirportTextBox
             // 
+            this.arrivalAirportTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.arrivalAirportTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.arrivalAirportTextBox.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.arrivalAirportTextBox.Location = new System.Drawing.Point(444, 75);
+            this.arrivalAirportTextBox.MaxLength = 3;
             this.arrivalAirportTextBox.Name = "arrivalAirportTextBox";
             this.arrivalAirportTextBox.Size = new System.Drawing.Size(125, 22);
             this.arrivalAirportTextBox.TabIndex = 17;
+            this.arrivalAirportTextBox.DoubleClick += new System.EventHandler(this.arrivalAirportTextBox_DoubleClick);
             // 
             // airlineTextBox
             // 
@@ -177,6 +184,7 @@ namespace Flights_Recommendation_System_GUI
             this.departureDateTimePicker.Name = "departureDateTimePicker";
             this.departureDateTimePicker.Size = new System.Drawing.Size(229, 22);
             this.departureDateTimePicker.TabIndex = 19;
+            this.departureDateTimePicker.MinDate = DateTime.Today;
             // 
             // arrivalDateTimePicker
             // 
@@ -186,6 +194,7 @@ namespace Flights_Recommendation_System_GUI
             this.arrivalDateTimePicker.Name = "arrivalDateTimePicker";
             this.arrivalDateTimePicker.Size = new System.Drawing.Size(228, 22);
             this.arrivalDateTimePicker.TabIndex = 20;
+            this.arrivalDateTimePicker.MinDate = DateTime.Today;
             // 
             // dataGridView1
             // 

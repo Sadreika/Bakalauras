@@ -31,12 +31,11 @@
                 CitySuggestionsList = dataFromDatabase.Rows.OfType<DataRow>().Select(x => x.Field<string>("City")).ToList();
                 CountrySuggestionsList = dataFromDatabase.Rows.OfType<DataRow>().Select(x => x.Field<string>("Country")).ToList();
                 IATASuggestionsList = dataFromDatabase.Rows.OfType<DataRow>().Select(x => x.Field<string>("IATA")).ToList();
-                AllSuggestionsList.AddRange(AirportSuggestionsList);
-                AllSuggestionsList.AddRange(CitySuggestionsList);
-                AllSuggestionsList.AddRange(CountrySuggestionsList);
-                AllSuggestionsList.AddRange(IATASuggestionsList);
-                Collection.AddRange(AllSuggestionsList.ToArray());
+
+                Collection.AddRange(IATASuggestionsList.ToArray());
+
                 departureAirportTextBox.AutoCompleteCustomSource = Collection;
+                arrivalAirportTextBox.AutoCompleteCustomSource = Collection;
             }
 
             Datasave.EndConnection();
@@ -47,11 +46,14 @@
 
         }
 
-        private void departureAirportTextBox_TextChanged(object sender, EventArgs e)
+        private void departureAirportTextBox_DoubleClick(object sender, EventArgs e)
         {
-            Collection = new AutoCompleteStringCollection();
-            Collection.AddRange(AllSuggestionsList.Where(x => x.Contains(departureAirportTextBox.Text)).ToArray());
-            departureAirportTextBox.AutoCompleteCustomSource = Collection;
+            
+        }
+
+        private void arrivalAirportTextBox_DoubleClick(object sender, EventArgs e)
+        {
+
         }
     }
 }
