@@ -29,6 +29,7 @@ namespace Flights_Recommendation_System_GUI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LocationSelectionForm));
             this.selectionButton = new System.Windows.Forms.Button();
             this.cityRadioButton = new System.Windows.Forms.RadioButton();
             this.countryRadioButton = new System.Windows.Forms.RadioButton();
@@ -58,6 +59,7 @@ namespace Flights_Recommendation_System_GUI
             this.cityRadioButton.TabStop = true;
             this.cityRadioButton.Text = "Miestas";
             this.cityRadioButton.UseVisualStyleBackColor = true;
+            this.cityRadioButton.Click += new System.EventHandler(this.cityRadioButton_Click);
             // 
             // countryRadioButton
             // 
@@ -70,6 +72,7 @@ namespace Flights_Recommendation_System_GUI
             this.countryRadioButton.TabStop = true;
             this.countryRadioButton.Text = "Šalis";
             this.countryRadioButton.UseVisualStyleBackColor = true;
+            this.countryRadioButton.Click += new System.EventHandler(this.countryRadioButton_Click);
             // 
             // airportRadioButton
             // 
@@ -81,6 +84,7 @@ namespace Flights_Recommendation_System_GUI
             this.airportRadioButton.TabStop = true;
             this.airportRadioButton.Text = "Oro uosto pavadinimas";
             this.airportRadioButton.UseVisualStyleBackColor = true;
+            this.airportRadioButton.Click += new System.EventHandler(this.airportRadioButton_Click);
             // 
             // locationTextBox
             // 
@@ -97,7 +101,7 @@ namespace Flights_Recommendation_System_GUI
             this.locationsDataGridView.Name = "locationsDataGridView";
             this.locationsDataGridView.RowHeadersWidth = 51;
             this.locationsDataGridView.RowTemplate.Height = 24;
-            this.locationsDataGridView.Size = new System.Drawing.Size(549, 387);
+            this.locationsDataGridView.Size = new System.Drawing.Size(560, 390);
             this.locationsDataGridView.TabIndex = 5;
             // 
             // LocationSelectionForm
@@ -111,6 +115,7 @@ namespace Flights_Recommendation_System_GUI
             this.Controls.Add(this.countryRadioButton);
             this.Controls.Add(this.cityRadioButton);
             this.Controls.Add(this.selectionButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LocationSelectionForm";
             this.Text = "Lokacijos pasirinkimas";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LocationSelectionForm_FormClosing);

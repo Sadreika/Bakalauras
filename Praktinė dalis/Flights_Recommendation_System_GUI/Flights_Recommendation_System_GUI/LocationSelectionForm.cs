@@ -41,44 +41,65 @@ namespace Flights_Recommendation_System_GUI
 
         }
 
+        private void setLocationsDataGridViewData()
+        {
+            DataTable data = new DataTable();
+
+            data.Columns.Add("Šalis");
+            data.Columns.Add("Miestas");
+            data.Columns.Add("Oro uostas");
+            data.Columns.Add("IATA");
+
+            List<string> listToCheck;
+            if (countryRadioButton.Checked)
+            {
+                listToCheck = CountrySuggestionsList;
+            }
+            else if (cityRadioButton.Checked)
+            {
+                listToCheck = CitySuggestionsList;
+            }
+            else
+            {
+                listToCheck = AirportSuggestionsList;
+            }
+
+            for (int i = 0; i < IATASuggestionsList.Count; i++)
+            {
+                if (locationTextBox.Text != null)
+                {
+                    if (listToCheck[i].ToLower().Contains(locationTextBox.Text.ToLower()))
+                    {
+                        data.Rows.Add(CountrySuggestionsList[i], CitySuggestionsList[i], AirportSuggestionsList[i], IATASuggestionsList[i]);
+                    }
+                }
+            }
+
+            locationsDataGridView.DataSource = data;
+            locationsDataGridView.Columns[0].Width = 145;
+            locationsDataGridView.Columns[1].Width = 145;
+            locationsDataGridView.Columns[2].Width = 145;
+            locationsDataGridView.Columns[3].Width = 50;
+
+        }
         private void locationTextBox_TextChanged(object sender, EventArgs e)
         {
-            //if(locationTextBox.Text.Length >= 3)
-            {
-                DataTable data = new DataTable();
+            setLocationsDataGridViewData();
+        }
 
-                data.Columns.Add("Šalis");
-                data.Columns.Add("Miestas");
-                data.Columns.Add("Oro uostas");
-                data.Columns.Add("IATA");
+        private void countryRadioButton_Click(object sender, EventArgs e)
+        {
+            setLocationsDataGridViewData();
+        }
 
-                List<string> listToCheck;
-                if(countryRadioButton.Checked)
-                {
-                    listToCheck = CountrySuggestionsList;
-                }
-                else if(cityRadioButton.Checked)
-                {
-                    listToCheck = CitySuggestionsList;
-                }
-                else
-                {
-                    listToCheck = AirportSuggestionsList;
-                }
+        private void cityRadioButton_Click(object sender, EventArgs e)
+        {
+            setLocationsDataGridViewData();
+        }
 
-                for (int i = 0; i < IATASuggestionsList.Count; i++)
-                {
-                    if (locationTextBox.Text != null)
-                    {
-                        if (listToCheck[i].ToLower().Contains(locationTextBox.Text.ToLower()))
-                        {
-                            data.Rows.Add(CountrySuggestionsList[i], CitySuggestionsList[i], AirportSuggestionsList[i], IATASuggestionsList[i]);
-                        }
-                    } 
-                }
-
-                locationsDataGridView.DataSource = data;
-            }
+        private void airportRadioButton_Click(object sender, EventArgs e)
+        {
+            setLocationsDataGridViewData();
         }
     }
 }
