@@ -30,24 +30,14 @@ namespace Flights_Recommendation_System_GUI
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LocationSelectionForm));
-            this.selectionButton = new System.Windows.Forms.Button();
             this.cityRadioButton = new System.Windows.Forms.RadioButton();
             this.countryRadioButton = new System.Windows.Forms.RadioButton();
             this.airportRadioButton = new System.Windows.Forms.RadioButton();
             this.locationTextBox = new System.Windows.Forms.TextBox();
             this.locationsDataGridView = new System.Windows.Forms.DataGridView();
+            this.searchTextBoxLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.locationsDataGridView)).BeginInit();
             this.SuspendLayout();
-            // 
-            // selectionButton
-            // 
-            this.selectionButton.Location = new System.Drawing.Point(32, 388);
-            this.selectionButton.Name = "selectionButton";
-            this.selectionButton.Size = new System.Drawing.Size(166, 30);
-            this.selectionButton.TabIndex = 0;
-            this.selectionButton.Text = "Pasirinkti pažymėtą";
-            this.selectionButton.UseVisualStyleBackColor = true;
-            this.selectionButton.Click += new System.EventHandler(this.selectionButton_Click);
             // 
             // cityRadioButton
             // 
@@ -64,7 +54,6 @@ namespace Flights_Recommendation_System_GUI
             // countryRadioButton
             // 
             this.countryRadioButton.AutoSize = true;
-            this.countryRadioButton.Checked = true;
             this.countryRadioButton.Location = new System.Drawing.Point(32, 31);
             this.countryRadioButton.Name = "countryRadioButton";
             this.countryRadioButton.Size = new System.Drawing.Size(59, 21);
@@ -88,7 +77,7 @@ namespace Flights_Recommendation_System_GUI
             // 
             // locationTextBox
             // 
-            this.locationTextBox.Location = new System.Drawing.Point(32, 137);
+            this.locationTextBox.Location = new System.Drawing.Point(32, 148);
             this.locationTextBox.Name = "locationTextBox";
             this.locationTextBox.Size = new System.Drawing.Size(166, 22);
             this.locationTextBox.TabIndex = 4;
@@ -103,18 +92,29 @@ namespace Flights_Recommendation_System_GUI
             this.locationsDataGridView.RowTemplate.Height = 24;
             this.locationsDataGridView.Size = new System.Drawing.Size(560, 390);
             this.locationsDataGridView.TabIndex = 5;
+            this.locationsDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.locationsDataGridView_CellClick);
+            this.locationsDataGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.locationsDataGridView_CellMouseDoubleClick);
+            // 
+            // searchTextBoxLabel
+            // 
+            this.searchTextBoxLabel.AutoSize = true;
+            this.searchTextBoxLabel.Location = new System.Drawing.Point(29, 119);
+            this.searchTextBoxLabel.Name = "searchTextBoxLabel";
+            this.searchTextBoxLabel.Size = new System.Drawing.Size(116, 17);
+            this.searchTextBoxLabel.TabIndex = 6;
+            this.searchTextBoxLabel.Text = "Paieškos laukelis";
             // 
             // LocationSelectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(797, 453);
+            this.Controls.Add(this.searchTextBoxLabel);
             this.Controls.Add(this.locationsDataGridView);
             this.Controls.Add(this.locationTextBox);
             this.Controls.Add(this.airportRadioButton);
             this.Controls.Add(this.countryRadioButton);
             this.Controls.Add(this.cityRadioButton);
-            this.Controls.Add(this.selectionButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LocationSelectionForm";
             this.Text = "Lokacijos pasirinkimas";
@@ -126,12 +126,11 @@ namespace Flights_Recommendation_System_GUI
         }
 
         #endregion
-
-        private System.Windows.Forms.Button selectionButton;
         private System.Windows.Forms.RadioButton cityRadioButton;
         private System.Windows.Forms.RadioButton countryRadioButton;
         private System.Windows.Forms.RadioButton airportRadioButton;
         private System.Windows.Forms.TextBox locationTextBox;
         private System.Windows.Forms.DataGridView locationsDataGridView;
+        private System.Windows.Forms.Label searchTextBoxLabel;
     }
 }

@@ -50,8 +50,6 @@ namespace Flights_Recommendation_System_GUI
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.allFlightsButton = new System.Windows.Forms.Button();
             this.searchButton = new System.Windows.Forms.Button();
-            this.optionsButton = new System.Windows.Forms.Button();
-            this.priceDifferenceButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -136,16 +134,17 @@ namespace Flights_Recommendation_System_GUI
             this.OWRTcheckBox.TabIndex = 13;
             this.OWRTcheckBox.Text = "Dvipusė kelionė";
             this.OWRTcheckBox.UseVisualStyleBackColor = true;
+            this.OWRTcheckBox.Click += new System.EventHandler(this.OWRTcheckBox_Click);
             // 
             // classComboBox
             // 
+            this.classComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.classComboBox.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.classComboBox.FormattingEnabled = true;
             this.classComboBox.Location = new System.Drawing.Point(1026, 38);
             this.classComboBox.Name = "classComboBox";
             this.classComboBox.Size = new System.Drawing.Size(125, 24);
             this.classComboBox.TabIndex = 14;
-            this.classComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             // 
             // departureAirportTextBox
             // 
@@ -183,20 +182,20 @@ namespace Flights_Recommendation_System_GUI
             // 
             this.departureDateTimePicker.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.departureDateTimePicker.Location = new System.Drawing.Point(717, 40);
+            this.departureDateTimePicker.MinDate = new System.DateTime(2021, 2, 10, 0, 0, 0, 0);
             this.departureDateTimePicker.Name = "departureDateTimePicker";
             this.departureDateTimePicker.Size = new System.Drawing.Size(229, 22);
             this.departureDateTimePicker.TabIndex = 19;
-            this.departureDateTimePicker.MinDate = DateTime.Today;
             // 
             // arrivalDateTimePicker
             // 
             this.arrivalDateTimePicker.CalendarFont = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.arrivalDateTimePicker.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.arrivalDateTimePicker.Location = new System.Drawing.Point(718, 78);
+            this.arrivalDateTimePicker.MinDate = new System.DateTime(2021, 2, 10, 0, 0, 0, 0);
             this.arrivalDateTimePicker.Name = "arrivalDateTimePicker";
             this.arrivalDateTimePicker.Size = new System.Drawing.Size(228, 22);
             this.arrivalDateTimePicker.TabIndex = 20;
-            this.arrivalDateTimePicker.MinDate = DateTime.Today;
             // 
             // dataGridView1
             // 
@@ -228,34 +227,12 @@ namespace Flights_Recommendation_System_GUI
             this.searchButton.Text = "Atlikti paiešką";
             this.searchButton.UseVisualStyleBackColor = true;
             // 
-            // optionsButton
-            // 
-            this.optionsButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.optionsButton.Location = new System.Drawing.Point(1196, 85);
-            this.optionsButton.Name = "optionsButton";
-            this.optionsButton.Size = new System.Drawing.Size(177, 30);
-            this.optionsButton.TabIndex = 24;
-            this.optionsButton.Text = "Papildomi nustatymai";
-            this.optionsButton.UseVisualStyleBackColor = true;
-            // 
-            // priceDifferenceButton
-            // 
-            this.priceDifferenceButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.priceDifferenceButton.Location = new System.Drawing.Point(1168, 808);
-            this.priceDifferenceButton.Name = "priceDifferenceButton";
-            this.priceDifferenceButton.Size = new System.Drawing.Size(198, 30);
-            this.priceDifferenceButton.TabIndex = 25;
-            this.priceDifferenceButton.Text = "Skrydžio kainų pokyčiai";
-            this.priceDifferenceButton.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1422, 853);
-            this.Controls.Add(this.priceDifferenceButton);
-            this.Controls.Add(this.optionsButton);
             this.Controls.Add(this.searchButton);
             this.Controls.Add(this.allFlightsButton);
             this.Controls.Add(this.dataGridView1);
@@ -302,8 +279,6 @@ namespace Flights_Recommendation_System_GUI
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button allFlightsButton;
         private System.Windows.Forms.Button searchButton;
-        private System.Windows.Forms.Button optionsButton;
-        private System.Windows.Forms.Button priceDifferenceButton;
     }
 }
 
