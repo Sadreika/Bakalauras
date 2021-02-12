@@ -31,7 +31,7 @@
             OutboundYear = searchCriteriaArray[2];
             OutboundMonth = searchCriteriaArray[3];
             OutboundDay = searchCriteriaArray[4];
-            DateTime.TryParseExact(searchCriteria[2] + "-" + searchCriteria[3] + "-" + searchCriteria[4], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime outboundDate);
+            DateTime.TryParseExact(searchCriteriaArray[2] + "-" + searchCriteriaArray[3] + "-" + searchCriteriaArray[4], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime outboundDate);
             OutboundDate = outboundDate;
 
             if(IsRt)
@@ -39,7 +39,7 @@
                 InboundYear = searchCriteriaArray[5];
                 InboundMonth = searchCriteriaArray[6];
                 InboundDay = searchCriteriaArray[7];
-                DateTime.TryParseExact(searchCriteria[5] + "-" + searchCriteria[6] + "-" + searchCriteria[7], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime inboundDate);
+                DateTime.TryParseExact(searchCriteriaArray[5] + "-" + searchCriteriaArray[6] + "-" + searchCriteriaArray[7], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime inboundDate);
                 InboundDate = inboundDate;
             }
 

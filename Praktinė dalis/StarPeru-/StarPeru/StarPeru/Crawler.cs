@@ -4,6 +4,7 @@
     using StarPeru.Functions;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class Crawler
     {
@@ -12,6 +13,8 @@
 
         private List<Flight> OutboundData = new List<Flight>();
         private List<Flight> InboundData = new List<Flight>();
+
+        private DatasaveFunctions Datasave = new DatasaveFunctions();
         public Crawler()
         {
             Client.AddDefaultHeader("Host", "www.starperu.com");
@@ -20,9 +23,7 @@
             Client.AddDefaultHeader("Origin", Urls.StartPage);
             Client.AddDefaultHeader("Connection", "keep-alive");
             Client.AddDefaultHeader("Referer", $"{Urls.StartPage}es");
-            Client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
         }
-
         public bool Start(string searchCriteria)
         {
             _Sc = new SearchCriteria(searchCriteria);
@@ -58,9 +59,31 @@
 
             foreach(Combinations combination in combinationsList)
             {
-                var a = combination;
+                if(_Sc.IsRt)
+                {
+                    TryGetTaxes(out string responseBodyTaxes, combination.Outbound.FlightCode, combination.Inbound.FlightCode);
+                    string[] priceInfo = RegexFunctions.RegexToMultiStringArray(responseBodyTaxes, Regexes.Taxes).First();
+
+                    if (Decimal.TryParse(priceInfo[0], out decimal priceWithoutTaxes))
+                    {
+                        combination.PriceWithoutTaxes = priceWithoutTaxes;
+                    }
+                    if (Decimal.TryParse(priceInfo[1], out decimal taxes))
+                    {
+                        combination.Taxes = taxes;
+                    }
+                    if (Decimal.TryParse(priceInfo[2], out decimal fullPrice))
+                    {
+                        combination.FullPrice = fullPrice;
+                    }
+                }
+                else
+                {
+                    TryGetTaxes(out string responseBodyTaxes, combination.Outbound.FlightCode);
+                }
             }
 
+            Datasave.TryToSaveFlights(combinationsList);
             return true;
         }
 
@@ -73,6 +96,7 @@
 
             request.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+            request.AddHeader("Upgrade-Insecure-Requests", "1");
 
             request.AddParameter("text/xml", postBody, ParameterType.RequestBody);
 
@@ -107,10 +131,11 @@
 
             string[][] sectorOriginAndDestination = RegexFunctions.RegexToMultiStringArray(sector, Regexes.SectorOriginAndDestination);
             string[][] sectorsInfo = RegexFunctions.RegexToMultiStringArray(sector, Regexes.SectorInfo);
+            string flightCode = RegexFunctions.RegexToString(sector, Regexes.FlightCode);
 
             foreach (string[] sectorInfo in sectorsInfo)
             {
-                Flight flight = new Flight(sectorOriginAndDestination, sectorInfo);
+                Flight flight = new Flight(sectorOriginAndDestination, sectorInfo, flightCode);
                 collectedDataList.Add(flight);
             }
 
@@ -142,10 +167,10 @@
             return responseBodyTaxes != null;
         }
         private string ConstructPostBodyForTaxes(string outBoundFlightCode, string inBoundFlightCode = null)
-        {            
+        {
             if(_Sc.IsRt)
             {
-                return $"cod_origen={_Sc.Origin}&cod_destino={_Sc.Destination}&cant_adl=1&cant_chd=0&cant_inf=0&codigo_desc=&fecha_ida={_Sc.OutboundDate.ToString("yyyy-MM-dd")}&fecha_retorno={_Sc.InboundDate.ToString("yyyy-MM-dd")}&tipo_viaje=R&grupo_retorno={outBoundFlightCode}&grupo_ida={inBoundFlightCode}";
+                return $"cod_origen={_Sc.Origin}&cod_destino={_Sc.Destination}&cant_adl=1&cant_chd=0&cant_inf=0&codigo_desc=&fecha_ida={_Sc.OutboundDate.ToString("yyyy-MM-dd")}&fecha_retorno={_Sc.InboundDate.ToString("yyyy-MM-dd")}&tipo_viaje=R&grupo_retorno={inBoundFlightCode}&grupo_ida={outBoundFlightCode}";
             }
             else
             {

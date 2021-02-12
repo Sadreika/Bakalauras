@@ -11,7 +11,7 @@
     {
         private RestClient Client = new RestClient();
 
-        private DatasaveFunctions Datasave = new DatasaveFunctions(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=FlightsRecommendationSystemDatabase;Integrated Security=True");
+        private DatasaveFunctions Datasave = new DatasaveFunctions();
         public Crawler()
         {
             Client.AddDefaultHeader("Host", "www.world-airport-codes.com");

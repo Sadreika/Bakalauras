@@ -9,9 +9,7 @@
         public string Origin;
         public string Destination;
 
-        public decimal? FullPrice;
         public decimal? PriceWithoutTaxes;
-        public decimal? Taxes;
 
         public string FareFamily;
         public string FlightNumber;
@@ -20,7 +18,9 @@
         public DateTime DepartureTime;
         public DateTime ArrivalTime;
 
-        public Flight(string[][] sectorOriginAndDestination, string[] sectorInfo)
+        public string FlightCode;
+
+        public Flight(string[][] sectorOriginAndDestination, string[] sectorInfo, string flightCode)
         {
             Origin = sectorOriginAndDestination.First().First();
             Destination = sectorOriginAndDestination.First().Last();
@@ -31,7 +31,6 @@
                 PriceWithoutTaxes = priceWithoutTaxes;
             }
             FlightNumber = sectorInfo[2];
-
    
             if (DateTime.TryParseExact(sectorInfo[3] + " " + sectorInfo[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime departureDate))
             {
@@ -43,6 +42,8 @@
             }
 
             Currency = sectorInfo[7];
+
+            FlightCode = flightCode;
         }
     }
 }

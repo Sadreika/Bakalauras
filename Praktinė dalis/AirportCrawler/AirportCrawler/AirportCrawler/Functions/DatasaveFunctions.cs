@@ -6,12 +6,11 @@
 
     class DatasaveFunctions
     {
-        public string ConnectionString { get; set; }
+        public string ConnectionString = @"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=FlightsRecommendationSystemDatabase;Integrated Security=True";
         public SqlConnection Connection { get; set; }
         public SqlCommand Command { get; set; }
-        public DatasaveFunctions(string connectionString)
+        public DatasaveFunctions()
         {
-            ConnectionString = connectionString;
             Connection = new SqlConnection(ConnectionString);
             Command = new SqlCommand();
             Command.CommandType = CommandType.Text;
