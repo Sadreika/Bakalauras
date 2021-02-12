@@ -54,8 +54,12 @@
                 }
             }
 
-            var a = Combinations.GetCombinations(OutboundData, InboundData);
+            List<Combinations> combinationsList = Combinations.GetCombinations(OutboundData, InboundData);
 
+            foreach(Combinations combination in combinationsList)
+            {
+                var a = combination;
+            }
 
             return true;
         }
@@ -112,30 +116,41 @@
 
             return collectedDataList;
         }
-        private bool TryGetTaxes(out string responseBodyTaxes)
+        private bool TryGetTaxes(out string responseBodyTaxes, string outBoundFlightCode, string inBoundFlightCode = null)
         {
             Client.BaseUrl = new Uri(Urls.FlightPage, UriKind.Absolute);
 
             RestRequest request = new RestRequest("ObtenerTarifas", Method.POST);
 
-            string postBody = ConstructPostBodyForTaxes();
-
+            if(_Sc.IsRt)
+            {
+                request.AddParameter("text/xml", ConstructPostBodyForTaxes(outBoundFlightCode, inBoundFlightCode), ParameterType.RequestBody);
+            }
+            else
+            {
+                request.AddParameter("text/xml", ConstructPostBodyForTaxes(outBoundFlightCode), ParameterType.RequestBody);
+            }
+            
             request.AddHeader("Accept", "*/*");
             request.AddHeader("X-Requested-With", "XMLHttpRequest");
             request.AddHeader("Referer", Urls.FlightPage);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
             
-            request.AddParameter("text/xml", postBody, ParameterType.RequestBody);
-
             IRestResponse response = Client.Execute(request);
             responseBodyTaxes = response.Content;
 
             return responseBodyTaxes != null;
         }
-        private string ConstructPostBodyForTaxes()
-        {
-            //cod_origen=LIM&cod_destino=HUU&cant_adl=1&cant_chd=0&cant_inf=0&codigo_desc=&fecha_ida=2021-03-19&fecha_retorno=2021-03-26&tipo_viaje=R&grupo_retorno=77.00|V|4121|2021-03-26 10:05:00|2021-03-26 11:05:00|NO&grupo_ida=44.00|O|4120|2021-03-19 08:30:00|2021-03-19 09:30:00|NO
-            return null;        
+        private string ConstructPostBodyForTaxes(string outBoundFlightCode, string inBoundFlightCode = null)
+        {            
+            if(_Sc.IsRt)
+            {
+                return $"cod_origen={_Sc.Origin}&cod_destino={_Sc.Destination}&cant_adl=1&cant_chd=0&cant_inf=0&codigo_desc=&fecha_ida={_Sc.OutboundDate.ToString("yyyy-MM-dd")}&fecha_retorno={_Sc.InboundDate.ToString("yyyy-MM-dd")}&tipo_viaje=R&grupo_retorno={outBoundFlightCode}&grupo_ida={inBoundFlightCode}";
+            }
+            else
+            {
+                return $"cod_origen={_Sc.Origin}&cod_destino={_Sc.Destination}&cant_adl=1&cant_chd=0&cant_inf=0&codigo_desc=&fecha_ida={_Sc.OutboundDate.ToString("yyyy-MM-dd")}&fecha_retorno={_Sc.OutboundDate.ToString("yyyy-MM-dd")}&tipo_viaje=O&grupo_ida={inBoundFlightCode}";
+            }     
         }
     }
 }
