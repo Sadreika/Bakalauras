@@ -1,9 +1,9 @@
 ﻿namespace StarPeru
 {
     using RestSharp;
+    using StarPeru.Functions;
     using System;
     using System.Collections.Generic;
-    using global::Functions.StarPeru;
 
     public class Crawler
     {
@@ -12,18 +12,12 @@
 
         private List<Flight> OutboundData = new List<Flight>();
         private List<Flight> InboundData = new List<Flight>();
-
-        //private List<Combinations> CombinationsList = new List<Combinations>();
-
         public Crawler()
         {
             Client.AddDefaultHeader("Host", "www.starperu.com");
-            Client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:82.0) Gecko/20100101 Firefox/82.0";
-            Client.AddDefaultHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-            Client.AddDefaultHeader("Accept-Language", "lt,en-US;q=0.8,en;q=0.6,ru;q=0.4,pl;q=0.2");
-            Client.AddDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
+            Client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101 Firefox/85.0";
+            Client.AddDefaultHeader("Accept-Language", "en-GB,en;q=0.5");
             Client.AddDefaultHeader("Origin", Urls.StartPage);
-            Client.AddDefaultHeader("DNT", "1");
             Client.AddDefaultHeader("Connection", "keep-alive");
             Client.AddDefaultHeader("Referer", $"{Urls.StartPage}es");
             Client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
@@ -60,33 +54,21 @@
                 }
             }
 
-            //foreach (Flight outbound in OutboundData)
-            //{
-            //    if (_afo.IsRt)
-            //    {
-            //        foreach (Flight inbound in InboundData)
-            //        {
-            //            Combinations combinations = new Combinations(outbound, inbound);
-            //            CombinationsList.Add(combinations);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        Combinations combinations = new Combinations(outbound);
-            //        CombinationsList.Add(combinations);
-            //    }
-            //}
+            var a = Combinations.GetCombinations(OutboundData, InboundData);
 
-            //return CombinationsList;
+
             return true;
         }
 
         private bool TryLoadPage(out string responseBody)
         {
-            Client.BaseUrl = new Uri(Urls.StartPage, UriKind.Absolute);
+            Client.BaseUrl = new Uri(Urls.FlightPage, UriKind.Absolute);
 
-            RestRequest request = new RestRequest("Booking1", Method.POST);
-            string postBody = ConstructPostBody();
+            RestRequest request = new RestRequest("", Method.POST);
+            string postBody = ConstructPostBodyForFlight();
+
+            request.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+            request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
 
             request.AddParameter("text/xml", postBody, ParameterType.RequestBody);
 
@@ -95,7 +77,7 @@
 
             return responseBody != null;
         }
-        private string ConstructPostBody()
+        private string ConstructPostBodyForFlight()
         {
             string isRt = _Sc.IsRt ? "R" : "O";
             string postBody = $"tipo_viaje={isRt}&origen={_Sc.Origin}&destino={_Sc.Destination}" +
@@ -119,16 +101,41 @@
         {
             List<Flight> collectedDataList = new List<Flight>();
 
-            string[] sectorOriginAndDestination = RegexFunctions.RegexToStringArray(sector, Regexes.SectorOriginAndDestination);
-            string[] sectorsInfo = RegexFunctions.RegexToStringArray(sector, Regexes.SectorInfo);
+            string[][] sectorOriginAndDestination = RegexFunctions.RegexToMultiStringArray(sector, Regexes.SectorOriginAndDestination);
+            string[][] sectorsInfo = RegexFunctions.RegexToMultiStringArray(sector, Regexes.SectorInfo);
 
-            foreach (string sectorInfo in sectorsInfo)
+            foreach (string[] sectorInfo in sectorsInfo)
             {
                 Flight flight = new Flight(sectorOriginAndDestination, sectorInfo);
                 collectedDataList.Add(flight);
             }
 
             return collectedDataList;
+        }
+        private bool TryGetTaxes(out string responseBodyTaxes)
+        {
+            Client.BaseUrl = new Uri(Urls.FlightPage, UriKind.Absolute);
+
+            RestRequest request = new RestRequest("ObtenerTarifas", Method.POST);
+
+            string postBody = ConstructPostBodyForTaxes();
+
+            request.AddHeader("Accept", "*/*");
+            request.AddHeader("X-Requested-With", "XMLHttpRequest");
+            request.AddHeader("Referer", Urls.FlightPage);
+            request.AddHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            
+            request.AddParameter("text/xml", postBody, ParameterType.RequestBody);
+
+            IRestResponse response = Client.Execute(request);
+            responseBodyTaxes = response.Content;
+
+            return responseBodyTaxes != null;
+        }
+        private string ConstructPostBodyForTaxes()
+        {
+            //cod_origen=LIM&cod_destino=HUU&cant_adl=1&cant_chd=0&cant_inf=0&codigo_desc=&fecha_ida=2021-03-19&fecha_retorno=2021-03-26&tipo_viaje=R&grupo_retorno=77.00|V|4121|2021-03-26 10:05:00|2021-03-26 11:05:00|NO&grupo_ida=44.00|O|4120|2021-03-19 08:30:00|2021-03-19 09:30:00|NO
+            return null;        
         }
     }
 }

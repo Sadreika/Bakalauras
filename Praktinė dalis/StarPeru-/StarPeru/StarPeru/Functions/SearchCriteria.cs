@@ -1,4 +1,4 @@
-﻿namespace Functions.StarPeru
+﻿namespace StarPeru.Functions
 {
     using System;
     using System.Globalization;

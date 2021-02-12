@@ -1,4 +1,4 @@
-﻿namespace Functions.StarPeru
+﻿namespace StarPeru.Functions
 {
     using System.Collections.Generic;
     using System.Data;

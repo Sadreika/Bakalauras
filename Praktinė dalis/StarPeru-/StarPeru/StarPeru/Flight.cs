@@ -2,53 +2,47 @@
 {
     using System;
     using System.Globalization;
+    using System.Linq;
+
     public class Flight
     {
         public string Origin;
         public string Destination;
 
-        public decimal FullPrice;
-        public decimal PriceWithoutTaxes;
-        public decimal Taxes;
+        public decimal? FullPrice;
+        public decimal? PriceWithoutTaxes;
+        public decimal? Taxes;
 
         public string FareFamily;
         public string FlightNumber;
-        public string CarrierCode;
-        public int Seats;
         public string Currency;
 
         public DateTime DepartureTime;
         public DateTime ArrivalTime;
 
-        public Flight(string[] sectorOriginAndDestination, string sectorInfo)
+        public Flight(string[][] sectorOriginAndDestination, string[] sectorInfo)
         {
-            var a = 1;
-            //try
-            //{
-            //    string[] originAndDestinationArray = sectorOriginAndDestination[0].Replace("&gt", "").Split(';');
-            //    Origin = originAndDestinationArray[0];
-            //    Destination = originAndDestinationArray[1];
+            Origin = sectorOriginAndDestination.First().First();
+            Destination = sectorOriginAndDestination.First().Last();
 
-            //    string[] flightInfo = sectorInfo.Split('|');
-            //    if (Decimal.TryParse(flightInfo[0], NumberStyles.Number, CultureInfo.CreateSpecificCulture("en-GB"), out decimal price))
-            //    {
-            //        Price = price;
-            //    }
-            //    FlightNumber = flightInfo[2];
+            FareFamily = sectorInfo[0];
+            if (Decimal.TryParse(sectorInfo[1], out decimal priceWithoutTaxes))
+            {
+                PriceWithoutTaxes = priceWithoutTaxes;
+            }
+            FlightNumber = sectorInfo[2];
 
-            //    DateTime date;
-            //    if (DateTime.TryParse(flightInfo[3], out date))
-            //    {
-            //        DepartureTime = date;
-            //    }
-            //    if (DateTime.TryParse(flightInfo[4], out date))
-            //    {
-            //        ArrivalTime = date;
-            //    }
-            //}
-            //catch
-            //{
-            //}
+   
+            if (DateTime.TryParseExact(sectorInfo[3] + " " + sectorInfo[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime departureDate))
+            {
+                DepartureTime = departureDate;
+            }
+            if (DateTime.TryParseExact(sectorInfo[5] + " " + sectorInfo[6], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime arrivalDate))
+            {
+                ArrivalTime = arrivalDate;
+            }
+
+            Currency = sectorInfo[7];
         }
     }
 }
