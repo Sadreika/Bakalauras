@@ -23,80 +23,49 @@
             Command.Connection = Connection;
         }
 
-        //public bool TryCreateTable(string tableName, List<string> sqlColumnCodes)
-        //{
-        //    try
-        //    {
-        //        Command.CommandText = $"CREATE TABLE {tableName} \u0028";
+        public bool TryFillTableWithData(string tableName, List<string> columnNames /*List<CurrencyInfo> dataList*/)
+        {
+            try
+            {
+                //foreach (CurrencyInfo data in dataList)
+                //{
+                //    Command.CommandText = $"INSERT INTO {tableName} \u0028";
 
-        //        AddSqlColumns(sqlColumnCodes);
+                //    AddSqlColumns(columnNames);
 
-        //        Command.ExecuteNonQuery();
+                //    Command.CommandText += " VALUES \u0028";
 
-        //        return true;
-        //    }
-        //    catch
-        //    {
-        //        return false;
-        //    }
-        //}
-        //public bool TryRemoveTable(string tableName)
-        //{
-        //    try
-        //    {
-        //        Command.CommandText = $"DROP TABLE {tableName}";
-        //        Command.ExecuteNonQuery();
+                //    AddSqlValues(data);
 
-        //        return true;
-        //    }
-        //    catch
-        //    {
-        //        return false;
-        //    }
-        //}
-        ////public bool TryFillTableWithData(string tableName, List<string> columnNames, List<CurrencyInfo> dataList)
-        ////{
-        ////    try
-        ////    {
-        ////        foreach (CurrencyInfo data in dataList)
-        ////        {
-        ////            Command.CommandText = $"INSERT INTO {tableName} \u0028";
+                //    Command.ExecuteNonQuery();
+                //}
 
-        ////            AddSqlColumns(columnNames);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public void AddSqlColumns(List<string> valuesToAdd)
+        {
+            for (int i = 0; i < valuesToAdd.Count; i++)
+            {
+                if (i == valuesToAdd.Count - 1)
+                {
+                    Command.CommandText += valuesToAdd[i].Trim() + "\u0029";
+                }
+                else
+                {
+                    Command.CommandText += valuesToAdd[i].Trim() + ", ";
+                }
+            }
+        }
+        public void AddSqlValues()
+        {
+            //Command.CommandText += $"'{valuesToAdd.Search.Trim().Replace("'", "")}', '{valuesToAdd.Value.Trim().Replace("'", "")}', '{valuesToAdd.Display.Trim().Replace("'", "")}' \u0029";
+        }
 
-        ////            Command.CommandText += " VALUES \u0028";
-
-        ////            AddSqlValues(data);
-
-        ////            Command.ExecuteNonQuery();
-        ////        }
-
-        ////        return true;
-        ////    }
-        ////    catch
-        ////    {
-        ////        return false;
-        ////    }
-        ////}
-        ////public void AddSqlColumns(List<string> valuesToAdd)
-        ////{
-        ////    for (int i = 0; i < valuesToAdd.Count; i++)
-        ////    {
-        ////        if (i == valuesToAdd.Count - 1)
-        ////        {
-        ////            Command.CommandText += valuesToAdd[i].Trim() + "\u0029";
-        ////        }
-        ////        else
-        ////        {
-        ////            Command.CommandText += valuesToAdd[i].Trim() + ", ";
-        ////        }
-        ////    }
-        ////}
-        ////public void AddSqlValues(CurrencyInfo valuesToAdd)
-        ////{
-        ////    Command.CommandText += $"'{valuesToAdd.Search.Trim().Replace("'", "")}', '{valuesToAdd.Value.Trim().Replace("'", "")}', '{valuesToAdd.Display.Trim().Replace("'", "")}' \u0029";
-        ////}
-        ///
         public bool TryToSaveFlights(List<Combinations> combinations)
         {
             Connection.Open();

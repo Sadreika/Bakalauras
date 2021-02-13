@@ -1,0 +1,7 @@
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirlinesDbTablesCreator\AirlinesDbTablesCreator\AirlinesDbTablesCreator\bin\Debug\AirlinesDbTablesCreator.exe.config
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirlinesDbTablesCreator\AirlinesDbTablesCreator\AirlinesDbTablesCreator\bin\Debug\AirlinesDbTablesCreator.exe
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirlinesDbTablesCreator\AirlinesDbTablesCreator\AirlinesDbTablesCreator\bin\Debug\AirlinesDbTablesCreator.pdb
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirlinesDbTablesCreator\AirlinesDbTablesCreator\AirlinesDbTablesCreator\obj\Debug\AirlinesDbTablesCreator.csprojAssemblyReference.cache
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirlinesDbTablesCreator\AirlinesDbTablesCreator\AirlinesDbTablesCreator\obj\Debug\AirlinesDbTablesCreator.csproj.CoreCompileInputs.cache
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirlinesDbTablesCreator\AirlinesDbTablesCreator\AirlinesDbTablesCreator\obj\Debug\AirlinesDbTablesCreator.exe
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirlinesDbTablesCreator\AirlinesDbTablesCreator\AirlinesDbTablesCreator\obj\Debug\AirlinesDbTablesCreator.pdb
