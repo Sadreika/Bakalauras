@@ -83,7 +83,7 @@
                 }
             }
 
-            Datasave.TryToSaveFlights(combinationsList);
+            Datasave.TryFillTableWithData(combinationsList);
             return true;
         }
 

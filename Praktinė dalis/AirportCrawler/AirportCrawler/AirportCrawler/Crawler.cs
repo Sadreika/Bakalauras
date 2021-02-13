@@ -61,8 +61,6 @@
             RestRequest request = new RestRequest("", Method.GET);
             IRestResponse response = Client.Execute(request);
 
-            //Console.WriteLine(Urls.airportCodeUrl + $"{c}.html?page={pageNumber} {response.StatusCode}");
-
             return TryExtractData(response.Content);
         }
         public bool TryExtractData(string content)

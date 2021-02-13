@@ -16,30 +16,57 @@
             Command.CommandType = CommandType.Text;
             Command.Connection = Connection;
         }
-        private void RenewCommand()
+        public bool TryFillTableWithData(List<Combinations> combinations)
         {
-            Command = new SqlCommand();
-            Command.CommandType = CommandType.Text;
-            Command.Connection = Connection;
-        }
+            string tableName = "StarPeru";
+            List<string> columnNames = new List<string>()
+            {
+                {"OriginOutbound"},
+                {"DestinationOutbound"},
+                {"ConnectionOutbound"},
+                {"PriceWithoutTaxesOutbound"},
+                {"FullPriceOutbound"},
+                {"TaxesOutbound"},
+                {"DepartureTimeOutbound"},
+                {"ArrivalTimeOutbound"},
+                {"TravelDurationOutbound"},
+                {"OriginInbound"},
+                {"DestinationInbound"},
+                {"ConnectionInbound"},
+                {"PriceWithoutTaxesInbound"},
+                {"FullPriceInbound"},
+                {"TaxesInbound"},
+                {"DepartureTimeInbound"},
+                {"ArrivalTimeInbound"},
+                {"TravelDurationInbound"},
+                {"PriceWithoutTaxes"},
+                {"FullPrice"},
+                {"Taxes"},
+                {"Currency"},
+                {"FareFamily"},
+                {"FlightNumber"},
+                {"Class"},
+                {"Airlines"},
+            };
 
-        public bool TryFillTableWithData(string tableName, List<string> columnNames /*List<CurrencyInfo> dataList*/)
-        {
             try
             {
-                //foreach (CurrencyInfo data in dataList)
-                //{
-                //    Command.CommandText = $"INSERT INTO {tableName} \u0028";
+                Connection.Open();
 
-                //    AddSqlColumns(columnNames);
+                foreach (Combinations combination in combinations)
+                {
+                    Command.CommandText = $"INSERT INTO {tableName} \u0028";
 
-                //    Command.CommandText += " VALUES \u0028";
+                    AddSqlColumns(columnNames);
 
-                //    AddSqlValues(data);
+                    Command.CommandText += " VALUES \u0028";
 
-                //    Command.ExecuteNonQuery();
-                //}
+                    AddSqlValues(combination);
 
+                    Command.ExecuteNonQuery();
+                }
+
+                Connection.Close();
                 return true;
             }
             catch
@@ -61,18 +88,9 @@
                 }
             }
         }
-        public void AddSqlValues()
+        public void AddSqlValues(Combinations combination)
         {
             //Command.CommandText += $"'{valuesToAdd.Search.Trim().Replace("'", "")}', '{valuesToAdd.Value.Trim().Replace("'", "")}', '{valuesToAdd.Display.Trim().Replace("'", "")}' \u0029";
-        }
-
-        public bool TryToSaveFlights(List<Combinations> combinations)
-        {
-            Connection.Open();
-
-
-            Connection.Close();
-            return false;
         }
     }
 }
