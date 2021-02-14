@@ -65,8 +65,6 @@
 
                     AddSqlValues(combination);
 
-                    var t = Command.CommandText;
-
                     Command.ExecuteNonQuery();
                 }
 

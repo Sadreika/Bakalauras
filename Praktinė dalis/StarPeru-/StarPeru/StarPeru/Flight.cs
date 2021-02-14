@@ -11,8 +11,8 @@
         public string Connection;
 
         public decimal? PriceWithoutTaxes;
+        public decimal? Taxes = 0;
         public decimal? FullPrice;
-        public decimal? Taxes;
 
         public string FareFamily;
         public string FlightNumber;
@@ -36,7 +36,8 @@
                 PriceWithoutTaxes = priceWithoutTaxes;
             }
             FlightNumber = sectorInfo[2];
-   
+            FullPrice = PriceWithoutTaxes + Taxes;
+
             if (DateTime.TryParseExact(sectorInfo[3] + " " + sectorInfo[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime departureDate))
             {
                 DepartureTime = departureDate;
@@ -45,6 +46,7 @@
             {
                 ArrivalTime = arrivalDate;
             }
+            TravelDuration = ArrivalTime.Subtract(DepartureTime).ToString();
 
             Currency = sectorInfo[7];
 
