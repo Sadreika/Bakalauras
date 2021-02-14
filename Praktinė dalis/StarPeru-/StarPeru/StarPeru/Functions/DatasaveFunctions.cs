@@ -30,6 +30,8 @@
                 {"DepartureTimeOutbound"},
                 {"ArrivalTimeOutbound"},
                 {"TravelDurationOutbound"},
+                {"FareFamilyOutbound"},
+                {"FlightNumberOutbound"},
                 {"OriginInbound"},
                 {"DestinationInbound"},
                 {"ConnectionInbound"},
@@ -39,12 +41,12 @@
                 {"DepartureTimeInbound"},
                 {"ArrivalTimeInbound"},
                 {"TravelDurationInbound"},
+                {"FareFamilyInbound"},
+                {"FlightNumberInbound"},
                 {"PriceWithoutTaxes"},
                 {"FullPrice"},
                 {"Taxes"},
                 {"Currency"},
-                {"FareFamily"},
-                {"FlightNumber"},
                 {"Class"},
                 {"Airlines"},
             };
@@ -62,6 +64,8 @@
                     Command.CommandText += " VALUES \u0028";
 
                     AddSqlValues(combination);
+
+                    var t = Command.CommandText;
 
                     Command.ExecuteNonQuery();
                 }
@@ -90,7 +94,37 @@
         }
         public void AddSqlValues(Combinations combination)
         {
-            //Command.CommandText += $"'{valuesToAdd.Search.Trim().Replace("'", "")}', '{valuesToAdd.Value.Trim().Replace("'", "")}', '{valuesToAdd.Display.Trim().Replace("'", "")}' \u0029";
+            Command.CommandText += $"'{combination.Outbound.Origin}', " +
+                $"'{combination.Outbound.Destination}', " +
+                $"'{combination.Outbound.Connection}', " +
+                $"{combination.Outbound.PriceWithoutTaxes}, " +
+                $"{combination.Outbound.FullPrice}, " +
+                $"{combination.Outbound.Taxes}, " +
+                $"'{combination.Outbound.DepartureTime}', " +
+                $"'{combination.Outbound.ArrivalTime}', " +
+                $"'{combination.Outbound.TravelDuration}', " +
+                $"'{combination.Outbound.FareFamily}', " +
+                $"'{combination.Outbound.FlightNumber}', " +
+
+                $"'{combination.Inbound.Origin}', " +
+                $"'{combination.Inbound.Destination}', " +
+                $"'{combination.Inbound.Connection}', " +
+                $"{combination.Inbound.PriceWithoutTaxes}, " +
+                $"{combination.Inbound.FullPrice}, " +
+                $"{combination.Inbound.Taxes}, " +
+                $"'{combination.Inbound.DepartureTime}', " +
+                $"'{combination.Inbound.ArrivalTime}', " +
+                $"'{combination.Inbound.TravelDuration}', " +
+                $"'{combination.Inbound.FareFamily}', " +
+                $"'{combination.Inbound.FlightNumber}', " +
+
+                $"{combination.PriceWithoutTaxes}, " +
+                $"{combination.FullPrice}, " +
+                $"{combination.Taxes}, " +
+
+                $"'{combination.Outbound.Currency}', " +
+                $"'E', " +
+                $"'StarPeru' \u0029";
         }
     }
 }

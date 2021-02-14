@@ -8,8 +8,11 @@
     {
         public string Origin;
         public string Destination;
+        public string Connection;
 
         public decimal? PriceWithoutTaxes;
+        public decimal? FullPrice;
+        public decimal? Taxes;
 
         public string FareFamily;
         public string FlightNumber;
@@ -17,6 +20,8 @@
 
         public DateTime DepartureTime;
         public DateTime ArrivalTime;
+
+        public string TravelDuration;
 
         public string FlightCode;
 
