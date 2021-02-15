@@ -105,6 +105,8 @@
             IRestResponse response = Client.Execute(request);
             responseBody = response.Content;
 
+            Console.WriteLine(Client.BaseUrl + " " + response.StatusCode);
+
             return responseBody != null;
         }
         private string ConstructPostBodyForFlight()
@@ -168,6 +170,8 @@
             
             IRestResponse response = Client.Execute(request);
             responseBodyTaxes = response.Content;
+
+            Console.WriteLine(Client.BaseUrl + " " + response.StatusCode);
 
             return responseBodyTaxes != null;
         }

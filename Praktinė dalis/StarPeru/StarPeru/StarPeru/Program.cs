@@ -1,4 +1,6 @@
-﻿namespace StarPeru
+﻿using System;
+
+namespace StarPeru
 {
     public class Program
     {
@@ -7,6 +9,7 @@
             Crawler crawler = new Crawler();
             string searchCriteriaString = args[0].ToString();
             bool isDataCollected = crawler.Start(searchCriteriaString);
+            Console.WriteLine("Finished: " + isDataCollected);
         }
     }
 }
