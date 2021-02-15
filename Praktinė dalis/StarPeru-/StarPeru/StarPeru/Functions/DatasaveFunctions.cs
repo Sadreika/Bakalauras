@@ -93,18 +93,20 @@
         public void AddSqlValues(Combinations combination)
         {
             Command.CommandText += $"'{combination.Outbound.Origin}', " +
-                $"'{combination.Outbound.Destination}', " +
-                $"'{combination.Outbound.Connection}', " +
-                $"{combination.Outbound.PriceWithoutTaxes}, " +
-                $"{combination.Outbound.FullPrice}, " +
-                $"{combination.Outbound.Taxes}, " +
-                $"'{combination.Outbound.DepartureTime}', " +
-                $"'{combination.Outbound.ArrivalTime}', " +
-                $"'{combination.Outbound.TravelDuration}', " +
-                $"'{combination.Outbound.FareFamily}', " +
-                $"'{combination.Outbound.FlightNumber}', " +
+               $"'{combination.Outbound.Destination}', " +
+               $"'{combination.Outbound.Connection}', " +
+               $"{combination.Outbound.PriceWithoutTaxes}, " +
+               $"{combination.Outbound.FullPrice}, " +
+               $"{combination.Outbound.Taxes}, " +
+               $"'{combination.Outbound.DepartureTime}', " +
+               $"'{combination.Outbound.ArrivalTime}', " +
+               $"'{combination.Outbound.TravelDuration}', " +
+               $"'{combination.Outbound.FareFamily}', " +
+               $"'{combination.Outbound.FlightNumber}', ";
 
-                $"'{combination.Inbound.Origin}', " +
+            if (combination.Inbound != null)
+            {
+                Command.CommandText += $"'{combination.Inbound.Origin}', " +
                 $"'{combination.Inbound.Destination}', " +
                 $"'{combination.Inbound.Connection}', " +
                 $"{combination.Inbound.PriceWithoutTaxes}, " +
@@ -114,15 +116,23 @@
                 $"'{combination.Inbound.ArrivalTime}', " +
                 $"'{combination.Inbound.TravelDuration}', " +
                 $"'{combination.Inbound.FareFamily}', " +
-                $"'{combination.Inbound.FlightNumber}', " +
-
-                $"{combination.PriceWithoutTaxes}, " +
+                $"'{combination.Inbound.FlightNumber}', ";
+            }
+            else
+            {
+                Command.CommandText +=
+                $"'', '', '', '', '', '', '', '', '', '', '', ";
+            }
+           
+            Command.CommandText += $"{combination.PriceWithoutTaxes}, " +
                 $"{combination.FullPrice}, " +
                 $"{combination.Taxes}, " +
 
                 $"'{combination.Outbound.Currency}', " +
                 $"'E', " +
                 $"'StarPeru' \u0029";
+
+            Command.CommandText = Command.CommandText.Replace("''", "null");
         }
     }
 }

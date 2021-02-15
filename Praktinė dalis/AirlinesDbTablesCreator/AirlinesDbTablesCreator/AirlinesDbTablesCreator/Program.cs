@@ -29,21 +29,21 @@
                 {"FareFamilyOutbound nvarchar(50)" },
                 {"FlightNumberOutbound nvarchar(50) NOT NULL" },
 
-                { "OriginInbound nvarchar(5) NOT NULL" },
-                { "DestinationInbound nvarchar(5) NOT NULL" },
+                { "OriginInbound nvarchar(5)" },
+                { "DestinationInbound nvarchar(5)" },
                 { "ConnectionInbound nvarchar(5)" },
 
-                { "PriceWithoutTaxesInbound decimal(10,2) NOT NULL" },
+                { "PriceWithoutTaxesInbound decimal(10,2)" },
                 { "FullPriceInbound decimal(10,2)" },
                 { "TaxesInbound decimal(10,2)" },
 
-                { "DepartureTimeInbound datetime NOT NULL"},
-                { "ArrivalTimeInbound datetime NOT NULL"},
+                { "DepartureTimeInbound datetime"},
+                { "ArrivalTimeInbound datetime"},
 
-                { "TravelDurationInbound nvarchar(50) NOT NULL"},
+                { "TravelDurationInbound nvarchar(50)"},
 
                 {"FareFamilyInbound nvarchar(50)" },
-                {"FlightNumberInbound nvarchar(50) NOT NULL" },
+                {"FlightNumberInbound nvarchar(50)" },
 
                 { "PriceWithoutTaxes decimal(10,2) NOT NULL" },
                 { "FullPrice decimal(10,2)" },

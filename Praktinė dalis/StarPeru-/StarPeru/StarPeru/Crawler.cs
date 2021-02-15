@@ -59,27 +59,29 @@
 
             foreach(Combinations combination in combinationsList)
             {
-                if(_Sc.IsRt)
+                string responseBodyTaxes;
+                if (_Sc.IsRt)
                 {
-                    TryGetTaxes(out string responseBodyTaxes, combination.Outbound.FlightCode, combination.Inbound.FlightCode);
-                    string[] priceInfo = RegexFunctions.RegexToMultiStringArray(responseBodyTaxes, Regexes.Taxes).First();
-
-                    if (Decimal.TryParse(priceInfo[0], out decimal priceWithoutTaxes))
-                    {
-                        combination.PriceWithoutTaxes = priceWithoutTaxes;
-                    }
-                    if (Decimal.TryParse(priceInfo[1], out decimal taxes))
-                    {
-                        combination.Taxes = taxes;
-                    }
-                    if (Decimal.TryParse(priceInfo[2], out decimal fullPrice))
-                    {
-                        combination.FullPrice = fullPrice;
-                    }
+                    TryGetTaxes(out responseBodyTaxes, combination.Outbound.FlightCode, combination.Inbound.FlightCode);
                 }
                 else
                 {
-                    TryGetTaxes(out string responseBodyTaxes, combination.Outbound.FlightCode);
+                    TryGetTaxes(out responseBodyTaxes, combination.Outbound.FlightCode);
+                }
+
+                string[] priceInfo = RegexFunctions.RegexToMultiStringArray(responseBodyTaxes, Regexes.Taxes).First();
+
+                if (Decimal.TryParse(priceInfo[0], out decimal priceWithoutTaxes))
+                {
+                    combination.PriceWithoutTaxes = priceWithoutTaxes;
+                }
+                if (Decimal.TryParse(priceInfo[1], out decimal taxes))
+                {
+                    combination.Taxes = taxes;
+                }
+                if (Decimal.TryParse(priceInfo[2], out decimal fullPrice))
+                {
+                    combination.FullPrice = fullPrice;
                 }
             }
 
@@ -131,12 +133,15 @@
 
             string[][] sectorOriginAndDestination = RegexFunctions.RegexToMultiStringArray(sector, Regexes.SectorOriginAndDestination);
             string[][] sectorsInfo = RegexFunctions.RegexToMultiStringArray(sector, Regexes.SectorInfo);
-            string flightCode = RegexFunctions.RegexToString(sector, Regexes.FlightCode);
+            string[] flightCode = RegexFunctions.RegexToStringArray(sector, Regexes.FlightCode);
 
+            int flightCount = 0;
             foreach (string[] sectorInfo in sectorsInfo)
             {
-                Flight flight = new Flight(sectorOriginAndDestination, sectorInfo, flightCode);
+                Flight flight = new Flight(sectorOriginAndDestination, sectorInfo, flightCode[flightCount]);
                 collectedDataList.Add(flight);
+
+                flightCount++;
             }
 
             return collectedDataList;
@@ -174,7 +179,7 @@
             }
             else
             {
-                return $"cod_origen={_Sc.Origin}&cod_destino={_Sc.Destination}&cant_adl=1&cant_chd=0&cant_inf=0&codigo_desc=&fecha_ida={_Sc.OutboundDate.ToString("yyyy-MM-dd")}&fecha_retorno={_Sc.OutboundDate.ToString("yyyy-MM-dd")}&tipo_viaje=O&grupo_ida={inBoundFlightCode}";
+                return $"cod_origen={_Sc.Origin}&cod_destino={_Sc.Destination}&cant_adl=1&cant_chd=0&cant_inf=0&codigo_desc=&fecha_ida={_Sc.OutboundDate.ToString("yyyy-MM-dd")}&fecha_retorno={_Sc.OutboundDate.ToString("yyyy-MM-dd")}&tipo_viaje=O&grupo_retorno=&grupo_ida={outBoundFlightCode}";
             }     
         }
     }
