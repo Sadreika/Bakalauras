@@ -21,38 +21,26 @@
         public DateTime DepartureTime;
         public DateTime ArrivalTime;
 
+        public string Class;
+
         public string TravelDuration;
 
         public string FlightCode;
 
         public string FlightKey;
 
-        public Flight(string[][] sectorOriginAndDestination, string[] sectorInfo, string flightCode)
+        public Flight(string[][] flightInfo, string flightKey)
         {
-            Origin = sectorOriginAndDestination.First().First();
-            Destination = sectorOriginAndDestination.First().Last();
-
-            FareFamily = sectorInfo[0];
-            if (Decimal.TryParse(sectorInfo[1], out decimal priceWithoutTaxes))
+            if (decimal.TryParse(flightInfo.First()[3], out decimal fullPrice))
             {
-                PriceWithoutTaxes = priceWithoutTaxes;
+                FullPrice = fullPrice;
             }
-            FlightNumber = sectorInfo[2];
-            FullPrice = PriceWithoutTaxes + Taxes;
 
-            if (DateTime.TryParseExact(sectorInfo[3] + " " + sectorInfo[4], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime departureDate))
-            {
-                DepartureTime = departureDate;
-            }
-            if (DateTime.TryParseExact(sectorInfo[5] + " " + sectorInfo[6], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime arrivalDate))
-            {
-                ArrivalTime = arrivalDate;
-            }
-            TravelDuration = ArrivalTime.Subtract(DepartureTime).ToString();
+            FareFamily = flightInfo.First()[2];
+            Currency = flightInfo.First()[1];
+            Class = flightInfo.First()[0];
 
-            Currency = sectorInfo[7];
-
-            FlightCode = flightCode;
+            FlightKey = flightKey;
         }
     }
 }

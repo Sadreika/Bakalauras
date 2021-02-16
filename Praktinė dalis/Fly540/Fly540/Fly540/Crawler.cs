@@ -51,15 +51,15 @@
                 OutboundData.AddRange(ExtractData(outboundSector));
             }
 
-            //if (_Sc.IsRt)
-            //{
-            //    string[] inboundSectors = RegexFunctions.RegexToStringArray(bounds[1], Regexes.Sectors);
+            if (_Sc.IsRt)
+            {
+                string[] inboundSectors = RegexFunctions.RegexToStringArray(bounds[1], Regexes.Flight);
 
-            //    foreach (string inboundSector in inboundSectors)
-            //    {
-            //        InboundData.AddRange(ExtractData(inboundSector));
-            //    }
-            //}
+                foreach (string inboundSector in inboundSectors)
+                {
+                    InboundData.AddRange(ExtractData(inboundSector));
+                }
+            }
 
             //List<Combinations> combinationsList = Combinations.GetCombinations(OutboundData, InboundData);
 
@@ -136,35 +136,33 @@
         {
             List<Flight> collectedDataList = new List<Flight>();
 
-            //List<Pricecard> pricecardInfoList = new List<Pricecard>();
-            //string[] pricecards = RegexFunctions.RegexToStringArray(sector, Regexes.PriceCard);
+            string[] pricecards = RegexFunctions.RegexToStringArray(sector, Regexes.PriceCard);
+            string flightKey = RegexFunctions.RegexToString(sector, Regexes.FlightKey);
 
-            //foreach (string pricecard in pricecards)
-            //{
-            //    string[][] fareFamilyCurrencyPriceSeatsSoldOut = RegexFunctions.RegexToMultiStringArray(pricecard, Regexes.FareFamilyCurrencyPriceSeatsSoldOut);
+            foreach (string pricecard in pricecards)
+            {
+                string[][] flightInfo = RegexFunctions.RegexToMultiStringArray(pricecard, Regexes.FareFamilyCurrencyPriceSeatsSoldOut);
 
-            //    Pricecard pricecardInfo = new Pricecard(fareFamilyCurrencyPriceSeatsSoldOut[0][0], fareFamilyCurrencyPriceSeatsSoldOut[0][1], fareFamilyCurrencyPriceSeatsSoldOut[0][2]);
-            //    pricecardInfoList.Add(pricecardInfo);
+                Flight flight = new Flight(flightInfo, flightKey);
 
-            //    if (fareFamilyCurrencyPriceSeatsSoldOut[0][2] == "" && fareFamilyCurrencyPriceSeatsSoldOut[0][4] == "")
-            //    {
-            //        return null;
-            //    }
-            //}
 
-            //pricecardInfoList.OrderBy(i => i.Price != null);
+                //string[][] departureAndArrivalBlocks = _isf.Regex.RegexMatchesToMultiArray(sectorInfo, Regexes.DepartureAndArrivalBlocks);
 
-            //return pricecardInfoList;
+                //leg.Origin = _isf.Regex.RegexMatchesToString(departureAndArrivalBlocks[0][0], Regexes.Location);
+                //leg.Destination = _isf.Regex.RegexMatchesToString(departureAndArrivalBlocks[0][1], Regexes.Location);
 
-            //string FlightKey = RegexFunctions.RegexToString(sector, Regexes.FlightKey);
+                //string[] fullDate = GetDate(departureAndArrivalBlocks);
 
-            //List<Pricecard> chepestPricecard = GetPricecard(sector);
+                //leg.DepartureDateTimeString = fullDate[0];
+                //leg.ArrivalDateTimeString = fullDate[1];
 
-            //F.FareFamily = chepestPricecard.Farefamily;
-            //sector.FareIncludingTax = chepestPricecard.Price;
-            //leg.AvailableSeats = chepestPricecard.Seats;
-            //sector.CabinClass = chepestPricecard.Cabin;
-            //sector.Currency = chepestPricecard.Currency;
+                //leg.FlightNumber = leg.CarrierCode + _isf.Regex.RegexMatchesToString(departureAndArrivalBlocks[0][0], Regexes.FlightNumber);
+
+
+
+                collectedDataList.Add(flight);
+            }
+
             //string[][] sectorOriginAndDestination = RegexFunctions.RegexToMultiStringArray(sector, Regexes.)
             //string[][] sectorOriginAndDestination = RegexFunctions.RegexToMultiStringArray(sector, Regexes.SectorOriginAndDestination);
             //string[][] sectorsInfo = RegexFunctions.RegexToMultiStringArray(sector, Regexes.SectorInfo);
@@ -179,9 +177,9 @@
             //    flightCount++;
             //}
 
-            //return collectedDataList;
-            return null;
+            return collectedDataList;
         }
+
         //private bool TryGetTaxes(out string responseBodyTaxes, string outBoundFlightCode, string inBoundFlightCode = null)
         //{
         //    Client.BaseUrl = new Uri(Urls.FlightPage, UriKind.Absolute);
