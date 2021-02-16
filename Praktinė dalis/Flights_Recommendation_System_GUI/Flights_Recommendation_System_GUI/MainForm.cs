@@ -81,5 +81,10 @@
                 arrivalDateTimePicker.Enabled = false;
             }
         }
+
+        private void allFlightsButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

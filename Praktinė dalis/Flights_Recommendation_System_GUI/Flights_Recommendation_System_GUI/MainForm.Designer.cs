@@ -216,6 +216,7 @@ namespace Flights_Recommendation_System_GUI
             this.allFlightsButton.TabIndex = 22;
             this.allFlightsButton.Text = "Visi avialinijos skrydžiai";
             this.allFlightsButton.UseVisualStyleBackColor = true;
+            this.allFlightsButton.Click += new System.EventHandler(this.allFlightsButton_Click);
             // 
             // searchButton
             // 

@@ -1,0 +1,10 @@
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Fly540\Fly540\Fly540\bin\Debug\Fly540.exe.config
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Fly540\Fly540\Fly540\bin\Debug\Fly540.exe
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Fly540\Fly540\Fly540\bin\Debug\Fly540.pdb
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Fly540\Fly540\Fly540\bin\Debug\RestSharp.dll
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Fly540\Fly540\Fly540\bin\Debug\RestSharp.xml
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Fly540\Fly540\Fly540\obj\Debug\Fly540.csprojAssemblyReference.cache
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Fly540\Fly540\Fly540\obj\Debug\Fly540.csproj.CoreCompileInputs.cache
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Fly540\Fly540\Fly540\obj\Debug\Fly540.csproj.CopyComplete
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Fly540\Fly540\Fly540\obj\Debug\Fly540.exe
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Fly540\Fly540\Fly540\obj\Debug\Fly540.pdb
