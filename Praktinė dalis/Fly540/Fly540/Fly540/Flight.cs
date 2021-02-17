@@ -26,7 +26,6 @@
         public string TravelDuration;
 
         public string FlightKey;
-
         public Flight(string origin, string destination, string[] fullDate, string flightNumber, string[][] flightInfo, string flightKey)
         {
             Origin = origin;

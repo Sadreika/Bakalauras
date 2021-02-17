@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Globalization;
+    using System.Threading;
 
     public class Crawler
     {
@@ -23,6 +24,7 @@
             Client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101 Firefox/85.0";
             Client.AddDefaultHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
             Client.AddDefaultHeader("Accept-Language", "en-GB,en;q=0.5");
+            Client.AddDefaultHeader("DNT", "1");
             Client.AddDefaultHeader("Connection", "keep-alive");
             Client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
         }
@@ -68,7 +70,8 @@
 
             foreach(Combinations combination in combinationsList)
             {
-                if(TryGetPassengerDetails(combination, outboundAndInboundRequestId, out string taxesResponseBody))
+                string requestKey = GetPassengerDetails(combination, outboundAndInboundRequestId);
+                if (TryGetTaxes(requestKey, out string taxesResponseBody))
                 {
                     string[][] pricesAndTaxes = RegexFunctions.RegexToMultiStringArray(taxesResponseBody, Regexes.PriceAndTaxes);
 
@@ -86,7 +89,7 @@
                 combination.Taxes = _Sc.IsRt ? combination.Outbound.Taxes + combination.Inbound.Taxes : combination.Outbound.Taxes;
                 combination.FullPrice = _Sc.IsRt ? combination.Outbound.FullPrice + combination.Inbound.FullPrice : combination.Outbound.FullPrice;
             }
-            var a = combinationsList;
+            var a = combinationsList; // need to fix request headers
             //Datasave.TryFillTableWithData(combinationsList);
             return true;
         }
@@ -163,7 +166,7 @@
 
             return fullDate;
         }
-        private bool TryGetPassengerDetails(Combinations combination, string[] requestId, out string responseBody)
+        private string GetPassengerDetails(Combinations combination, string[] requestId)
         {
             char cabinClassForOutbound = Dictionaries.CabinClassToInt[combination.Outbound.FareFamily];
             Flight outboundSector = combination.Outbound;
@@ -194,18 +197,17 @@
 
             RestRequest request = new RestRequest("", Method.POST);
 
-            request.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddHeader("Referer", referer);
-
             request.AddParameter("text/xml", requestBody, ParameterType.RequestBody);
 
+            Client.FollowRedirects = false;
+
             IRestResponse response = Client.Execute(request);
-            responseBody = response.Content;
 
             Console.WriteLine(Urls.PassengerDetails + " " + response.StatusCode);
 
-            return response.Content != null;
+            return response.Headers[7].Value.ToString();
         }
         private string ConstructReferer()
         {
@@ -219,6 +221,43 @@
                 + $"&date_from={_Sc.OutboundDay}{outboundMonth}{_Sc.OutboundYear}"
                 + $"&date_to={_Sc.InboundDay}{inboundMonth}{_Sc.InboundYear}"
                 + "&adult_no=1&children_no=0&infant_no=0&searchFlight=&change_flight=";
+        }
+        private bool TryGetTaxes(string requestKey, out string responseBody)
+        {
+            string referer = FormUrl();
+            Client.BaseUrl = new Uri(Urls.StartPage + requestKey, UriKind.Absolute);
+            RestRequest request = new RestRequest("", Method.GET);
+
+            request.AddHeader("Sec-Fetch-Site", "same-origin");
+            request.AddHeader("Sec-Fetch-Mode", "navigate");
+            request.AddHeader("Sec-Fetch-User", "?1");
+            request.AddHeader("Sec-Fetch-Dest", "document");
+            request.AddHeader("Referer", referer);
+
+            Client.FollowRedirects = false;
+
+            IRestResponse response = Client.Execute(request);
+            responseBody = response.Content;
+
+            Console.WriteLine(Client.BaseUrl + " " + response.StatusCode);
+
+            return responseBody != null;
+        }
+
+        private string FormUrl()
+        {
+            string isOneWay = _Sc.IsRt ? "0" : "1";
+
+            string outboundMonth = _Sc.OutboundDate.ToString("MMM", CultureInfo.InvariantCulture);
+            string inboundMonth = _Sc.InboundDate.ToString("MMM", CultureInfo.InvariantCulture);
+
+            return Urls.FlightPage + "?isoneway=" + isOneWay + "&currency=" + "KES"
+                + "&depairportcode=" + _Sc.Origin
+                + "&arrvairportcode=" + _Sc.Destination
+                + "&date_from="
+                + _Sc.OutboundDay + outboundMonth + _Sc.OutboundYear + "&date_to="
+                + _Sc.InboundDay + inboundMonth + _Sc.InboundYear
+                + "&adult_no=1" + "&children_no=0" + "&infant_no=0" + "&searchFlight=&change_flight=";
         }
     }
 }
