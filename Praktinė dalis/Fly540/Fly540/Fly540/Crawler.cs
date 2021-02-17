@@ -148,8 +148,10 @@
                 string[][] flightInfo = RegexFunctions.RegexToMultiStringArray(pricecard, Regexes.FlightInfo);
 
                 Flight flight = new Flight(origin, destination, fullDate, flightNumber, flightInfo, flightKey);
-
-                collectedDataList.Add(flight);
+                if(flight.FullPrice != null)
+                {
+                    collectedDataList.Add(flight);
+                }    
             }
 
             return collectedDataList;
