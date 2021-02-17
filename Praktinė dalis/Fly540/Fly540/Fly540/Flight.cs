@@ -25,20 +25,34 @@
 
         public string TravelDuration;
 
-        public string FlightCode;
-
         public string FlightKey;
 
-        public Flight(string[][] flightInfo, string flightKey)
+        public Flight(string origin, string destination, string[] fullDate, string flightNumber, string[][] flightInfo, string flightKey)
         {
-            if (decimal.TryParse(flightInfo.First()[3], out decimal fullPrice))
+            Origin = origin;
+            Destination = destination;
+
+            FlightNumber = flightNumber;
+
+            if(DateTime.TryParseExact(fullDate.First(), "yyyy-ddd dd, MMM-h:mmtt", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime departureTime))
+            {
+                DepartureTime = departureTime;
+            }
+
+            if (DateTime.TryParseExact(fullDate.Last(), "yyyy-ddd dd, MMM-h:mmtt", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime arrivalTime))
+            {
+                ArrivalTime = arrivalTime;
+            }
+
+            if (decimal.TryParse(flightInfo.First()[2], out decimal fullPrice))
             {
                 FullPrice = fullPrice;
             }
 
-            FareFamily = flightInfo.First()[2];
+            FareFamily = flightInfo.First()[0];
             Currency = flightInfo.First()[1];
-            Class = flightInfo.First()[0];
+
+            TravelDuration = ArrivalTime.Subtract(DepartureTime).ToString();
 
             FlightKey = flightKey;
         }

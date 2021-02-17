@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using System.Globalization;
 
     public class Crawler
     {
@@ -61,40 +62,34 @@
                 }
             }
 
-            //List<Combinations> combinationsList = Combinations.GetCombinations(OutboundData, InboundData);
+            string[] outboundAndInboundRequestId = RegexFunctions.RegexToStringArray(responseBody, Regexes.OutboundAndInboundRequestId);
 
-            //foreach(Combinations combination in combinationsList)
-            //{
-            //    string responseBodyTaxes;
-            //    if (_Sc.IsRt)
-            //    {
-            //        TryGetTaxes(out responseBodyTaxes, combination.Outbound.FlightCode, combination.Inbound.FlightCode);
-            //    }
-            //    else
-            //    {
-            //        TryGetTaxes(out responseBodyTaxes, combination.Outbound.FlightCode);
-            //    }
+            List<Combinations> combinationsList = Combinations.GetCombinations(OutboundData, InboundData);
 
-            //    string[] priceInfo = RegexFunctions.RegexToMultiStringArray(responseBodyTaxes, Regexes.Taxes).First();
+            foreach(Combinations combination in combinationsList)
+            {
+                if(TryGetPassengerDetails(combination, outboundAndInboundRequestId, out string taxesResponseBody))
+                {
+                    string[][] pricesAndTaxes = RegexFunctions.RegexToMultiStringArray(taxesResponseBody, Regexes.PriceAndTaxes);
 
-            //    if (Decimal.TryParse(priceInfo[0], out decimal priceWithoutTaxes))
-            //    {
-            //        combination.PriceWithoutTaxes = priceWithoutTaxes;
-            //    }
-            //    if (Decimal.TryParse(priceInfo[1], out decimal taxes))
-            //    {
-            //        combination.Taxes = taxes;
-            //    }
-            //    if (Decimal.TryParse(priceInfo[2], out decimal fullPrice))
-            //    {
-            //        combination.FullPrice = fullPrice;
-            //    }
-            //}
+                    combination.Outbound.PriceWithoutTaxes = decimal.Parse(pricesAndTaxes.First().First());
+                    combination.Outbound.Taxes = decimal.Parse(pricesAndTaxes.First().Last());
 
+                    if (_Sc.IsRt)
+                    {
+                        combination.Inbound.PriceWithoutTaxes = decimal.Parse(pricesAndTaxes.Last().First());
+                        combination.Inbound.Taxes = decimal.Parse(pricesAndTaxes.Last().Last());
+                    }
+                }
+
+                combination.PriceWithoutTaxes = _Sc.IsRt ? combination.Outbound.PriceWithoutTaxes + combination.Inbound.PriceWithoutTaxes : combination.Outbound.PriceWithoutTaxes;
+                combination.Taxes = _Sc.IsRt ? combination.Outbound.Taxes + combination.Inbound.Taxes : combination.Outbound.Taxes;
+                combination.FullPrice = _Sc.IsRt ? combination.Outbound.FullPrice + combination.Inbound.FullPrice : combination.Outbound.FullPrice;
+            }
+            var a = combinationsList;
             //Datasave.TryFillTableWithData(combinationsList);
             return true;
         }
-
         private bool TryLoadPage(out string responseBody)
         {
             Client.BaseUrl = new Uri(ConstructUrl(), UriKind.Absolute);
@@ -137,86 +132,93 @@
             List<Flight> collectedDataList = new List<Flight>();
 
             string[] pricecards = RegexFunctions.RegexToStringArray(sector, Regexes.PriceCard);
+            string[][] departureAndArrivalBlocks = RegexFunctions.RegexToMultiStringArray(sector, Regexes.DepartureAndArrivalBlocks);
+
+            string origin = RegexFunctions.RegexToString(departureAndArrivalBlocks[0][0], Regexes.Location);
+            string destination = RegexFunctions.RegexToString(departureAndArrivalBlocks[0][1], Regexes.Location);
+            string[] fullDate = GetDate(departureAndArrivalBlocks);
+            string flightNumber = RegexFunctions.RegexToString(departureAndArrivalBlocks[0][0], Regexes.FlightNumber);
             string flightKey = RegexFunctions.RegexToString(sector, Regexes.FlightKey);
 
             foreach (string pricecard in pricecards)
             {
-                string[][] flightInfo = RegexFunctions.RegexToMultiStringArray(pricecard, Regexes.FareFamilyCurrencyPriceSeatsSoldOut);
+                string[][] flightInfo = RegexFunctions.RegexToMultiStringArray(pricecard, Regexes.FlightInfo);
 
-                Flight flight = new Flight(flightInfo, flightKey);
-
-
-                //string[][] departureAndArrivalBlocks = _isf.Regex.RegexMatchesToMultiArray(sectorInfo, Regexes.DepartureAndArrivalBlocks);
-
-                //leg.Origin = _isf.Regex.RegexMatchesToString(departureAndArrivalBlocks[0][0], Regexes.Location);
-                //leg.Destination = _isf.Regex.RegexMatchesToString(departureAndArrivalBlocks[0][1], Regexes.Location);
-
-                //string[] fullDate = GetDate(departureAndArrivalBlocks);
-
-                //leg.DepartureDateTimeString = fullDate[0];
-                //leg.ArrivalDateTimeString = fullDate[1];
-
-                //leg.FlightNumber = leg.CarrierCode + _isf.Regex.RegexMatchesToString(departureAndArrivalBlocks[0][0], Regexes.FlightNumber);
-
-
+                Flight flight = new Flight(origin, destination, fullDate, flightNumber, flightInfo, flightKey);
 
                 collectedDataList.Add(flight);
             }
 
-            //string[][] sectorOriginAndDestination = RegexFunctions.RegexToMultiStringArray(sector, Regexes.)
-            //string[][] sectorOriginAndDestination = RegexFunctions.RegexToMultiStringArray(sector, Regexes.SectorOriginAndDestination);
-            //string[][] sectorsInfo = RegexFunctions.RegexToMultiStringArray(sector, Regexes.SectorInfo);
-            //string[] flightCode = RegexFunctions.RegexToStringArray(sector, Regexes.FlightCode);
-
-            //int flightCount = 0;
-            //foreach (string[] sectorInfo in sectorsInfo)
-            //{
-            //    Flight flight = new Flight(sectorOriginAndDestination, sectorInfo, flightCode[flightCount]);
-            //    collectedDataList.Add(flight);
-
-            //    flightCount++;
-            //}
-
             return collectedDataList;
         }
+        private string[] GetDate(string[][] departureAndArrivalBlocks)
+        {
+            string[] fullDate = new string[2];
+            string[][] departHoursDayMonth = RegexFunctions.RegexToMultiStringArray(departureAndArrivalBlocks[0][0], Regexes.FlightHoursDayMonth);
+            string[][] arrivalHoursDayMonth = RegexFunctions.RegexToMultiStringArray(departureAndArrivalBlocks[0][1], Regexes.FlightHoursDayMonth);
+            
+            fullDate[0] = _Sc.OutboundYear + "-" + departHoursDayMonth[0][1] + "-" + departHoursDayMonth[0][0];
 
-        //private bool TryGetTaxes(out string responseBodyTaxes, string outBoundFlightCode, string inBoundFlightCode = null)
-        //{
-        //    Client.BaseUrl = new Uri(Urls.FlightPage, UriKind.Absolute);
+            fullDate[1] = (_Sc.IsRt ? _Sc.InboundYear : _Sc.OutboundYear) + "-" + arrivalHoursDayMonth[0][1] + "-" + arrivalHoursDayMonth[0][0];
 
-        //    RestRequest request = new RestRequest("ObtenerTarifas", Method.POST);
+            return fullDate;
+        }
+        private bool TryGetPassengerDetails(Combinations combination, string[] requestId, out string responseBody)
+        {
+            char cabinClassForOutbound = Dictionaries.CabinClassToInt[combination.Outbound.FareFamily];
+            Flight outboundSector = combination.Outbound;
+            string requestBody;
+            if (_Sc.IsRt)
+            {
+                char cabinClassForInbound = Dictionaries.CabinClassToInt[combination.Inbound.FareFamily];
+                Flight inboundSector = combination.Inbound;
+                requestBody = "option=com_travel&task=airbook.addPassengers&outbound_request_id=" + requestId.First() +
+                "&inbound_request_id=" + requestId.Last() +
+                "&outbound_solution_id=" + outboundSector.FlightKey +
+                "&outbound_cabin_class=" + cabinClassForOutbound +
+                "&inbound_solution_id=" + inboundSector.FlightKey +
+                "&inbound_cabin_class=" + cabinClassForInbound +
+                "&adults=1&children=0&infants=0&change_flight=";
+            }
+            else
+            {
+                requestBody = "option=com_travel&task=airbook.addPassengers&outbound_request_id=" + requestId.First() +
+               "&inbound_request_id=&outbound_solution_id=" + outboundSector.FlightKey +
+               "&outbound_cabin_class=" + cabinClassForOutbound +
+               "&inbound_solution_id=&inbound_cabin_class=&adults=1&children=0&infants=0&change_flight=";
+            }
 
-        //    if(_Sc.IsRt)
-        //    {
-        //        request.AddParameter("text/xml", ConstructPostBodyForTaxes(outBoundFlightCode, inBoundFlightCode), ParameterType.RequestBody);
-        //    }
-        //    else
-        //    {
-        //        request.AddParameter("text/xml", ConstructPostBodyForTaxes(outBoundFlightCode), ParameterType.RequestBody);
-        //    }
+            string referer = ConstructReferer();
 
-        //    request.AddHeader("Accept", "*/*");
-        //    request.AddHeader("X-Requested-With", "XMLHttpRequest");
-        //    request.AddHeader("Referer", Urls.FlightPage);
-        //    request.AddHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            Client.BaseUrl = new Uri(Urls.PassengerDetails, UriKind.Absolute);
 
-        //    IRestResponse response = Client.Execute(request);
-        //    responseBodyTaxes = response.Content;
+            RestRequest request = new RestRequest("", Method.POST);
 
-        //    Console.WriteLine(Client.BaseUrl + " " + response.StatusCode);
+            request.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+            request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+            request.AddHeader("Referer", referer);
 
-        //    return responseBodyTaxes != null;
-        //}
-        //private string ConstructPostBodyForTaxes(string outBoundFlightCode, string inBoundFlightCode = null)
-        //{
-        //    if(_Sc.IsRt)
-        //    {
-        //        return $"cod_origen={_Sc.Origin}&cod_destino={_Sc.Destination}&cant_adl=1&cant_chd=0&cant_inf=0&codigo_desc=&fecha_ida={_Sc.OutboundDate.ToString("yyyy-MM-dd")}&fecha_retorno={_Sc.InboundDate.ToString("yyyy-MM-dd")}&tipo_viaje=R&grupo_retorno={inBoundFlightCode}&grupo_ida={outBoundFlightCode}";
-        //    }
-        //    else
-        //    {
-        //        return $"cod_origen={_Sc.Origin}&cod_destino={_Sc.Destination}&cant_adl=1&cant_chd=0&cant_inf=0&codigo_desc=&fecha_ida={_Sc.OutboundDate.ToString("yyyy-MM-dd")}&fecha_retorno={_Sc.OutboundDate.ToString("yyyy-MM-dd")}&tipo_viaje=O&grupo_retorno=&grupo_ida={outBoundFlightCode}";
-        //    }     
-        //}
+            request.AddParameter("text/xml", requestBody, ParameterType.RequestBody);
+
+            IRestResponse response = Client.Execute(request);
+            responseBody = response.Content;
+
+            Console.WriteLine(Urls.PassengerDetails + " " + response.StatusCode);
+
+            return response.Content != null;
+        }
+        private string ConstructReferer()
+        {
+            string isOneWay = _Sc.IsRt ? "0" : "1";
+
+            string outboundMonth = _Sc.OutboundDate.ToString("MMM", CultureInfo.InvariantCulture);
+            string inboundMonth = _Sc.InboundDate.ToString("MMM", CultureInfo.InvariantCulture);
+
+            return $"{Urls.FlightPage}?isoneway={isOneWay}&currency=KES"
+                + $"&depairportcode={_Sc.Origin}&arrvairportcode={_Sc.Destination}"
+                + $"&date_from={_Sc.OutboundDay}{outboundMonth}{_Sc.OutboundYear}"
+                + $"&date_to={_Sc.InboundDay}{inboundMonth}{_Sc.InboundYear}"
+                + "&adult_no=1&children_no=0&infant_no=0&searchFlight=&change_flight=";
+        }
     }
 }
