@@ -9,23 +9,20 @@
         public string Origin;
         public string Destination;
         public string Connection;
+        public string FareFamily;
+        public string FlightNumber;
+        public string Currency;
+        public string Class;
+        public string TravelDuration;
+        public string FlightKey;
 
         public decimal? PriceWithoutTaxes;
         public decimal? Taxes = 0;
         public decimal? FullPrice;
 
-        public string FareFamily;
-        public string FlightNumber;
-        public string Currency;
-
         public DateTime DepartureTime;
         public DateTime ArrivalTime;
-
-        public string Class;
-
-        public string TravelDuration;
-
-        public string FlightKey;
+        
         public Flight(string origin, string destination, string[] fullDate, string flightNumber, string[][] flightInfo, string flightKey)
         {
             Origin = origin;

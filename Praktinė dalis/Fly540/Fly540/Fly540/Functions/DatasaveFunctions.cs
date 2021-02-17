@@ -18,7 +18,7 @@
         }
         public bool TryFillTableWithData(List<Combinations> combinations)
         {
-            string tableName = "StarPeru";
+            string tableName = "Fly540";
             List<string> columnNames = new List<string>()
             {
                 {"OriginOutbound"},
@@ -130,7 +130,7 @@
 
                 $"'{combination.Outbound.Currency}', " +
                 $"'E', " +
-                $"'StarPeru' \u0029";
+                $"'Fly540' \u0029";
 
             Command.CommandText = Command.CommandText.Replace("''", "null");
         }

@@ -1,7 +1,6 @@
 ﻿namespace Fly540
 {
     using System.Collections.Generic;
-
     internal static class Dictionaries
     {
         public static Dictionary<string, char> CabinClassToInt = new Dictionary<string, char>

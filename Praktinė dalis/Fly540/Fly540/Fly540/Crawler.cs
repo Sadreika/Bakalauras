@@ -7,8 +7,6 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Globalization;
-    using System.Threading;
-
     public class Crawler
     {
         private RestClient Client = new RestClient();
@@ -89,13 +87,13 @@
                 combination.Taxes = _Sc.IsRt ? combination.Outbound.Taxes + combination.Inbound.Taxes : combination.Outbound.Taxes;
                 combination.FullPrice = _Sc.IsRt ? combination.Outbound.FullPrice + combination.Inbound.FullPrice : combination.Outbound.FullPrice;
             }
-            var a = combinationsList; // need to fix request headers
-            //Datasave.TryFillTableWithData(combinationsList);
+
+            Datasave.TryFillTableWithData(combinationsList);
             return true;
         }
         private bool TryLoadPage(out string responseBody)
         {
-            Client.BaseUrl = new Uri(ConstructUrl(), UriKind.Absolute);
+            Client.BaseUrl = new Uri(ConstructUrlForFlights(), UriKind.Absolute);
 
             RestRequest request = new RestRequest("", Method.GET);
 
@@ -106,7 +104,7 @@
 
             return responseBody != null;
         }
-        private string ConstructUrl()
+        private string ConstructUrlForFlights()
         {
             string isRt = _Sc.IsRt ? "0" : "1";
 
@@ -193,7 +191,7 @@
                "&inbound_solution_id=&inbound_cabin_class=&adults=1&children=0&infants=0&change_flight=";
             }
 
-            string referer = ConstructReferer();
+            string referer = ConstructRefererForDetails();
 
             Client.BaseUrl = new Uri(Urls.PassengerDetails, UriKind.Absolute);
 
@@ -211,7 +209,7 @@
 
             return response.Headers[7].Value.ToString();
         }
-        private string ConstructReferer()
+        private string ConstructRefererForDetails()
         {
             string isOneWay = _Sc.IsRt ? "0" : "1";
 
@@ -226,7 +224,7 @@
         }
         private bool TryGetTaxes(string requestKey, out string responseBody)
         {
-            string referer = FormUrl();
+            string referer = ConstructRefererForTaxes();
             Client.BaseUrl = new Uri(Urls.StartPage + requestKey, UriKind.Absolute);
             RestRequest request = new RestRequest("", Method.GET);
 
@@ -245,21 +243,16 @@
 
             return responseBody != null;
         }
-
-        private string FormUrl()
+        private string ConstructRefererForTaxes()
         {
             string isOneWay = _Sc.IsRt ? "0" : "1";
 
-            string outboundMonth = _Sc.OutboundDate.ToString("MMM", CultureInfo.InvariantCulture);
-            string inboundMonth = _Sc.InboundDate.ToString("MMM", CultureInfo.InvariantCulture);
-
-            return Urls.FlightPage + "?isoneway=" + isOneWay + "&currency=" + "KES"
-                + "&depairportcode=" + _Sc.Origin
-                + "&arrvairportcode=" + _Sc.Destination
-                + "&date_from="
-                + _Sc.OutboundDay + outboundMonth + _Sc.OutboundYear + "&date_to="
-                + _Sc.InboundDay + inboundMonth + _Sc.InboundYear
-                + "&adult_no=1" + "&children_no=0" + "&infant_no=0" + "&searchFlight=&change_flight=";
+            return $"{Urls.FlightPage}?isoneway={isOneWay}&currency=KES"
+                + $"&depairportcode={_Sc.Origin}"
+                + $"&arrvairportcode={_Sc.Destination}"
+                + $"&date_from={_Sc.OutboundDay}{_Sc.OutboundDate.ToString("MMM", CultureInfo.InvariantCulture)}{_Sc.OutboundYear}"
+                + $"&date_to={_Sc.InboundDay}{_Sc.InboundDate.ToString("MMM", CultureInfo.InvariantCulture)}{_Sc.InboundYear}"
+                + "&adult_no=1&children_no=0&infant_no=0&searchFlight=&change_flight=";
         }
     }
 }
