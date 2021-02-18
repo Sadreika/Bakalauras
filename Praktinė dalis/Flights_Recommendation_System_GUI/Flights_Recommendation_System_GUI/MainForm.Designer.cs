@@ -47,10 +47,11 @@ namespace Flights_Recommendation_System_GUI
             this.airlineTextBox = new System.Windows.Forms.TextBox();
             this.departureDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.arrivalDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.airlineFlightsDataGridView = new System.Windows.Forms.DataGridView();
             this.allFlightsButton = new System.Windows.Forms.Button();
             this.searchButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.filterCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            ((System.ComponentModel.ISupportInitialize)(this.airlineFlightsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // airlineLabel
@@ -197,15 +198,15 @@ namespace Flights_Recommendation_System_GUI
             this.arrivalDateTimePicker.Size = new System.Drawing.Size(228, 22);
             this.arrivalDateTimePicker.TabIndex = 20;
             // 
-            // dataGridView1
+            // airlineFlightsDataGridView
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(54, 146);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1319, 647);
-            this.dataGridView1.TabIndex = 21;
+            this.airlineFlightsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.airlineFlightsDataGridView.Location = new System.Drawing.Point(12, 146);
+            this.airlineFlightsDataGridView.Name = "airlineFlightsDataGridView";
+            this.airlineFlightsDataGridView.RowHeadersWidth = 51;
+            this.airlineFlightsDataGridView.RowTemplate.Height = 24;
+            this.airlineFlightsDataGridView.Size = new System.Drawing.Size(1878, 835);
+            this.airlineFlightsDataGridView.TabIndex = 21;
             // 
             // allFlightsButton
             // 
@@ -228,15 +229,26 @@ namespace Flights_Recommendation_System_GUI
             this.searchButton.Text = "Atlikti paiešką";
             this.searchButton.UseVisualStyleBackColor = true;
             // 
+            // filterCheckedListBox
+            // 
+            this.filterCheckedListBox.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.filterCheckedListBox.FormattingEnabled = true;
+            this.filterCheckedListBox.Location = new System.Drawing.Point(1656, 22);
+            this.filterCheckedListBox.Name = "filterCheckedListBox";
+            this.filterCheckedListBox.Size = new System.Drawing.Size(234, 106);
+            this.filterCheckedListBox.TabIndex = 24;
+            this.filterCheckedListBox.SelectedIndexChanged += new System.EventHandler(this.filterCheckedListBox_SelectedIndexChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1422, 853);
+            this.ClientSize = new System.Drawing.Size(1902, 993);
+            this.Controls.Add(this.filterCheckedListBox);
             this.Controls.Add(this.searchButton);
             this.Controls.Add(this.allFlightsButton);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.airlineFlightsDataGridView);
             this.Controls.Add(this.arrivalDateTimePicker);
             this.Controls.Add(this.departureDateTimePicker);
             this.Controls.Add(this.airlineTextBox);
@@ -251,11 +263,13 @@ namespace Flights_Recommendation_System_GUI
             this.Controls.Add(this.arrivalAirportLabel);
             this.Controls.Add(this.departureAirportLabel);
             this.Controls.Add(this.airlineLabel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Skrydžių rekomendavimo sistema";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.airlineFlightsDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -277,9 +291,10 @@ namespace Flights_Recommendation_System_GUI
         private System.Windows.Forms.TextBox airlineTextBox;
         private System.Windows.Forms.DateTimePicker departureDateTimePicker;
         private System.Windows.Forms.DateTimePicker arrivalDateTimePicker;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView airlineFlightsDataGridView;
         private System.Windows.Forms.Button allFlightsButton;
         private System.Windows.Forms.Button searchButton;
+        private CheckedListBox filterCheckedListBox;
     }
 }
 

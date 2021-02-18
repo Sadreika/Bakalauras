@@ -110,9 +110,8 @@
             dataFromDatabase = new DataTable();
             try
             {
-                Command.CommandText = $"SELECT {selectionString} FROM {tableName}";
-                SqlDataReader reader = Command.ExecuteReader();
-                dataFromDatabase.Load(reader);
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter($"SELECT {selectionString} FROM {tableName}", Connection);
+                sqlDataAdapter.Fill(dataFromDatabase);
 
                 return true;
             }

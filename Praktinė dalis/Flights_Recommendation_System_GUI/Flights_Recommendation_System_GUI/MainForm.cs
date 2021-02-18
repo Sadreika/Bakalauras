@@ -15,13 +15,15 @@
         private List<string> IATASuggestionsList;
 
         private AutoCompleteStringCollection Collection = new AutoCompleteStringCollection();
-        private DataTable dataFromDatabase;
+
+        private DataTable airportsFromDatabase = new DataTable();
 
         public MainForm()
         {
             InitializeComponent();
             LoadAirports();
             PrepareComboBoxes();
+            PrepareCheckListBox();
             OWRTcheckBox.Checked = true;
         }
         public void RefreshAirportTextBox(bool isDepartureAirport)
@@ -38,9 +40,9 @@
         private void LoadAirports()
         {
             Datasave.StartConnection();
-            if(Datasave.TryGetDataFromTable("Airports", "*", out dataFromDatabase))
+            if(Datasave.TryGetDataFromTable("Airports", "*", out airportsFromDatabase))
             {
-                IATASuggestionsList = dataFromDatabase.Rows.OfType<DataRow>().Select(x => x.Field<string>("IATA")).ToList();
+                IATASuggestionsList = airportsFromDatabase.Rows.OfType<DataRow>().Select(x => x.Field<string>("IATA")).ToList();
 
                 Collection.AddRange(IATASuggestionsList.ToArray());
 
@@ -56,12 +58,12 @@
         }
         private void departureAirportTextBox_DoubleClick(object sender, EventArgs e)
         {
-            LocationSelectionForm locationSelectionForm = new LocationSelectionForm(this, dataFromDatabase, true);
+            LocationSelectionForm locationSelectionForm = new LocationSelectionForm(this, airportsFromDatabase, true);
             locationSelectionForm.Show();
         }
         private void arrivalAirportTextBox_DoubleClick(object sender, EventArgs e)
         {
-            LocationSelectionForm locationSelectionForm = new LocationSelectionForm(this, dataFromDatabase, false);
+            LocationSelectionForm locationSelectionForm = new LocationSelectionForm(this, airportsFromDatabase, false);
             locationSelectionForm.Show();
         }
         private void PrepareComboBoxes()
@@ -69,6 +71,14 @@
             string[] suggestionsArray = new string[] { "Ekonominė", "Verslo", "Premium", "Pirma" };
             classComboBox.Items.AddRange(suggestionsArray);
             Controls.Add(classComboBox);
+        }
+        private void PrepareCheckListBox()
+        {
+            filterCheckedListBox.Items.Add("Rodyti sustojimus");
+            filterCheckedListBox.Items.Add("Rodyti skrydžio numerį");
+            filterCheckedListBox.Items.Add("Rodyti skrydžio kategoriją");
+            filterCheckedListBox.Items.Add("Rodyti klasę");
+            filterCheckedListBox.Items.Add("Rodyti avialiniją");
         }
         private void OWRTcheckBox_Click(object sender, EventArgs e)
         {
@@ -81,10 +91,109 @@
                 arrivalDateTimePicker.Enabled = false;
             }
         }
-
         private void allFlightsButton_Click(object sender, EventArgs e)
         {
+            TryFillAirlineFlightsDataGridView(airlineTextBox.Text);
+        }
+        private bool TryFillAirlineFlightsDataGridView(string tableName)
+        {
+            Datasave.StartConnection();
 
+            if (Datasave.TryGetDataFromTable(tableName, "*", out DataTable dataFromDatabase))
+            {
+                airlineFlightsDataGridView.DataSource = dataFromDatabase;
+                ChangeAirlineFlightsDataGridViewHeaders();
+
+                Datasave.Connection.Close();
+                return true;
+            }
+
+            Datasave.EndConnection();
+
+            return false;
+        }
+        private void ChangeAirlineFlightsDataGridViewHeaders()
+        {
+            //outbound
+            airlineFlightsDataGridView.Columns[0].Visible = false;
+            airlineFlightsDataGridView.Columns[3].Visible = false;
+            airlineFlightsDataGridView.Columns[10].Visible = false;
+            airlineFlightsDataGridView.Columns[11].Visible = false;
+            airlineFlightsDataGridView.Columns[14].Visible = false;
+            airlineFlightsDataGridView.Columns[21].Visible = false;
+            airlineFlightsDataGridView.Columns[22].Visible = false;
+            airlineFlightsDataGridView.Columns[27].Visible = false;
+            airlineFlightsDataGridView.Columns[28].Visible = false;
+
+            airlineFlightsDataGridView.Columns[1].HeaderText = "Išvykimo IATA";
+            airlineFlightsDataGridView.Columns[2].HeaderText = "Atvykimo IATA";
+            airlineFlightsDataGridView.Columns[3].HeaderText = "Sustojimo IATA";
+            airlineFlightsDataGridView.Columns[4].HeaderText = "Kaina be mokesčių";
+            airlineFlightsDataGridView.Columns[5].HeaderText = "Pilna kaina";
+            airlineFlightsDataGridView.Columns[6].HeaderText = "Mokestis";
+            airlineFlightsDataGridView.Columns[7].HeaderText = "Išvykimo laikas";
+            airlineFlightsDataGridView.Columns[8].HeaderText = "Atvykimo laikas";
+            airlineFlightsDataGridView.Columns[9].HeaderText = "Kelionės trukmė";
+            airlineFlightsDataGridView.Columns[10].HeaderText = "Skrydžio kategorija";
+            airlineFlightsDataGridView.Columns[11].HeaderText = "Skrydžio numeris";
+
+            //inbound
+
+            airlineFlightsDataGridView.Columns[12].HeaderText = "Išvykimo IATA";
+            airlineFlightsDataGridView.Columns[13].HeaderText = "Atvykimo IATA";
+            airlineFlightsDataGridView.Columns[14].HeaderText = "Sustojimo IATA";
+            airlineFlightsDataGridView.Columns[15].HeaderText = "Kaina be mokesčių";
+            airlineFlightsDataGridView.Columns[16].HeaderText = "Pilna kaina";
+            airlineFlightsDataGridView.Columns[17].HeaderText = "Mokestis";
+            airlineFlightsDataGridView.Columns[18].HeaderText = "Išvykimo laikas";
+            airlineFlightsDataGridView.Columns[19].HeaderText = "Atvykimo laikas";
+            airlineFlightsDataGridView.Columns[20].HeaderText = "Kelionės trukmė";
+            airlineFlightsDataGridView.Columns[21].HeaderText = "Skrydžio kategorija";
+            airlineFlightsDataGridView.Columns[22].HeaderText = "Skrydžio numeris";
+
+            airlineFlightsDataGridView.Columns[23].HeaderText = "Visos kelionės kaina be mokesčių";
+            airlineFlightsDataGridView.Columns[24].HeaderText = "Visos kelionės kaina";
+            airlineFlightsDataGridView.Columns[25].HeaderText = "Visos kelionės mokesčiai";
+
+            airlineFlightsDataGridView.Columns[26].HeaderText = "Valiuta";
+            airlineFlightsDataGridView.Columns[27].HeaderText = "Klasė";
+            airlineFlightsDataGridView.Columns[28].HeaderText = "Avialinija";
+        }
+        private void filterCheckedListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            bool valueToSet = false;
+
+            switch (filterCheckedListBox.SelectedIndex)
+            {
+                case 0:
+                    valueToSet = airlineFlightsDataGridView.Columns[3].Visible == true ? false : true;
+                    airlineFlightsDataGridView.Columns[3].Visible = valueToSet;
+                    airlineFlightsDataGridView.Columns[14].Visible = valueToSet;
+                    break;
+                case 1:
+                    valueToSet = airlineFlightsDataGridView.Columns[22].Visible == true ? false : true;
+                    airlineFlightsDataGridView.Columns[11].Visible = valueToSet;
+                    airlineFlightsDataGridView.Columns[22].Visible = valueToSet;
+                    break;
+                case 2:
+                    valueToSet = airlineFlightsDataGridView.Columns[21].Visible == true ? false : true;
+                    airlineFlightsDataGridView.Columns[10].Visible = valueToSet;
+                    airlineFlightsDataGridView.Columns[21].Visible = valueToSet;
+                    break;
+                case 3:
+                    valueToSet = airlineFlightsDataGridView.Columns[27].Visible == true ? false : true;
+                    airlineFlightsDataGridView.Columns[27].Visible = valueToSet;
+                    break;
+                case 4:
+                    valueToSet = airlineFlightsDataGridView.Columns[28].Visible == true ? false : true;
+                    airlineFlightsDataGridView.Columns[28].Visible = valueToSet;
+                    break;
+            }
+
+            filterCheckedListBox.SetItemChecked(filterCheckedListBox.SelectedIndex, valueToSet);
+
+            filterCheckedListBox.Refresh();
+            airlineFlightsDataGridView.Refresh();
         }
     }
 }
