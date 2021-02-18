@@ -79,6 +79,7 @@
             filterCheckedListBox.Items.Add("Rodyti skrydžio kategoriją");
             filterCheckedListBox.Items.Add("Rodyti klasę");
             filterCheckedListBox.Items.Add("Rodyti avialiniją");
+            filterCheckedListBox.Enabled = false;
         }
         private void OWRTcheckBox_Click(object sender, EventArgs e)
         {
@@ -94,6 +95,7 @@
         private void allFlightsButton_Click(object sender, EventArgs e)
         {
             TryFillAirlineFlightsDataGridView(airlineTextBox.Text);
+            filterCheckedListBox.Enabled = true;
         }
         private bool TryFillAirlineFlightsDataGridView(string tableName)
         {

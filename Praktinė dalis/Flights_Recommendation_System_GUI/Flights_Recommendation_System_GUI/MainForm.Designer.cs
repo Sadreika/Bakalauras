@@ -200,6 +200,7 @@ namespace Flights_Recommendation_System_GUI
             // 
             // airlineFlightsDataGridView
             // 
+            this.airlineFlightsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.airlineFlightsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.airlineFlightsDataGridView.Location = new System.Drawing.Point(12, 146);
             this.airlineFlightsDataGridView.Name = "airlineFlightsDataGridView";
@@ -235,7 +236,7 @@ namespace Flights_Recommendation_System_GUI
             this.filterCheckedListBox.FormattingEnabled = true;
             this.filterCheckedListBox.Location = new System.Drawing.Point(1656, 22);
             this.filterCheckedListBox.Name = "filterCheckedListBox";
-            this.filterCheckedListBox.Size = new System.Drawing.Size(234, 106);
+            this.filterCheckedListBox.Size = new System.Drawing.Size(234, 104);
             this.filterCheckedListBox.TabIndex = 24;
             this.filterCheckedListBox.SelectedIndexChanged += new System.EventHandler(this.filterCheckedListBox_SelectedIndexChanged);
             // 
