@@ -7,3 +7,4 @@ C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Fly540\Fly540\Fly540\
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Fly540\Fly540\Fly540\obj\Release\Fly540.csproj.CopyComplete
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Fly540\Fly540\Fly540\obj\Release\Fly540.exe
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Fly540\Fly540\Fly540\obj\Release\Fly540.pdb
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Fly540\Fly540\Fly540\obj\Release\Fly540.csprojAssemblyReference.cache

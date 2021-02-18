@@ -42,7 +42,7 @@
 
             foreach (string outboundSector in outboundSectors)
             {
-                OutboundData.AddRange(ExtractData(outboundSector));
+                OutboundData.Add(ExtractData(outboundSector));
             }
 
             if (_Sc.IsRt)
@@ -51,7 +51,7 @@
 
                 foreach (string inboundSector in inboundSectors)
                 {
-                    InboundData.AddRange(ExtractData(inboundSector));
+                    InboundData.Add(ExtractData(inboundSector));
                 }
             }
 
@@ -129,7 +129,7 @@
 
             return bounds.Length != 0;
         }
-        private List<Flight> ExtractData(string sector)
+        private Flight ExtractData(string sector)
         {
             List<Flight> collectedDataList = new List<Flight>();
 
@@ -146,7 +146,7 @@
                 flightCount++;
             }
 
-            return collectedDataList;
+            return collectedDataList.OrderBy(i => i.PriceWithoutTaxes).First(i => i.PriceWithoutTaxes != null);
         }
         private bool TryGetTaxes(out string responseBodyTaxes, string outBoundFlightCode, string inBoundFlightCode = null)
         {

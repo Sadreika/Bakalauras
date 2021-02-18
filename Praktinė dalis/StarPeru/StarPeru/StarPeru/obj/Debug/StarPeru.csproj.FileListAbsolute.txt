@@ -18,3 +18,13 @@ C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\StarPeru-\StarPeru\St
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\StarPeru-\StarPeru\StarPeru\bin\Debug\RestSharp.dll
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\StarPeru-\StarPeru\StarPeru\bin\Debug\RestSharp.xml
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\StarPeru-\StarPeru\StarPeru\obj\Debug\StarPeru.csproj.CopyComplete
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\StarPeru\StarPeru\StarPeru\bin\Debug\StarPeru.exe.config
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\StarPeru\StarPeru\StarPeru\bin\Debug\StarPeru.exe
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\StarPeru\StarPeru\StarPeru\bin\Debug\StarPeru.pdb
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\StarPeru\StarPeru\StarPeru\bin\Debug\RestSharp.dll
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\StarPeru\StarPeru\StarPeru\bin\Debug\RestSharp.xml
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\StarPeru\StarPeru\StarPeru\obj\Debug\StarPeru.csprojAssemblyReference.cache
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\StarPeru\StarPeru\StarPeru\obj\Debug\StarPeru.csproj.CoreCompileInputs.cache
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\StarPeru\StarPeru\StarPeru\obj\Debug\StarPeru.csproj.CopyComplete
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\StarPeru\StarPeru\StarPeru\obj\Debug\StarPeru.exe
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\StarPeru\StarPeru\StarPeru\obj\Debug\StarPeru.pdb
