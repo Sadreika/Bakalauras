@@ -78,8 +78,7 @@ namespace Flights_Recommendation_System_GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(282, 153);
-            this.ControlBox = false;
+            this.ClientSize = new System.Drawing.Size(282, 103);
             this.Controls.Add(this.cityInfoLabel);
             this.Controls.Add(this.countryInfoLabel);
             this.Controls.Add(this.cityLabel);
