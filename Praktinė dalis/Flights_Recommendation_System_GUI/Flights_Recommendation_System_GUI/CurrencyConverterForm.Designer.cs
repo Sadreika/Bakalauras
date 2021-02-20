@@ -1,7 +1,7 @@
 ﻿
 namespace Flights_Recommendation_System_GUI
 {
-    partial class CurrencyConverter
+    partial class CurrencyConverterForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,6 +29,7 @@ namespace Flights_Recommendation_System_GUI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CurrencyConverterForm));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -89,7 +90,7 @@ namespace Flights_Recommendation_System_GUI
             this.dataGridView1.Size = new System.Drawing.Size(240, 150);
             this.dataGridView1.TabIndex = 5;
             // 
-            // CurrencyConverter
+            // CurrencyConverterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -100,7 +101,9 @@ namespace Flights_Recommendation_System_GUI
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "CurrencyConverter";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "CurrencyConverterForm";
             this.Text = "CurrencyConverter";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

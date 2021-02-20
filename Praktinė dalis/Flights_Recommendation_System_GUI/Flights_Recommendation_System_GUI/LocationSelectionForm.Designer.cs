@@ -115,6 +115,7 @@ namespace Flights_Recommendation_System_GUI
             this.Controls.Add(this.airportRadioButton);
             this.Controls.Add(this.countryRadioButton);
             this.Controls.Add(this.cityRadioButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LocationSelectionForm";
             this.Text = "Lokacijos pasirinkimas";

@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Flights_Recommendation_System_GUI
 {
-    public partial class CurrencyConverter : Form
+    public partial class IATAInformationForm : Form
     {
-        public CurrencyConverter()
+        public IATAInformationForm()
         {
             InitializeComponent();
         }
