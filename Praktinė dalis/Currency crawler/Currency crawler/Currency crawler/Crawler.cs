@@ -39,6 +39,8 @@
                 TryLoadBasePage(out string javaScriptCacheCode);
                 TryLoadCurrencyList(javaScriptCacheCode);
             }
+
+            Console.WriteLine("Finished currency crawler");
         }
 
         public void StartConversionCrawler(string convertToCurrencyCode, string convertFromCurrencyCode, out double tradeRate, out double[][] chartData)
@@ -67,7 +69,9 @@
                 chartData[arrayElement][3] = (double)chartPoint.SelectToken("[3]");
 
                 arrayElement += 1;
-            }   
+            }
+
+            Console.WriteLine("Finished convertion crawler");
         }
 
         public bool TryLoadBasePage(out string javaScriptCacheCode)

@@ -1,0 +1,12 @@
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\bin\Debug\Newtonsoft.Json.dll
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\bin\Debug\RestSharp.dll
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\bin\Debug\Newtonsoft.Json.xml
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\bin\Debug\RestSharp.xml
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\obj\Debug\CurrencyCrawler.csprojAssemblyReference.cache
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\obj\Debug\CurrencyCrawler.csproj.CoreCompileInputs.cache
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\obj\Debug\CurrencyCrawler.csproj.CopyComplete
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\bin\Debug\CurrencyCrawler.exe.config
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\bin\Debug\CurrencyCrawler.exe
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\bin\Debug\CurrencyCrawler.pdb
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\obj\Debug\CurrencyCrawler.exe
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\obj\Debug\CurrencyCrawler.pdb

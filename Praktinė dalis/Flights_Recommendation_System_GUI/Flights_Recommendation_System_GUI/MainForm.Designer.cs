@@ -230,6 +230,7 @@ namespace Flights_Recommendation_System_GUI
             this.searchButton.TabIndex = 23;
             this.searchButton.Text = "Atlikti paiešką";
             this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // filterCheckedListBox
             // 

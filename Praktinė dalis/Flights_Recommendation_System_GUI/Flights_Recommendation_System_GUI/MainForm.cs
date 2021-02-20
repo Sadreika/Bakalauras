@@ -17,11 +17,13 @@
         private AutoCompleteStringCollection Collection = new AutoCompleteStringCollection();
 
         private DataTable airportsFromDatabase = new DataTable();
+        private DataTable currenciesFromDatabase = new DataTable();
 
         public MainForm()
         {
             InitializeComponent();
             LoadAirports();
+            LoadCurrencies();
             PrepareComboBoxes();
             PrepareCheckListBox();
             OWRTcheckBox.Checked = true;
@@ -50,6 +52,12 @@
                 arrivalAirportTextBox.AutoCompleteCustomSource = Collection;
             }
 
+            Datasave.EndConnection();
+        }
+        private void LoadCurrencies()
+        {
+            Datasave.StartConnection();
+            Datasave.TryGetDataFromTable("Currencies", "*", out currenciesFromDatabase);
             Datasave.EndConnection();
         }
         private void MainForm_Load(object sender, EventArgs e)
@@ -216,12 +224,17 @@
                 iATAInformationForm.Show();
             }
 
-            //if (columnIndex == 4 || columnIndex == 5 || columnIndex == 6 ||
-            //    columnIndex == 15 || columnIndex == 16 || columnIndex == 17 ||
-            //    columnIndex == 23 || columnIndex == 24 || columnIndex == 25)
-            //{
-            //    //MessageBox.Show("TAXES");
-            //}
+            if (columnIndex == 4 || columnIndex == 5 || columnIndex == 6 ||
+                columnIndex == 15 || columnIndex == 16 || columnIndex == 17 ||
+                columnIndex == 23 || columnIndex == 24 || columnIndex == 25)
+            {
+                CurrencyConverterForm currencyConverterForm = new CurrencyConverterForm(this, airlineFlightsDataGridView.Rows[cellSelected[0].RowIndex].Cells[26].Value.ToString(), currenciesFromDatabase);
+                currencyConverterForm.Show();
+            }
+        }
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+           
         }
     }
 }

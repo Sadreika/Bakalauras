@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
-
     class DatasaveFunctions
     {
         public string ConnectionString { get; set; }
@@ -14,17 +13,6 @@
         {
             ConnectionString = connectionString;
             Connection = new SqlConnection(ConnectionString);
-            Command = new SqlCommand();
-            Command.CommandType = CommandType.Text;
-            Command.Connection = Connection;
-        }
-        public void RenewConnection(string connectionString)
-        {
-            ConnectionString = connectionString;
-            Connection = new SqlConnection(ConnectionString);
-        }
-        public void RenewCommand()
-        {
             Command = new SqlCommand();
             Command.CommandType = CommandType.Text;
             Command.Connection = Connection;

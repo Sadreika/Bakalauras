@@ -1,0 +1,1 @@
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Currency crawler\Currency crawler\Currency crawler\obj\Release\CurrencyCrawler.csproj.CoreCompileInputs.cache

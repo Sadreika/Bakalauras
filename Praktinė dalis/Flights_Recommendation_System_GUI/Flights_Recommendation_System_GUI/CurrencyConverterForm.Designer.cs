@@ -33,11 +33,12 @@ namespace Flights_Recommendation_System_GUI
             this.currentCurrencyLabel = new System.Windows.Forms.Label();
             this.newCurrencyLabel = new System.Windows.Forms.Label();
             this.currentCurrencyTextBox = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.newCurrencyTextBox = new System.Windows.Forms.TextBox();
             this.convertButton = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.currenciesDataGridView = new System.Windows.Forms.DataGridView();
             this.conversionInfoButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.rateLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.currenciesDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // currentCurrencyLabel
@@ -68,12 +69,13 @@ namespace Flights_Recommendation_System_GUI
             this.currentCurrencyTextBox.Size = new System.Drawing.Size(143, 22);
             this.currentCurrencyTextBox.TabIndex = 2;
             // 
-            // textBox2
+            // newCurrencyTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(36, 115);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(143, 22);
-            this.textBox2.TabIndex = 3;
+            this.newCurrencyTextBox.Location = new System.Drawing.Point(36, 115);
+            this.newCurrencyTextBox.Name = "newCurrencyTextBox";
+            this.newCurrencyTextBox.Size = new System.Drawing.Size(143, 22);
+            this.newCurrencyTextBox.TabIndex = 3;
+            this.newCurrencyTextBox.TextChanged += new System.EventHandler(this.newCurrencyTextBox_TextChanged);
             // 
             // convertButton
             // 
@@ -84,35 +86,50 @@ namespace Flights_Recommendation_System_GUI
             this.convertButton.TabIndex = 4;
             this.convertButton.Text = "Konvertuoti";
             this.convertButton.UseVisualStyleBackColor = true;
+            this.convertButton.Click += new System.EventHandler(this.convertButton_Click);
             // 
-            // dataGridView1
+            // currenciesDataGridView
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(218, 36);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(437, 212);
-            this.dataGridView1.TabIndex = 5;
+            this.currenciesDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.currenciesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.currenciesDataGridView.Location = new System.Drawing.Point(218, 36);
+            this.currenciesDataGridView.Name = "currenciesDataGridView";
+            this.currenciesDataGridView.RowHeadersWidth = 51;
+            this.currenciesDataGridView.RowTemplate.Height = 24;
+            this.currenciesDataGridView.Size = new System.Drawing.Size(437, 212);
+            this.currenciesDataGridView.TabIndex = 5;
+            this.currenciesDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.currenciesDataGridView_CellClick);
             // 
             // conversionInfoButton
             // 
+            this.conversionInfoButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.conversionInfoButton.Location = new System.Drawing.Point(36, 173);
             this.conversionInfoButton.Name = "conversionInfoButton";
             this.conversionInfoButton.Size = new System.Drawing.Size(143, 50);
             this.conversionInfoButton.TabIndex = 6;
             this.conversionInfoButton.Text = "Konvertavimo informacija";
             this.conversionInfoButton.UseVisualStyleBackColor = true;
+            this.conversionInfoButton.Click += new System.EventHandler(this.conversionInfoButton_Click);
+            // 
+            // rateLabel
+            // 
+            this.rateLabel.AutoSize = true;
+            this.rateLabel.Location = new System.Drawing.Point(36, 144);
+            this.rateLabel.Name = "rateLabel";
+            this.rateLabel.Size = new System.Drawing.Size(46, 17);
+            this.rateLabel.TabIndex = 7;
+            this.rateLabel.Text = "empty";
             // 
             // CurrencyConverterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(682, 273);
+            this.Controls.Add(this.rateLabel);
             this.Controls.Add(this.conversionInfoButton);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.currenciesDataGridView);
             this.Controls.Add(this.convertButton);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.newCurrencyTextBox);
             this.Controls.Add(this.currentCurrencyTextBox);
             this.Controls.Add(this.newCurrencyLabel);
             this.Controls.Add(this.currentCurrencyLabel);
@@ -120,7 +137,8 @@ namespace Flights_Recommendation_System_GUI
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CurrencyConverterForm";
             this.Text = "Valiutų keitimas";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CurrencyConverterForm_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.currenciesDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -131,9 +149,10 @@ namespace Flights_Recommendation_System_GUI
         private System.Windows.Forms.Label currentCurrencyLabel;
         private System.Windows.Forms.Label newCurrencyLabel;
         private System.Windows.Forms.TextBox currentCurrencyTextBox;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox newCurrencyTextBox;
         private System.Windows.Forms.Button convertButton;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView currenciesDataGridView;
         private System.Windows.Forms.Button conversionInfoButton;
+        private System.Windows.Forms.Label rateLabel;
     }
 }
