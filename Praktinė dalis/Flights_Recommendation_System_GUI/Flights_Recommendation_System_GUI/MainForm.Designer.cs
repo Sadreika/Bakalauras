@@ -208,6 +208,7 @@ namespace Flights_Recommendation_System_GUI
             this.airlineFlightsDataGridView.RowTemplate.Height = 24;
             this.airlineFlightsDataGridView.Size = new System.Drawing.Size(1878, 835);
             this.airlineFlightsDataGridView.TabIndex = 21;
+            this.airlineFlightsDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.airlineFlightsDataGridView_CellClick);
             // 
             // allFlightsButton
             // 

@@ -197,5 +197,23 @@
             filterCheckedListBox.Refresh();
             airlineFlightsDataGridView.Refresh();
         }
+        private void airlineFlightsDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var cellSelected = airlineFlightsDataGridView.SelectedCells;
+            int columnIndex = cellSelected[0].ColumnIndex;
+
+            if(columnIndex == 1 || columnIndex == 2 || columnIndex == 3 ||
+               columnIndex == 12 || columnIndex == 13 || columnIndex == 14)
+            {
+                MessageBox.Show("IATA");
+            }
+
+            if (columnIndex == 4 || columnIndex == 5 || columnIndex == 6 ||
+                columnIndex == 15 || columnIndex == 16 || columnIndex == 17 ||
+                columnIndex == 23 || columnIndex == 24 || columnIndex == 25)
+            {
+                MessageBox.Show("TAXES");
+            }
+        }
     }
 }

@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurrencyConverter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CurrencyConverter.Designer.cs">
+      <DependentUpon>CurrencyConverter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Functions\DatasaveFunctions.cs" />
     <Compile Include="LocationSelectionForm.cs">
       <SubType>Form</SubType>
@@ -61,6 +67,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CurrencyConverter.resx">
+      <DependentUpon>CurrencyConverter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LocationSelectionForm.resx">
       <DependentUpon>LocationSelectionForm.cs</DependentUpon>
     </EmbeddedResource>
