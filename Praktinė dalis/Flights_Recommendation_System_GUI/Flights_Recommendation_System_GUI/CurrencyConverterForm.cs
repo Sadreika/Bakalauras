@@ -79,9 +79,11 @@
             if(CheckCurrency())
             {
                 Crawler crawler = new Crawler();
-                crawler.StartConversionCrawler(newCurrencyTextBox.Text, currentCurrencyTextBox.Text, out double tradeRate, out double[][] chartData);
+                crawler.StartConversionCrawler(newCurrencyTextBox.Text.ToUpper(), currentCurrencyTextBox.Text.ToUpper(), out double tradeRate, out double[][] chartData);
                 rateLabel.Visible = true;
                 rateLabel.Text = $"Santykis: {Math.Round(tradeRate, 2)}";
+                ChartForm chartForm = new ChartForm(chartData);
+                chartForm.Show();
             }
         }
 

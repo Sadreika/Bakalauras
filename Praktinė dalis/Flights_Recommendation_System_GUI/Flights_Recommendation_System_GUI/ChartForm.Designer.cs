@@ -30,13 +30,23 @@ namespace Flights_Recommendation_System_GUI
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChartForm));
+            this.currencyCartesianChart = new LiveCharts.WinForms.CartesianChart();
             this.SuspendLayout();
+            // 
+            // currencyCartesianChart
+            // 
+            this.currencyCartesianChart.Location = new System.Drawing.Point(12, 30);
+            this.currencyCartesianChart.Name = "currencyCartesianChart";
+            this.currencyCartesianChart.Size = new System.Drawing.Size(750, 410);
+            this.currencyCartesianChart.TabIndex = 0;
+            this.currencyCartesianChart.Text = "cartesianChart1";
             // 
             // ChartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(782, 453);
+            this.Controls.Add(this.currencyCartesianChart);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ChartForm";
@@ -46,5 +56,7 @@ namespace Flights_Recommendation_System_GUI
         }
 
         #endregion
+
+        private LiveCharts.WinForms.CartesianChart currencyCartesianChart;
     }
 }
