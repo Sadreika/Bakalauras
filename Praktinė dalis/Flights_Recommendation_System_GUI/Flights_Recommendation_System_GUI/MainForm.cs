@@ -201,19 +201,27 @@
         {
             var cellSelected = airlineFlightsDataGridView.SelectedCells;
             int columnIndex = cellSelected[0].ColumnIndex;
+            string cellValue = cellSelected[0].Value.ToString();
 
-            if(columnIndex == 1 || columnIndex == 2 || columnIndex == 3 ||
+            if (columnIndex == 1 || columnIndex == 2 || columnIndex == 3 ||
                columnIndex == 12 || columnIndex == 13 || columnIndex == 14)
             {
-                //MessageBox.Show("IATA");
+                IATAInformationForm iATAInformationForm = new IATAInformationForm(airportsFromDatabase, cellValue);
+                iATAInformationForm.StartPosition = FormStartPosition.Manual;
+
+                var cellRectangle = airlineFlightsDataGridView.GetCellDisplayRectangle(cellSelected[0].ColumnIndex, cellSelected[0].RowIndex, true);
+
+                iATAInformationForm.Left = cellRectangle.Left;
+                iATAInformationForm.Top = cellRectangle.Bottom + 170;
+                iATAInformationForm.Show();
             }
 
-            if (columnIndex == 4 || columnIndex == 5 || columnIndex == 6 ||
-                columnIndex == 15 || columnIndex == 16 || columnIndex == 17 ||
-                columnIndex == 23 || columnIndex == 24 || columnIndex == 25)
-            {
-                //MessageBox.Show("TAXES");
-            }
+            //if (columnIndex == 4 || columnIndex == 5 || columnIndex == 6 ||
+            //    columnIndex == 15 || columnIndex == 16 || columnIndex == 17 ||
+            //    columnIndex == 23 || columnIndex == 24 || columnIndex == 25)
+            //{
+            //    //MessageBox.Show("TAXES");
+            //}
         }
     }
 }

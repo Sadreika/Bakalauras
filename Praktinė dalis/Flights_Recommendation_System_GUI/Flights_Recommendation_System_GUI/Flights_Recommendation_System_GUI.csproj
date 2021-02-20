@@ -46,13 +46,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CurrencyConverter.cs">
+    <Compile Include="CurrencyConverterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CurrencyConverter.Designer.cs">
-      <DependentUpon>CurrencyConverter.cs</DependentUpon>
+    <Compile Include="CurrencyConverterForm.Designer.cs">
+      <DependentUpon>CurrencyConverterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Functions\DatasaveFunctions.cs" />
+    <Compile Include="IATAInformationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IATAInformationForm.Designer.cs">
+      <DependentUpon>IATAInformationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LocationSelectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,8 +73,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CurrencyConverter.resx">
-      <DependentUpon>CurrencyConverter.cs</DependentUpon>
+    <EmbeddedResource Include="CurrencyConverterForm.resx">
+      <DependentUpon>CurrencyConverterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IATAInformationForm.resx">
+      <DependentUpon>IATAInformationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LocationSelectionForm.resx">
       <DependentUpon>LocationSelectionForm.cs</DependentUpon>
