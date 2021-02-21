@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
-
     class DatasaveFunctions
     {
         public string ConnectionString { get; set; }
@@ -24,37 +23,6 @@
         public void EndConnection()
         {
             Connection.Close();
-        }
-        public bool TryCreateTable(string tableName, List<string> sqlColumnCodes)
-        {
-            try
-            {
-                Command.CommandText = $"CREATE TABLE {tableName} \u0028";
-
-                AddSqlColumns(sqlColumnCodes);
-
-                Command.ExecuteNonQuery();
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        public bool TryRemoveTable(string tableName)
-        {
-            try
-            {
-                Command.CommandText = $"DROP TABLE {tableName}";
-                Command.ExecuteNonQuery();
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
         public bool TryFillTableWithData(string tableName, List<string> columnNames, List<string> dataList)
         {
@@ -119,6 +87,62 @@
             {
                 return false;
             }
+        }
+        public bool TryGetDataFromTableCustom(string query, out DataTable dataFromDatabase)
+        {
+            dataFromDatabase = new DataTable();
+            try
+            {
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(query, Connection);
+                sqlDataAdapter.Fill(dataFromDatabase);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public string ConstructSelectionString(string airlineText, string departureAirportText, string arrivalAirportText,
+            string departureDateTimePickerText, string arrivalDateTimePickerText, bool owrtCheck, string classComboBoxText)
+        {
+            string[] departureDateParts = departureDateTimePickerText.Split('-');
+            string[] arrivalDateParts = arrivalDateTimePickerText.Split('-');
+
+            string query = string.Empty;
+
+            query += $"SELECT * fROM {airlineText} ";
+
+            if (departureAirportText != string.Empty && arrivalAirportText != string.Empty)
+            {
+                query += $"WHERE OriginOutbound = '{departureAirportText}' " +
+                         $"AND DestinationOutbound = '{arrivalAirportText}' " +
+
+                         $"AND DATEPART(yyyy, DepartureTimeOutbound) = {departureDateParts[0]} " +
+                         $"AND DATEPART(MM, DepartureTimeOutbound) = {departureDateParts[1]} " +
+                         $"AND DATEPART(dd, DepartureTimeOutbound) = {departureDateParts[2]} ";
+            }
+            else
+            {
+                query += $"WHERE DATEPART(yyyy, DepartureTimeOutbound) = {departureDateParts[0]} " +
+                         $"AND DATEPART(MM, DepartureTimeOutbound) = {departureDateParts[1]} " +
+                         $"AND DATEPART(dd, DepartureTimeOutbound) = {departureDateParts[2]} ";
+            }
+
+            if (owrtCheck)
+            {
+                query += $"AND DATEPART(yyyy, ArrivalTimeInbound) = {arrivalDateParts[0]} " +
+                         $"AND DATEPART(MM, ArrivalTimeInbound) = {arrivalDateParts[1]} " +
+                         $"AND DATEPART(dd, ArrivalTimeInbound) = {arrivalDateParts[2]} ";
+            }
+            else
+            {
+                query += "AND ArrivalTimeInbound IS NULL ";
+            }
+
+            query += $"AND Class = '{Dictionary.TravelClassesDictionary[classComboBoxText]}'";
+
+            return query;
         }
     }
 }

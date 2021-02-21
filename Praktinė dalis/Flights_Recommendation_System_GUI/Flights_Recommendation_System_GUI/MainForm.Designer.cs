@@ -189,6 +189,8 @@ namespace Flights_Recommendation_System_GUI
             this.departureDateTimePicker.Name = "departureDateTimePicker";
             this.departureDateTimePicker.Size = new System.Drawing.Size(229, 22);
             this.departureDateTimePicker.TabIndex = 19;
+            this.departureDateTimePicker.Format = DateTimePickerFormat.Custom;
+            this.departureDateTimePicker.CustomFormat = "yyyy-MM-dd";
             // 
             // arrivalDateTimePicker
             // 
@@ -199,6 +201,8 @@ namespace Flights_Recommendation_System_GUI
             this.arrivalDateTimePicker.Name = "arrivalDateTimePicker";
             this.arrivalDateTimePicker.Size = new System.Drawing.Size(228, 22);
             this.arrivalDateTimePicker.TabIndex = 20;
+            this.arrivalDateTimePicker.Format = DateTimePickerFormat.Custom;
+            this.arrivalDateTimePicker.CustomFormat = "yyyy-MM-dd";
             // 
             // airlineFlightsDataGridView
             // 

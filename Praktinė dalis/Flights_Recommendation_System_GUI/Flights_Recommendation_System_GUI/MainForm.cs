@@ -1,6 +1,6 @@
 ﻿namespace Flights_Recommendation_System_GUI
 {
-    using Flights_Recommendation_System_GUI.Functions;
+    using Functions;
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -17,8 +17,8 @@
 
         private AutoCompleteStringCollection Collection = new AutoCompleteStringCollection();
 
-        private DataTable airportsFromDatabase = new DataTable();
-        private DataTable currenciesFromDatabase = new DataTable();
+        private DataTable _airportsFromDatabase = new DataTable();
+        private DataTable _currenciesFromDatabase = new DataTable();
 
         public MainForm()
         {
@@ -44,9 +44,9 @@
         private void LoadAirports()
         {
             Datasave.StartConnection();
-            if (Datasave.TryGetDataFromTable("Airports", "*", out airportsFromDatabase))
+            if (Datasave.TryGetDataFromTable("Airports", "*", out _airportsFromDatabase))
             {
-                IATASuggestionsList = airportsFromDatabase.Rows.OfType<DataRow>().Select(x => x.Field<string>("IATA")).ToList();
+                IATASuggestionsList = _airportsFromDatabase.Rows.OfType<DataRow>().Select(x => x.Field<string>("IATA")).ToList();
 
                 Collection.AddRange(IATASuggestionsList.ToArray());
 
@@ -59,7 +59,7 @@
         private void LoadCurrencies()
         {
             Datasave.StartConnection();
-            Datasave.TryGetDataFromTable("Currencies", "*", out currenciesFromDatabase);
+            Datasave.TryGetDataFromTable("Currencies", "*", out _currenciesFromDatabase);
             Datasave.EndConnection();
         }
         private void LoadAirlinesTablesNames()
@@ -71,15 +71,13 @@
 
             for (int i = 0; i < tables.Rows.Count; i++)
             {
-                if(tables.Rows[i].ItemArray[2].ToString() != "Currencies" &&
+                if (tables.Rows[i].ItemArray[2].ToString() != "Currencies" &&
                     tables.Rows[i].ItemArray[2].ToString() != "Airports")
                 {
                     collection.Add(tables.Rows[i].ItemArray[2].ToString());
                 }
             }
 
-            
-           
             airlineTextBox.AutoCompleteCustomSource = collection;
 
             Datasave.EndConnection();
@@ -90,19 +88,20 @@
         }
         private void departureAirportTextBox_DoubleClick(object sender, EventArgs e)
         {
-            LocationSelectionForm locationSelectionForm = new LocationSelectionForm(this, airportsFromDatabase, true);
+            LocationSelectionForm locationSelectionForm = new LocationSelectionForm(this, _airportsFromDatabase, true);
             locationSelectionForm.Show();
         }
         private void arrivalAirportTextBox_DoubleClick(object sender, EventArgs e)
         {
-            LocationSelectionForm locationSelectionForm = new LocationSelectionForm(this, airportsFromDatabase, false);
+            LocationSelectionForm locationSelectionForm = new LocationSelectionForm(this, _airportsFromDatabase, false);
             locationSelectionForm.Show();
         }
         private void PrepareComboBoxes()
         {
-            string[] suggestionsArray = new string[] { "Ekonominė", "Verslo", "Premium", "Pirma" };
+            object[] suggestionsArray = { "Ekonominė", "Verslo", "Premium", "Pirma" };
             classComboBox.Items.AddRange(suggestionsArray);
             Controls.Add(classComboBox);
+            classComboBox.Text = "Ekonominė";
         }
         private void PrepareCheckListBox()
         {
@@ -126,20 +125,55 @@
         }
         private void collectedDataButton_Click(object sender, EventArgs e)
         {
-            TryFillAirlineFlightsDataGridView(airlineTextBox.Text);
-            filterCheckedListBox.Enabled = true;
+            if (TryFillAirlineFlightsDataGridView())
+            {
+                filterCheckedListBox.Enabled = true;
+            }
         }
-        private bool TryFillAirlineFlightsDataGridView(string tableName)
+        private bool TryFillAirlineFlightsDataGridView()
         {
+            string query;
+
             Datasave.StartConnection();
 
-            if (Datasave.TryGetDataFromTable(tableName, "*", out DataTable dataFromDatabase))
+            if (airlineTextBox.Text != string.Empty)
             {
-                airlineFlightsDataGridView.DataSource = dataFromDatabase;
-                ChangeAirlineFlightsDataGridViewHeaders();
+                query = Datasave.ConstructSelectionString(airlineTextBox.Text, departureAirportTextBox.Text, arrivalAirportTextBox.Text,
+                    departureDateTimePicker.Text, arrivalDateTimePicker.Text, OWRTcheckBox.Checked, classComboBox.Text);
+                
+                if (Datasave.TryGetDataFromTableCustom(query, out DataTable dataFromDatabase))
+                {
+                    airlineFlightsDataGridView.DataSource = dataFromDatabase;
 
-                Datasave.Connection.Close();
-                return true;
+                    Datasave.EndConnection();
+                    ChangeAirlineFlightsDataGridViewHeaders();
+                    return true;
+                }
+            }
+            else
+            {
+                DataTable allDataFromDatabase = new DataTable();
+                foreach (var tableName in airlineTextBox.AutoCompleteCustomSource)
+                {
+                    query = Datasave.ConstructSelectionString(tableName.ToString(), departureAirportTextBox.Text, arrivalAirportTextBox.Text,
+                        departureDateTimePicker.Text, arrivalDateTimePicker.Text, OWRTcheckBox.Checked, classComboBox.Text);
+                    
+                    if (Datasave.TryGetDataFromTableCustom(query, out DataTable dataFromDatabase))
+                    {
+                        if (dataFromDatabase.Rows.Count != 0)
+                        {
+                            allDataFromDatabase.Merge(dataFromDatabase);
+                        }
+                    }
+                }
+
+                if (allDataFromDatabase.Rows.Count != 0)
+                {
+                    airlineFlightsDataGridView.DataSource = allDataFromDatabase;
+                    ChangeAirlineFlightsDataGridViewHeaders();
+                    Datasave.EndConnection();
+                    return true;
+                }
             }
 
             Datasave.EndConnection();
@@ -159,39 +193,39 @@
             airlineFlightsDataGridView.Columns[27].Visible = false;
             airlineFlightsDataGridView.Columns[28].Visible = false;
 
-            airlineFlightsDataGridView.Columns[1].HeaderText = "Išvykimo IATA";
-            airlineFlightsDataGridView.Columns[2].HeaderText = "Atvykimo IATA";
-            airlineFlightsDataGridView.Columns[3].HeaderText = "Sustojimo IATA";
-            airlineFlightsDataGridView.Columns[4].HeaderText = "Kaina be mokesčių";
-            airlineFlightsDataGridView.Columns[5].HeaderText = "Pilna kaina";
-            airlineFlightsDataGridView.Columns[6].HeaderText = "Mokestis";
-            airlineFlightsDataGridView.Columns[7].HeaderText = "Išvykimo laikas";
-            airlineFlightsDataGridView.Columns[8].HeaderText = "Atvykimo laikas";
-            airlineFlightsDataGridView.Columns[9].HeaderText = "Kelionės trukmė";
-            airlineFlightsDataGridView.Columns[10].HeaderText = "Skrydžio kategorija";
-            airlineFlightsDataGridView.Columns[11].HeaderText = "Skrydžio numeris";
+            airlineFlightsDataGridView.Columns[1].HeaderText = @"Išvykimo IATA";
+            airlineFlightsDataGridView.Columns[2].HeaderText = @"Atvykimo IATA";
+            airlineFlightsDataGridView.Columns[3].HeaderText = @"Sustojimo IATA";
+            airlineFlightsDataGridView.Columns[4].HeaderText = @"Kaina be mokesčių";
+            airlineFlightsDataGridView.Columns[5].HeaderText = @"Pilna kaina";
+            airlineFlightsDataGridView.Columns[6].HeaderText = @"Mokestis";
+            airlineFlightsDataGridView.Columns[7].HeaderText = @"Išvykimo laikas";
+            airlineFlightsDataGridView.Columns[8].HeaderText = @"Atvykimo laikas";
+            airlineFlightsDataGridView.Columns[9].HeaderText = @"Kelionės trukmė";
+            airlineFlightsDataGridView.Columns[10].HeaderText = @"Skrydžio kategorija";
+            airlineFlightsDataGridView.Columns[11].HeaderText = @"Skrydžio numeris";
 
             //inbound
 
-            airlineFlightsDataGridView.Columns[12].HeaderText = "Išvykimo IATA";
-            airlineFlightsDataGridView.Columns[13].HeaderText = "Atvykimo IATA";
-            airlineFlightsDataGridView.Columns[14].HeaderText = "Sustojimo IATA";
-            airlineFlightsDataGridView.Columns[15].HeaderText = "Kaina be mokesčių";
-            airlineFlightsDataGridView.Columns[16].HeaderText = "Pilna kaina";
-            airlineFlightsDataGridView.Columns[17].HeaderText = "Mokestis";
-            airlineFlightsDataGridView.Columns[18].HeaderText = "Išvykimo laikas";
-            airlineFlightsDataGridView.Columns[19].HeaderText = "Atvykimo laikas";
-            airlineFlightsDataGridView.Columns[20].HeaderText = "Kelionės trukmė";
-            airlineFlightsDataGridView.Columns[21].HeaderText = "Skrydžio kategorija";
-            airlineFlightsDataGridView.Columns[22].HeaderText = "Skrydžio numeris";
+            airlineFlightsDataGridView.Columns[12].HeaderText = @"Išvykimo IATA";
+            airlineFlightsDataGridView.Columns[13].HeaderText = @"Atvykimo IATA";
+            airlineFlightsDataGridView.Columns[14].HeaderText = @"Sustojimo IATA";
+            airlineFlightsDataGridView.Columns[15].HeaderText = @"Kaina be mokesčių";
+            airlineFlightsDataGridView.Columns[16].HeaderText = @"Pilna kaina";
+            airlineFlightsDataGridView.Columns[17].HeaderText = @"Mokestis";
+            airlineFlightsDataGridView.Columns[18].HeaderText = @"Išvykimo laikas";
+            airlineFlightsDataGridView.Columns[19].HeaderText = @"Atvykimo laikas";
+            airlineFlightsDataGridView.Columns[20].HeaderText = @"Kelionės trukmė";
+            airlineFlightsDataGridView.Columns[21].HeaderText = @"Skrydžio kategorija";
+            airlineFlightsDataGridView.Columns[22].HeaderText = @"Skrydžio numeris";
 
-            airlineFlightsDataGridView.Columns[23].HeaderText = "Visos kelionės kaina be mokesčių";
-            airlineFlightsDataGridView.Columns[24].HeaderText = "Visos kelionės kaina";
-            airlineFlightsDataGridView.Columns[25].HeaderText = "Visos kelionės mokesčiai";
+            airlineFlightsDataGridView.Columns[23].HeaderText = @"Visos kelionės kaina be mokesčių";
+            airlineFlightsDataGridView.Columns[24].HeaderText = @"Visos kelionės kaina";
+            airlineFlightsDataGridView.Columns[25].HeaderText = @"Visos kelionės mokesčiai";
 
-            airlineFlightsDataGridView.Columns[26].HeaderText = "Valiuta";
-            airlineFlightsDataGridView.Columns[27].HeaderText = "Klasė";
-            airlineFlightsDataGridView.Columns[28].HeaderText = "Avialinija";
+            airlineFlightsDataGridView.Columns[26].HeaderText = @"Valiuta";
+            airlineFlightsDataGridView.Columns[27].HeaderText = @"Klasė";
+            airlineFlightsDataGridView.Columns[28].HeaderText = @"Avialinija";
         }
         private void filterCheckedListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -239,8 +273,10 @@
             if (columnIndex == 1 || columnIndex == 2 || columnIndex == 3 ||
                columnIndex == 12 || columnIndex == 13 || columnIndex == 14)
             {
-                IATAInformationForm iATAInformationForm = new IATAInformationForm(airportsFromDatabase, cellValue);
-                iATAInformationForm.StartPosition = FormStartPosition.Manual;
+                IATAInformationForm iATAInformationForm = new IATAInformationForm(_airportsFromDatabase, cellValue)
+                {
+                    StartPosition = FormStartPosition.Manual
+                };
 
                 var cellRectangle = airlineFlightsDataGridView.GetCellDisplayRectangle(cellSelected[0].ColumnIndex, cellSelected[0].RowIndex, true);
 
@@ -253,7 +289,7 @@
                 columnIndex == 15 || columnIndex == 16 || columnIndex == 17 ||
                 columnIndex == 23 || columnIndex == 24 || columnIndex == 25)
             {
-                CurrencyConverterForm currencyConverterForm = new CurrencyConverterForm(this, airlineFlightsDataGridView.Rows[cellSelected[0].RowIndex].Cells[26].Value.ToString(), currenciesFromDatabase);
+                CurrencyConverterForm currencyConverterForm = new CurrencyConverterForm(this, airlineFlightsDataGridView.Rows[cellSelected[0].RowIndex].Cells[26].Value.ToString(), _currenciesFromDatabase);
                 currencyConverterForm.Show();
             }
         }
@@ -266,9 +302,13 @@
             {
                 foreach (int columnId in columnsIds)
                 {
-                    airlineFlightsDataGridView.Rows[i].Cells[columnId].Value = airlineFlightsDataGridView.Rows[i].Cells[columnId].Value.ToString() != string.Empty
-                         ? Math.Round((decimal)airlineFlightsDataGridView.Rows[i].Cells[columnId].Value * (decimal)TradeRate, 2)
-                         : airlineFlightsDataGridView.Rows[i].Cells[columnId].Value;
+                    if (TradeRate != null)
+                        airlineFlightsDataGridView.Rows[i].Cells[columnId].Value =
+                            airlineFlightsDataGridView.Rows[i].Cells[columnId].Value.ToString() != string.Empty
+                                ? Math.Round(
+                                    (decimal)airlineFlightsDataGridView.Rows[i].Cells[columnId].Value *
+                                    (decimal)TradeRate, 2)
+                                : airlineFlightsDataGridView.Rows[i].Cells[columnId].Value;
                 }
 
                 airlineFlightsDataGridView.Rows[i].Cells[26].Value = newCurrency.ToUpper();
