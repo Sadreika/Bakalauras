@@ -62,9 +62,9 @@
                 listToCheck = AirportSuggestionsList;
             }
 
-            for (int i = 0; i < IATASuggestionsList.Count; i++)
+            if (locationTextBox.Text != null)
             {
-                if (locationTextBox.Text != null)
+                for (int i = 0; i < IATASuggestionsList.Count; i++)
                 {
                     if (listToCheck[i].ToLower().Contains(locationTextBox.Text.ToLower()))
                     {

@@ -48,7 +48,7 @@ namespace Flights_Recommendation_System_GUI
             this.departureDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.arrivalDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.airlineFlightsDataGridView = new System.Windows.Forms.DataGridView();
-            this.allFlightsButton = new System.Windows.Forms.Button();
+            this.collectedDataButton = new System.Windows.Forms.Button();
             this.searchButton = new System.Windows.Forms.Button();
             this.filterCheckedListBox = new System.Windows.Forms.CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)(this.airlineFlightsDataGridView)).BeginInit();
@@ -173,6 +173,8 @@ namespace Flights_Recommendation_System_GUI
             // 
             // airlineTextBox
             // 
+            this.airlineTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.airlineTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.airlineTextBox.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.airlineTextBox.Location = new System.Drawing.Point(143, 38);
             this.airlineTextBox.Name = "airlineTextBox";
@@ -210,16 +212,16 @@ namespace Flights_Recommendation_System_GUI
             this.airlineFlightsDataGridView.TabIndex = 21;
             this.airlineFlightsDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.airlineFlightsDataGridView_CellClick);
             // 
-            // allFlightsButton
+            // collectedDataButton
             // 
-            this.allFlightsButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.allFlightsButton.Location = new System.Drawing.Point(54, 83);
-            this.allFlightsButton.Name = "allFlightsButton";
-            this.allFlightsButton.Size = new System.Drawing.Size(214, 30);
-            this.allFlightsButton.TabIndex = 22;
-            this.allFlightsButton.Text = "Visi avialinijos skrydžiai";
-            this.allFlightsButton.UseVisualStyleBackColor = true;
-            this.allFlightsButton.Click += new System.EventHandler(this.allFlightsButton_Click);
+            this.collectedDataButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.collectedDataButton.Location = new System.Drawing.Point(54, 83);
+            this.collectedDataButton.Name = "collectedDataButton";
+            this.collectedDataButton.Size = new System.Drawing.Size(214, 30);
+            this.collectedDataButton.TabIndex = 22;
+            this.collectedDataButton.Text = "Rodyti surinktus duomenis";
+            this.collectedDataButton.UseVisualStyleBackColor = true;
+            this.collectedDataButton.Click += new System.EventHandler(this.collectedDataButton_Click);
             // 
             // searchButton
             // 
@@ -250,7 +252,7 @@ namespace Flights_Recommendation_System_GUI
             this.ClientSize = new System.Drawing.Size(1902, 993);
             this.Controls.Add(this.filterCheckedListBox);
             this.Controls.Add(this.searchButton);
-            this.Controls.Add(this.allFlightsButton);
+            this.Controls.Add(this.collectedDataButton);
             this.Controls.Add(this.airlineFlightsDataGridView);
             this.Controls.Add(this.arrivalDateTimePicker);
             this.Controls.Add(this.departureDateTimePicker);
@@ -295,7 +297,7 @@ namespace Flights_Recommendation_System_GUI
         private System.Windows.Forms.DateTimePicker departureDateTimePicker;
         private System.Windows.Forms.DateTimePicker arrivalDateTimePicker;
         private System.Windows.Forms.DataGridView airlineFlightsDataGridView;
-        private System.Windows.Forms.Button allFlightsButton;
+        private System.Windows.Forms.Button collectedDataButton;
         private System.Windows.Forms.Button searchButton;
         private CheckedListBox filterCheckedListBox;
     }

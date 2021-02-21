@@ -25,6 +25,7 @@
             InitializeComponent();
             LoadAirports();
             LoadCurrencies();
+            LoadAirlinesTablesNames();
             PrepareComboBoxes();
             PrepareCheckListBox();
             OWRTcheckBox.Checked = true;
@@ -59,6 +60,28 @@
         {
             Datasave.StartConnection();
             Datasave.TryGetDataFromTable("Currencies", "*", out currenciesFromDatabase);
+            Datasave.EndConnection();
+        }
+        private void LoadAirlinesTablesNames()
+        {
+            Datasave.StartConnection();
+
+            DataTable tables = Datasave.Connection.GetSchema("Tables");
+            AutoCompleteStringCollection collection = new AutoCompleteStringCollection();
+
+            for (int i = 0; i < tables.Rows.Count; i++)
+            {
+                if(tables.Rows[i].ItemArray[2].ToString() != "Currencies" &&
+                    tables.Rows[i].ItemArray[2].ToString() != "Airports")
+                {
+                    collection.Add(tables.Rows[i].ItemArray[2].ToString());
+                }
+            }
+
+            
+           
+            airlineTextBox.AutoCompleteCustomSource = collection;
+
             Datasave.EndConnection();
         }
         private void MainForm_Load(object sender, EventArgs e)
@@ -101,7 +124,7 @@
                 arrivalDateTimePicker.Enabled = false;
             }
         }
-        private void allFlightsButton_Click(object sender, EventArgs e)
+        private void collectedDataButton_Click(object sender, EventArgs e)
         {
             TryFillAirlineFlightsDataGridView(airlineTextBox.Text);
             filterCheckedListBox.Enabled = true;
@@ -234,7 +257,6 @@
                 currencyConverterForm.Show();
             }
         }
-
         public void ChangeCurrency(string newCurrency, ProgressBar convertProgressBar)
         {
             List<int> columnsIds = new List<int>() { 4, 5, 6, 15, 16, 17, 23, 24, 25 };
@@ -249,7 +271,7 @@
                          : airlineFlightsDataGridView.Rows[i].Cells[columnId].Value;
                 }
 
-                airlineFlightsDataGridView.Rows[i].Cells[26].Value = newCurrency;
+                airlineFlightsDataGridView.Rows[i].Cells[26].Value = newCurrency.ToUpper();
                 convertProgressBar.Increment(1);
             }
 
