@@ -41,7 +41,6 @@
             SeriesCollection series = new SeriesCollection();
             series.Add(new LineSeries() { Title = "Kursas", Values = new ChartValues<double>(values)});
             currencyCartesianChart.Series = series;
-            //currencyCartesianChart.Series.AddRange(values);
         }
     }
 }

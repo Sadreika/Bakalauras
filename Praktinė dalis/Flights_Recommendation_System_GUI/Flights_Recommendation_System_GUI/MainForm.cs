@@ -9,9 +9,10 @@
     public partial class MainForm : Form
     {
         public string IATAToSet { get; set; }
+        public double? TradeRate { get; set; }
 
         private DatasaveFunctions Datasave = new DatasaveFunctions(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=FlightsRecommendationSystemDatabase;Integrated Security=True");
-        
+
         private List<string> IATASuggestionsList;
 
         private AutoCompleteStringCollection Collection = new AutoCompleteStringCollection();
@@ -30,7 +31,7 @@
         }
         public void RefreshAirportTextBox(bool isDepartureAirport)
         {
-            if(isDepartureAirport)
+            if (isDepartureAirport)
             {
                 departureAirportTextBox.Text = IATAToSet;
             }
@@ -42,7 +43,7 @@
         private void LoadAirports()
         {
             Datasave.StartConnection();
-            if(Datasave.TryGetDataFromTable("Airports", "*", out airportsFromDatabase))
+            if (Datasave.TryGetDataFromTable("Airports", "*", out airportsFromDatabase))
             {
                 IATASuggestionsList = airportsFromDatabase.Rows.OfType<DataRow>().Select(x => x.Field<string>("IATA")).ToList();
 
@@ -91,7 +92,7 @@
         }
         private void OWRTcheckBox_Click(object sender, EventArgs e)
         {
-            if(OWRTcheckBox.Checked)
+            if (OWRTcheckBox.Checked)
             {
                 arrivalDateTimePicker.Enabled = true;
             }
@@ -203,6 +204,7 @@
             filterCheckedListBox.SetItemChecked(filterCheckedListBox.SelectedIndex, valueToSet);
 
             filterCheckedListBox.Refresh();
+            airlineFlightsDataGridView.Update();
             airlineFlightsDataGridView.Refresh();
         }
         private void airlineFlightsDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -232,9 +234,32 @@
                 currencyConverterForm.Show();
             }
         }
+
+        public void ChangeCurrency(string newCurrency, ProgressBar convertProgressBar)
+        {
+            List<int> columnsIds = new List<int>() { 4, 5, 6, 15, 16, 17, 23, 24, 25 };
+
+            convertProgressBar.Maximum = airlineFlightsDataGridView.Rows.Count - 1;
+            for (int i = 0; i < airlineFlightsDataGridView.Rows.Count - 1; i++)
+            {
+                foreach (int columnId in columnsIds)
+                {
+                    airlineFlightsDataGridView.Rows[i].Cells[columnId].Value = airlineFlightsDataGridView.Rows[i].Cells[columnId].Value.ToString() != string.Empty
+                         ? Math.Round((decimal)airlineFlightsDataGridView.Rows[i].Cells[columnId].Value * (decimal)TradeRate, 2)
+                         : airlineFlightsDataGridView.Rows[i].Cells[columnId].Value;
+                }
+
+                airlineFlightsDataGridView.Rows[i].Cells[26].Value = newCurrency;
+                convertProgressBar.Increment(1);
+            }
+
+
+            airlineFlightsDataGridView.Update();
+            airlineFlightsDataGridView.Refresh();
+        }
         private void searchButton_Click(object sender, EventArgs e)
         {
-           
+
         }
     }
 }

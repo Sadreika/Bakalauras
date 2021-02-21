@@ -38,6 +38,7 @@ namespace Flights_Recommendation_System_GUI
             this.currenciesDataGridView = new System.Windows.Forms.DataGridView();
             this.conversionInfoButton = new System.Windows.Forms.Button();
             this.rateLabel = new System.Windows.Forms.Label();
+            this.convertProgressBar = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.currenciesDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -120,11 +121,19 @@ namespace Flights_Recommendation_System_GUI
             this.rateLabel.TabIndex = 7;
             this.rateLabel.Text = "empty";
             // 
+            // convertProgressBar
+            // 
+            this.convertProgressBar.Location = new System.Drawing.Point(132, 115);
+            this.convertProgressBar.Name = "convertProgressBar";
+            this.convertProgressBar.Size = new System.Drawing.Size(459, 34);
+            this.convertProgressBar.TabIndex = 8;
+            // 
             // CurrencyConverterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(682, 273);
+            this.Controls.Add(this.convertProgressBar);
             this.Controls.Add(this.rateLabel);
             this.Controls.Add(this.conversionInfoButton);
             this.Controls.Add(this.currenciesDataGridView);
@@ -154,5 +163,6 @@ namespace Flights_Recommendation_System_GUI
         private System.Windows.Forms.DataGridView currenciesDataGridView;
         private System.Windows.Forms.Button conversionInfoButton;
         private System.Windows.Forms.Label rateLabel;
+        private System.Windows.Forms.ProgressBar convertProgressBar;
     }
 }
