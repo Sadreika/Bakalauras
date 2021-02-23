@@ -111,23 +111,11 @@
 
             string query = string.Empty;
 
-            query += $"SELECT * fROM {airlineText} ";
+            query += $"SELECT * fROM {airlineText} WHERE ";
 
-            if (departureAirportText != string.Empty && arrivalAirportText != string.Empty)
-            {
-                query += $"WHERE OriginOutbound = '{departureAirportText}' " +
-                         $"AND DestinationOutbound = '{arrivalAirportText}' " +
-
-                         $"AND DATEPART(yyyy, DepartureTimeOutbound) = {departureDateParts[0]} " +
-                         $"AND DATEPART(MM, DepartureTimeOutbound) = {departureDateParts[1]} " +
-                         $"AND DATEPART(dd, DepartureTimeOutbound) = {departureDateParts[2]} ";
-            }
-            else
-            {
-                query += $"WHERE DATEPART(yyyy, DepartureTimeOutbound) = {departureDateParts[0]} " +
-                         $"AND DATEPART(MM, DepartureTimeOutbound) = {departureDateParts[1]} " +
-                         $"AND DATEPART(dd, DepartureTimeOutbound) = {departureDateParts[2]} ";
-            }
+            query += $"DATEPART(yyyy, DepartureTimeOutbound) = {departureDateParts[0]} ";
+            query += $"AND DATEPART(MM, DepartureTimeOutbound) = {departureDateParts[1]} " +
+                     $"AND DATEPART(dd, DepartureTimeOutbound) = {departureDateParts[2]} ";
 
             if (owrtCheck)
             {
@@ -138,6 +126,15 @@
             else
             {
                 query += "AND ArrivalTimeInbound IS NULL ";
+            }
+
+            if (departureAirportText != string.Empty)
+            {
+                query += $"AND OriginOutbound = '{departureAirportText}' ";
+            }
+            if (arrivalAirportText != string.Empty)
+            {
+                query += $"AND DestinationOutbound = '{arrivalAirportText}' ";
             }
 
             query += $"AND Class = '{Dictionary.TravelClassesDictionary[classComboBoxText]}'";
