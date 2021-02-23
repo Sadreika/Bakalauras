@@ -47,6 +47,7 @@
                         {
                             break;
                         }
+
                         pageNumber += 1;
                     }
                     while (true);
@@ -60,6 +61,8 @@
             Client.BaseUrl = new Uri(Urls.airportCodeUrl + $"{c}.html?page={pageNumber}", UriKind.Absolute);
             RestRequest request = new RestRequest("", Method.GET);
             IRestResponse response = Client.Execute(request);
+
+            Console.WriteLine(Urls.airportCodeUrl + $"{c}.html?page={pageNumber}");
 
             return TryExtractData(response.Content);
         }
@@ -85,11 +88,11 @@
                 airportsInfo = RegexFunctions.RegexToMultiStringArray(content, Regexes.AirportData);
             }
 
-            foreach(string[] airportInfo in airportsInfo)
+            foreach (string[] airportInfo in airportsInfo)
             {
                 Datasave.TryFillTableWithData("Airports", columnNames, airportInfo.ToList());
             }
-            
+
             return true;
         }
     }

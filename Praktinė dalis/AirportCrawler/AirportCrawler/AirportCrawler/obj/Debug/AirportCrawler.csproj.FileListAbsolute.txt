@@ -7,3 +7,4 @@ C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirportCrawler\Airpor
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirportCrawler\AirportCrawler\AirportCrawler\obj\Debug\AirportCrawler.csproj.CopyComplete
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirportCrawler\AirportCrawler\AirportCrawler\obj\Debug\AirportCrawler.exe
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirportCrawler\AirportCrawler\AirportCrawler\obj\Debug\AirportCrawler.pdb
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\AirportCrawler\AirportCrawler\AirportCrawler\obj\Debug\AirportCrawler.csprojAssemblyReference.cache
