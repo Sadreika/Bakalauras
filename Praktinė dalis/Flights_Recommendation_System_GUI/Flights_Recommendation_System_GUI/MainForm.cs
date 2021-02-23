@@ -321,7 +321,21 @@
         }
         private void searchButton_Click(object sender, EventArgs e)
         {
+            string flightType = OWRTcheckBox.Checked ? "R" : "O";
 
+            if(departureAirportTextBox.Text != string.Empty &&
+                arrivalAirportTextBox.Text != string.Empty)
+            {
+                string searchCriteria = $"{departureAirportTextBox.Text.ToUpper()}|{arrivalAirportTextBox.Text.ToUpper()}|" +
+                    $"{departureDateTimePicker.Value.ToString("yyyy")}|" +
+                    $"{departureDateTimePicker.Value.ToString("MM")}|" +
+                    $"{departureDateTimePicker.Value.ToString("dd")}|" +
+                    $"{arrivalDateTimePicker.Value.ToString("yyyy")}|" +
+                    $"{arrivalDateTimePicker.Value.ToString("MM")}|" +
+                    $"{arrivalDateTimePicker.Value.ToString("dd")}|" +
+                    $"{Dictionary.TravelClassesDictionary[classComboBox.Text]}|" +
+                    $"{flightType}||";
+            }
         }
     }
 }
