@@ -356,6 +356,8 @@
         private void compareButton_Click(object sender, EventArgs e)
         {
             TryFillAirlineFlightsDataGridView(false);
+            CompareChartForm compareChartForm = new CompareChartForm(airlineFlightsDataGridView);
+            compareChartForm.Show();
         }
     }
 }

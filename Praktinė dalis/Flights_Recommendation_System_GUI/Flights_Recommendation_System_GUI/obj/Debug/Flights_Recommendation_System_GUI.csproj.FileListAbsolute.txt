@@ -29,3 +29,4 @@ C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Flights_Recommendatio
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Flights_Recommendation_System_GUI\Flights_Recommendation_System_GUI\bin\Debug\LiveCharts.Wpf.pdb
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Flights_Recommendation_System_GUI\Flights_Recommendation_System_GUI\bin\Debug\LiveCharts.Wpf.xml
 C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Flights_Recommendation_System_GUI\Flights_Recommendation_System_GUI\obj\Debug\Flights_Recommendation_System_GUI.ChartForm.resources
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\Flights_Recommendation_System_GUI\Flights_Recommendation_System_GUI\obj\Debug\Flights_Recommendation_System_GUI.CompareChartForm.resources
