@@ -4,6 +4,8 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Diagnostics;
+    using System.IO;
     using System.Linq;
     using System.Windows.Forms;
     public partial class MainForm : Form
@@ -19,7 +21,6 @@
 
         private DataTable _airportsFromDatabase = new DataTable();
         private DataTable _currenciesFromDatabase = new DataTable();
-
         public MainForm()
         {
             InitializeComponent();
@@ -125,12 +126,12 @@
         }
         private void collectedDataButton_Click(object sender, EventArgs e)
         {
-            if (TryFillAirlineFlightsDataGridView())
+            if (TryFillAirlineFlightsDataGridView(true))
             {
                 filterCheckedListBox.Enabled = true;
             }
         }
-        private bool TryFillAirlineFlightsDataGridView()
+        private bool TryFillAirlineFlightsDataGridView(bool isSearch)
         {
             string query;
 
@@ -139,7 +140,7 @@
             if (airlineTextBox.Text != string.Empty)
             {
                 query = Datasave.ConstructSelectionString(airlineTextBox.Text, departureAirportTextBox.Text, arrivalAirportTextBox.Text,
-                    departureDateTimePicker.Text, arrivalDateTimePicker.Text, OWRTcheckBox.Checked, classComboBox.Text);
+                    departureDateTimePicker.Text, arrivalDateTimePicker.Text, OWRTcheckBox.Checked, classComboBox.Text, isSearch);
                 
                 if (Datasave.TryGetDataFromTableCustom(query, out DataTable dataFromDatabase))
                 {
@@ -156,7 +157,7 @@
                 foreach (var tableName in airlineTextBox.AutoCompleteCustomSource)
                 {
                     query = Datasave.ConstructSelectionString(tableName.ToString(), departureAirportTextBox.Text, arrivalAirportTextBox.Text,
-                        departureDateTimePicker.Text, arrivalDateTimePicker.Text, OWRTcheckBox.Checked, classComboBox.Text);
+                        departureDateTimePicker.Text, arrivalDateTimePicker.Text, OWRTcheckBox.Checked, classComboBox.Text, isSearch);
                     
                     if (Datasave.TryGetDataFromTableCustom(query, out DataTable dataFromDatabase))
                     {
@@ -324,18 +325,37 @@
             string flightType = OWRTcheckBox.Checked ? "R" : "O";
 
             if(departureAirportTextBox.Text != string.Empty &&
-                arrivalAirportTextBox.Text != string.Empty)
+                arrivalAirportTextBox.Text != string.Empty && airlineTextBox.Text != string.Empty)
             {
-                string searchCriteria = $"{departureAirportTextBox.Text.ToUpper()}|{arrivalAirportTextBox.Text.ToUpper()}|" +
-                    $"{departureDateTimePicker.Value.ToString("yyyy")}|" +
-                    $"{departureDateTimePicker.Value.ToString("MM")}|" +
-                    $"{departureDateTimePicker.Value.ToString("dd")}|" +
-                    $"{arrivalDateTimePicker.Value.ToString("yyyy")}|" +
-                    $"{arrivalDateTimePicker.Value.ToString("MM")}|" +
-                    $"{arrivalDateTimePicker.Value.ToString("dd")}|" +
-                    $"{Dictionary.TravelClassesDictionary[classComboBox.Text]}|" +
-                    $"{flightType}||";
-            }
+                Process compiler = new Process();
+
+                compiler.StartInfo.FileName = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName, "Crawlers\\") + $"{airlineTextBox.Text}.exe";
+
+                compiler.StartInfo.Arguments = $"\"{departureAirportTextBox.Text.ToUpper()}|{arrivalAirportTextBox.Text.ToUpper()}|" +
+                   $"{departureDateTimePicker.Value.ToString("yyyy")}|" +
+                   $"{departureDateTimePicker.Value.ToString("MM")}|" +
+                   $"{departureDateTimePicker.Value.ToString("dd")}|" +
+                   $"{arrivalDateTimePicker.Value.ToString("yyyy")}|" +
+                   $"{arrivalDateTimePicker.Value.ToString("MM")}|" +
+                   $"{arrivalDateTimePicker.Value.ToString("dd")}|" +
+                   $"{Dictionary.TravelClassesDictionary[classComboBox.Text]}|" +
+                   $"{flightType}||0\"";
+
+                compiler.StartInfo.CreateNoWindow = true;
+                compiler.StartInfo.UseShellExecute = false;
+                compiler.StartInfo.RedirectStandardOutput = true;
+
+                compiler.Start();
+                this.Enabled = false;
+                compiler.WaitForExit();
+                this.Enabled = true;
+                TryFillAirlineFlightsDataGridView(true);
+            } 
+        }
+
+        private void compareButton_Click(object sender, EventArgs e)
+        {
+            TryFillAirlineFlightsDataGridView(false);
         }
     }
 }

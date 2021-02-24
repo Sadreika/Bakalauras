@@ -51,6 +51,7 @@ namespace Flights_Recommendation_System_GUI
             this.collectedDataButton = new System.Windows.Forms.Button();
             this.searchButton = new System.Windows.Forms.Button();
             this.filterCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.compareButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.airlineFlightsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -183,26 +184,26 @@ namespace Flights_Recommendation_System_GUI
             // 
             // departureDateTimePicker
             // 
+            this.departureDateTimePicker.CustomFormat = "yyyy-MM-dd";
             this.departureDateTimePicker.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.departureDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.departureDateTimePicker.Location = new System.Drawing.Point(717, 40);
             this.departureDateTimePicker.MinDate = new System.DateTime(2021, 2, 10, 0, 0, 0, 0);
             this.departureDateTimePicker.Name = "departureDateTimePicker";
             this.departureDateTimePicker.Size = new System.Drawing.Size(229, 22);
             this.departureDateTimePicker.TabIndex = 19;
-            this.departureDateTimePicker.Format = DateTimePickerFormat.Custom;
-            this.departureDateTimePicker.CustomFormat = "yyyy-MM-dd";
             // 
             // arrivalDateTimePicker
             // 
             this.arrivalDateTimePicker.CalendarFont = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.arrivalDateTimePicker.CustomFormat = "yyyy-MM-dd";
             this.arrivalDateTimePicker.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.arrivalDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.arrivalDateTimePicker.Location = new System.Drawing.Point(718, 78);
             this.arrivalDateTimePicker.MinDate = new System.DateTime(2021, 2, 10, 0, 0, 0, 0);
             this.arrivalDateTimePicker.Name = "arrivalDateTimePicker";
             this.arrivalDateTimePicker.Size = new System.Drawing.Size(228, 22);
             this.arrivalDateTimePicker.TabIndex = 20;
-            this.arrivalDateTimePicker.Format = DateTimePickerFormat.Custom;
-            this.arrivalDateTimePicker.CustomFormat = "yyyy-MM-dd";
             // 
             // airlineFlightsDataGridView
             // 
@@ -248,12 +249,24 @@ namespace Flights_Recommendation_System_GUI
             this.filterCheckedListBox.TabIndex = 24;
             this.filterCheckedListBox.SelectedIndexChanged += new System.EventHandler(this.filterCheckedListBox_SelectedIndexChanged);
             // 
+            // compareButton
+            // 
+            this.compareButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compareButton.Location = new System.Drawing.Point(1196, 83);
+            this.compareButton.Name = "compareButton";
+            this.compareButton.Size = new System.Drawing.Size(177, 29);
+            this.compareButton.TabIndex = 25;
+            this.compareButton.Text = "Atlikti palyginimą";
+            this.compareButton.UseVisualStyleBackColor = true;
+            this.compareButton.Click += new System.EventHandler(this.compareButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1902, 993);
+            this.Controls.Add(this.compareButton);
             this.Controls.Add(this.filterCheckedListBox);
             this.Controls.Add(this.searchButton);
             this.Controls.Add(this.collectedDataButton);
@@ -304,6 +317,7 @@ namespace Flights_Recommendation_System_GUI
         private System.Windows.Forms.Button collectedDataButton;
         private System.Windows.Forms.Button searchButton;
         private CheckedListBox filterCheckedListBox;
+        private Button compareButton;
     }
 }
 
