@@ -11,44 +11,67 @@
         public CompareChartForm(DataGridView airlineFlightsDataGridView)
         {
             InitializeComponent();
-            // reikia maziausiu kainu saraso
-            // reikia atskiro grafo inboundui ir atskiro outboundui
-            List<decimal> priceList = new List<decimal>();
-            List<DateTime> tempDateList = new List<DateTime>();
+
+            ChartData chartData = new ChartData();
+
+            List<ChartData> outboundChartDataList = new List<ChartData>();
+            List<ChartData> inboundChartDataList = new List<ChartData>();
 
             for (int i = 1; i < airlineFlightsDataGridView.Rows.Count - 1; i++)
             {
-                priceList.Add((decimal)airlineFlightsDataGridView.Rows[i].Cells[5].Value);
-                tempDateList.Add((DateTime)airlineFlightsDataGridView.Rows[i].Cells[7].Value);
+                ChartData outboundChartData = new ChartData((decimal)airlineFlightsDataGridView.Rows[i].Cells[5].Value, (DateTime)airlineFlightsDataGridView.Rows[i].Cells[7].Value);
+                outboundChartDataList.Add(outboundChartData);
 
                 if (airlineFlightsDataGridView.Rows[i].Cells[16].Value != null)
                 {
-                    priceList.Add((decimal)airlineFlightsDataGridView.Rows[i].Cells[16].Value);
-                    tempDateList.Add((DateTime)airlineFlightsDataGridView.Rows[i].Cells[19].Value);
+                    ChartData inboundChartData = new ChartData((decimal)airlineFlightsDataGridView.Rows[i].Cells[16].Value, (DateTime)airlineFlightsDataGridView.Rows[i].Cells[19].Value);
+                    inboundChartDataList.Add(inboundChartData);
                 }
             }
 
-            tempDateList.Sort();
+            outboundChartDataList = chartData.FilterChartList(outboundChartDataList);
+            inboundChartDataList = chartData.FilterChartList(inboundChartDataList);
 
-            List<string> dateList = new List<string>();
-            dateList.AddRange(tempDateList.Select(x => x.ToString("yyyy MM dd")));
-            dateList = dateList.Distinct().ToList();
+            List<string> fullDateList = new List<string>();
+            fullDateList = outboundChartDataList.Select(x => x.DateLabel).ToList();
 
-            compareCartesianChart.AxisX.Add(new LiveCharts.Wpf.Axis
+            outboundCompareCartesianChart.AxisX.Add(new LiveCharts.Wpf.Axis
             {
                 Title = "Dienos",
-                Labels = dateList
+                Labels = fullDateList
             });
 
-            compareCartesianChart.AxisY.Add(new LiveCharts.Wpf.Axis
+            outboundCompareCartesianChart.AxisY.Add(new LiveCharts.Wpf.Axis
             {
                 Title = "Kainos",
             });
 
-            compareCartesianChart.Series.Clear();
-            SeriesCollection series = new SeriesCollection();
-            series.Add(new LineSeries() { Title = "Kaina", Values = new ChartValues<decimal>(priceList) });
-            compareCartesianChart.Series = series;
+            fullDateList = inboundChartDataList.Select(x => x.DateLabel).ToList();
+
+            inboundCompareCartesianChart.AxisX.Add(new LiveCharts.Wpf.Axis
+            {
+                Title = "Dienos",
+                Labels = fullDateList
+            });
+
+            inboundCompareCartesianChart.AxisY.Add(new LiveCharts.Wpf.Axis
+            {
+                Title = "Kainos",
+            });
+
+            outboundCompareCartesianChart.Series.Clear();
+            inboundCompareCartesianChart.Series.Clear();
+
+            SeriesCollection outboundSeries = new SeriesCollection();
+            SeriesCollection inboundSeries = new SeriesCollection();
+
+            outboundSeries.Add(new LineSeries() { Title = "Išvykimo kaina", Values = new ChartValues<decimal>(outboundChartDataList.Select(x => x.Price).ToList())});
+
+            outboundCompareCartesianChart.Series = outboundSeries;
+
+            inboundSeries.Add(new LineSeries() { Title = "Grįžimo kaina", Values = new ChartValues<decimal>(inboundChartDataList.Select(x => x.Price).ToList())});
+
+            inboundCompareCartesianChart.Series = inboundSeries;
         }
     }
 }

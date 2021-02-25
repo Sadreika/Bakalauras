@@ -60,6 +60,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChartData.cs" />
     <Compile Include="ChartForm.cs">
       <SubType>Form</SubType>
     </Compile>

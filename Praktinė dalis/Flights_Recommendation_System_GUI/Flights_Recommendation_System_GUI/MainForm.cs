@@ -359,5 +359,52 @@
             CompareChartForm compareChartForm = new CompareChartForm(airlineFlightsDataGridView);
             compareChartForm.Show();
         }
+
+        private void intervalSearchButton_Click(object sender, EventArgs e)
+        {
+            string flightType = OWRTcheckBox.Checked ? "R" : "O";
+
+            int pattern = 1;
+            int daysToAdd = 7;
+            int daysToSearchCount = int.Parse(arrivalDateTimePicker.Value.Subtract(departureDateTimePicker.Value).Days.ToString());
+
+            if (departureAirportTextBox.Text != string.Empty &&
+                arrivalAirportTextBox.Text != string.Empty && airlineTextBox.Text != string.Empty)
+            {
+                Process compiler = new Process();
+
+                compiler.StartInfo.FileName = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName, "Crawlers\\") + $"{airlineTextBox.Text}.exe";
+
+                compiler.StartInfo.CreateNoWindow = true;
+                compiler.StartInfo.UseShellExecute = false;
+                compiler.StartInfo.RedirectStandardOutput = true;
+
+                this.Enabled = false;
+                
+                for (int i = 0; i < daysToSearchCount; i++)
+                {
+                    DateTime tempDepartureDateTime = departureDateTimePicker.Value;
+                    tempDepartureDateTime = tempDepartureDateTime.AddDays(daysToAdd);
+
+                    compiler.StartInfo.Arguments = $"\"{departureAirportTextBox.Text.ToUpper()}|{arrivalAirportTextBox.Text.ToUpper()}|" +
+                        $"{departureDateTimePicker.Value.ToString("yyyy")}|" +
+                        $"{departureDateTimePicker.Value.ToString("MM")}|" +
+                        $"{departureDateTimePicker.Value.ToString("dd")}|" +
+                        $"{tempDepartureDateTime.ToString("yyyy")}|" +
+                        $"{tempDepartureDateTime.ToString("MM")}|" +
+                        $"{tempDepartureDateTime.ToString("dd")}|" +
+                        $"{Dictionary.TravelClassesDictionary[classComboBox.Text]}|" +
+                        $"{flightType}||0\"";
+
+                    compiler.Start();
+                    compiler.WaitForExit();
+
+                    departureDateTimePicker.Value = departureDateTimePicker.Value.AddDays(pattern);
+                }
+              
+                this.Enabled = true;
+                TryFillAirlineFlightsDataGridView(true);
+            }
+        }
     }
 }

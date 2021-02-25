@@ -52,6 +52,7 @@ namespace Flights_Recommendation_System_GUI
             this.searchButton = new System.Windows.Forms.Button();
             this.filterCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.compareButton = new System.Windows.Forms.Button();
+            this.intervalSearchButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.airlineFlightsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -260,12 +261,24 @@ namespace Flights_Recommendation_System_GUI
             this.compareButton.UseVisualStyleBackColor = true;
             this.compareButton.Click += new System.EventHandler(this.compareButton_Click);
             // 
+            // intervalSearchButton
+            // 
+            this.intervalSearchButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.intervalSearchButton.Location = new System.Drawing.Point(1392, 83);
+            this.intervalSearchButton.Name = "intervalSearchButton";
+            this.intervalSearchButton.Size = new System.Drawing.Size(177, 29);
+            this.intervalSearchButton.TabIndex = 26;
+            this.intervalSearchButton.Text = "Paieška intervale";
+            this.intervalSearchButton.UseVisualStyleBackColor = true;
+            this.intervalSearchButton.Click += new System.EventHandler(this.intervalSearchButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1902, 993);
+            this.Controls.Add(this.intervalSearchButton);
             this.Controls.Add(this.compareButton);
             this.Controls.Add(this.filterCheckedListBox);
             this.Controls.Add(this.searchButton);
@@ -318,6 +331,7 @@ namespace Flights_Recommendation_System_GUI
         private System.Windows.Forms.Button searchButton;
         private CheckedListBox filterCheckedListBox;
         private Button compareButton;
+        private Button intervalSearchButton;
     }
 }
 
