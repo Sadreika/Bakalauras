@@ -101,7 +101,6 @@
             Datasave.TryFillTableWithData(combinationsList);
             return true;
         }
-
         private bool TryLoadFlights(out string responseBody)
         {
             responseBody = null;
@@ -279,7 +278,8 @@
                 
                 if(isFirstLeg)
                 {
-                    airline = ((string)singleLeg.SelectToken("flight.description")).Split().First();
+                    string[] airlineParts = ((string)singleLeg.SelectToken("flight.description")).Split();
+                    airline = string.Join(" ", airlineParts.Take(airlineParts.Length - 1));
                 }
                 else
                 {
