@@ -1,11 +1,11 @@
 ﻿namespace SuperSaverSe
 {
+    using Newtonsoft.Json.Linq;
     using RestSharp;
     using SuperSaverSe.Functions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Newtonsoft.Json.Linq;
     using System.Text.RegularExpressions;
 
     public class Crawler
@@ -34,7 +34,7 @@
             {
                 return false;
             }
-           
+
             JToken flightPageJson = JToken.Parse(RegexFunctions.RegexToString(responseBody, Regexes.ReFlightsJson));
 
             var recommendations = ExtractRecommendations(flightPageJson);
@@ -64,7 +64,7 @@
                     continue;
                 }
 
-                if(!ExtractData(outbound, out Flight extractedOutboundFlight))
+                if (!ExtractData(outbound, out Flight extractedOutboundFlight))
                 {
                     continue;
                 }
@@ -238,7 +238,7 @@
             {
                 bool isFirstLeg = singleLeg == legs.First();
 
-                if(legs.Count() == 2)
+                if (legs.Count() == 2)
                 {
                     if (isFirstLeg)
                     {
@@ -275,15 +275,17 @@
                 {
                     return false;
                 }
-                
-                if(isFirstLeg)
+
+                if (isFirstLeg)
                 {
                     string[] airlineParts = ((string)singleLeg.SelectToken("flight.description")).Split();
                     airline = string.Join(" ", airlineParts.Take(airlineParts.Length - 1));
                 }
                 else
                 {
-                    if(airline != ((string)singleLeg.SelectToken("flight.description")).Split().First())
+                    string[] airlineParts = ((string)singleLeg.SelectToken("flight.description")).Split();
+
+                    if (airline != string.Join(" ", airlineParts.Take(airlineParts.Length - 1)))
                     {
                         return false;
                     }
