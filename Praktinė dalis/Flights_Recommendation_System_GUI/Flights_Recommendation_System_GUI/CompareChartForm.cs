@@ -12,66 +12,42 @@
         {
             InitializeComponent();
 
-            ChartData chartData = new ChartData();
-
-            List<ChartData> outboundChartDataList = new List<ChartData>();
-            List<ChartData> inboundChartDataList = new List<ChartData>();
+            List<ChartData> dataGridDataList = new List<ChartData>();
 
             for (int i = 1; i < airlineFlightsDataGridView.Rows.Count - 1; i++)
             {
-                ChartData outboundChartData = new ChartData((decimal)airlineFlightsDataGridView.Rows[i].Cells[5].Value, (DateTime)airlineFlightsDataGridView.Rows[i].Cells[7].Value);
-                outboundChartDataList.Add(outboundChartData);
-
-                if (airlineFlightsDataGridView.Rows[i].Cells[16].Value != null)
-                {
-                    ChartData inboundChartData = new ChartData((decimal)airlineFlightsDataGridView.Rows[i].Cells[16].Value, (DateTime)airlineFlightsDataGridView.Rows[i].Cells[19].Value);
-                    inboundChartDataList.Add(inboundChartData);
-                }
+                ChartData chartData = new ChartData((decimal)airlineFlightsDataGridView.Rows[i].Cells[24].Value, (DateTime)airlineFlightsDataGridView.Rows[i].Cells[7].Value, (string)airlineFlightsDataGridView.Rows[i].Cells[28].Value);
+                dataGridDataList.Add(chartData);
             }
 
-            outboundChartDataList = chartData.FilterChartList(outboundChartDataList);
-            inboundChartDataList = chartData.FilterChartList(inboundChartDataList);
+            List<List<ChartData>> chartDataList = ChartData.FilterChartList(dataGridDataList);
 
             List<string> fullDateList = new List<string>();
-            fullDateList = outboundChartDataList.Select(x => x.DateLabel).ToList();
+            fullDateList = dataGridDataList.Select(x => x.DateLabel).ToList();
+            fullDateList = fullDateList.Distinct().ToList();
 
-            outboundCompareCartesianChart.AxisX.Add(new LiveCharts.Wpf.Axis
+            compareCartesianChart.AxisX.Add(new LiveCharts.Wpf.Axis
             {
                 Title = "Dienos",
                 Labels = fullDateList
             });
 
-            outboundCompareCartesianChart.AxisY.Add(new LiveCharts.Wpf.Axis
+            compareCartesianChart.AxisY.Add(new LiveCharts.Wpf.Axis
             {
                 Title = "Kainos",
             });
 
-            fullDateList = inboundChartDataList.Select(x => x.DateLabel).ToList();
+            compareCartesianChart.Series.Clear();
 
-            inboundCompareCartesianChart.AxisX.Add(new LiveCharts.Wpf.Axis
+            SeriesCollection series = new SeriesCollection();
+
+            foreach (List<ChartData> chartData in chartDataList)
             {
-                Title = "Dienos",
-                Labels = fullDateList
-            });
+                string chartName = chartData.First().Airline;
+                series.Add(new LineSeries() { Title = chartName, Values = new ChartValues<decimal>(chartData.Select(x => x.Price).ToList()) });
+            }
 
-            inboundCompareCartesianChart.AxisY.Add(new LiveCharts.Wpf.Axis
-            {
-                Title = "Kainos",
-            });
-
-            outboundCompareCartesianChart.Series.Clear();
-            inboundCompareCartesianChart.Series.Clear();
-
-            SeriesCollection outboundSeries = new SeriesCollection();
-            SeriesCollection inboundSeries = new SeriesCollection();
-
-            outboundSeries.Add(new LineSeries() { Title = "Išvykimo kaina", Values = new ChartValues<decimal>(outboundChartDataList.Select(x => x.Price).ToList())});
-
-            outboundCompareCartesianChart.Series = outboundSeries;
-
-            inboundSeries.Add(new LineSeries() { Title = "Grįžimo kaina", Values = new ChartValues<decimal>(inboundChartDataList.Select(x => x.Price).ToList())});
-
-            inboundCompareCartesianChart.Series = inboundSeries;
+            compareCartesianChart.Series = series;
         }
     }
 }

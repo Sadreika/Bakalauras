@@ -106,6 +106,7 @@
         }
         private void PrepareCheckListBox()
         {
+            filterCheckedListBox.Items.Add("Rodyti tarpines kainas");
             filterCheckedListBox.Items.Add("Rodyti sustojimus");
             filterCheckedListBox.Items.Add("Rodyti skrydžio numerį");
             filterCheckedListBox.Items.Add("Rodyti skrydžio kategoriją");
@@ -183,12 +184,17 @@
         }
         private void ChangeAirlineFlightsDataGridViewHeaders()
         {
-            //outbound
             airlineFlightsDataGridView.Columns[0].Visible = false;
             airlineFlightsDataGridView.Columns[3].Visible = false;
+            airlineFlightsDataGridView.Columns[4].Visible = false;
+            airlineFlightsDataGridView.Columns[5].Visible = false;
+            airlineFlightsDataGridView.Columns[6].Visible = false;
             airlineFlightsDataGridView.Columns[10].Visible = false;
             airlineFlightsDataGridView.Columns[11].Visible = false;
             airlineFlightsDataGridView.Columns[14].Visible = false;
+            airlineFlightsDataGridView.Columns[15].Visible = false;
+            airlineFlightsDataGridView.Columns[16].Visible = false;
+            airlineFlightsDataGridView.Columns[17].Visible = false;
             airlineFlightsDataGridView.Columns[21].Visible = false;
             airlineFlightsDataGridView.Columns[22].Visible = false;
             airlineFlightsDataGridView.Columns[27].Visible = false;
@@ -205,9 +211,6 @@
             airlineFlightsDataGridView.Columns[9].HeaderText = @"Kelionės trukmė";
             airlineFlightsDataGridView.Columns[10].HeaderText = @"Skrydžio kategorija";
             airlineFlightsDataGridView.Columns[11].HeaderText = @"Skrydžio numeris";
-
-            //inbound
-
             airlineFlightsDataGridView.Columns[12].HeaderText = @"Išvykimo IATA";
             airlineFlightsDataGridView.Columns[13].HeaderText = @"Atvykimo IATA";
             airlineFlightsDataGridView.Columns[14].HeaderText = @"Sustojimo IATA";
@@ -235,25 +238,34 @@
             switch (filterCheckedListBox.SelectedIndex)
             {
                 case 0:
+                    valueToSet = airlineFlightsDataGridView.Columns[4].Visible == true ? false : true;
+                    airlineFlightsDataGridView.Columns[4].Visible = valueToSet;
+                    airlineFlightsDataGridView.Columns[5].Visible = valueToSet;
+                    airlineFlightsDataGridView.Columns[6].Visible = valueToSet;
+                    airlineFlightsDataGridView.Columns[15].Visible = valueToSet;
+                    airlineFlightsDataGridView.Columns[16].Visible = valueToSet;
+                    airlineFlightsDataGridView.Columns[17].Visible = valueToSet;
+                    break;
+                case 1:
                     valueToSet = airlineFlightsDataGridView.Columns[3].Visible == true ? false : true;
                     airlineFlightsDataGridView.Columns[3].Visible = valueToSet;
                     airlineFlightsDataGridView.Columns[14].Visible = valueToSet;
                     break;
-                case 1:
+                case 2:
                     valueToSet = airlineFlightsDataGridView.Columns[22].Visible == true ? false : true;
                     airlineFlightsDataGridView.Columns[11].Visible = valueToSet;
                     airlineFlightsDataGridView.Columns[22].Visible = valueToSet;
                     break;
-                case 2:
+                case 3:
                     valueToSet = airlineFlightsDataGridView.Columns[21].Visible == true ? false : true;
                     airlineFlightsDataGridView.Columns[10].Visible = valueToSet;
                     airlineFlightsDataGridView.Columns[21].Visible = valueToSet;
                     break;
-                case 3:
+                case 4:
                     valueToSet = airlineFlightsDataGridView.Columns[27].Visible == true ? false : true;
                     airlineFlightsDataGridView.Columns[27].Visible = valueToSet;
                     break;
-                case 4:
+                case 5:
                     valueToSet = airlineFlightsDataGridView.Columns[28].Visible == true ? false : true;
                     airlineFlightsDataGridView.Columns[28].Visible = valueToSet;
                     break;
@@ -349,15 +361,21 @@
                 this.Enabled = false;
                 compiler.WaitForExit();
                 this.Enabled = true;
-                TryFillAirlineFlightsDataGridView(true);
+                if (TryFillAirlineFlightsDataGridView(true))
+                {
+                    filterCheckedListBox.Enabled = true;
+                }
             } 
         }
 
         private void compareButton_Click(object sender, EventArgs e)
         {
-            TryFillAirlineFlightsDataGridView(false);
-            //CompareChartForm compareChartForm = new CompareChartForm(airlineFlightsDataGridView);
-            //compareChartForm.Show();
+            if (TryFillAirlineFlightsDataGridView(false))
+            {
+                filterCheckedListBox.Enabled = true;
+            }
+            CompareChartForm compareChartForm = new CompareChartForm(airlineFlightsDataGridView);
+            compareChartForm.Show();
         }
 
         private void intervalSearchButton_Click(object sender, EventArgs e)
@@ -411,7 +429,10 @@
                 }
 
                 this.Enabled = true;
-                TryFillAirlineFlightsDataGridView(true);
+                if (TryFillAirlineFlightsDataGridView(true))
+                {
+                    filterCheckedListBox.Enabled = true;
+                }
             }
         }
     }

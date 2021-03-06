@@ -208,7 +208,7 @@ namespace Flights_Recommendation_System_GUI
             // 
             // airlineFlightsDataGridView
             // 
-            this.airlineFlightsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.airlineFlightsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.airlineFlightsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.airlineFlightsDataGridView.Location = new System.Drawing.Point(12, 146);
             this.airlineFlightsDataGridView.Name = "airlineFlightsDataGridView";
