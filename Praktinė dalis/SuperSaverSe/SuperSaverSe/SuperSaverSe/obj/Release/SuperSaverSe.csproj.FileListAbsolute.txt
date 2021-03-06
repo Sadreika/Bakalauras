@@ -1,0 +1,12 @@
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\SuperSaverSe\SuperSaverSe\SuperSaverSe\bin\Release\SuperSaverSe.exe.config
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\SuperSaverSe\SuperSaverSe\SuperSaverSe\bin\Release\SuperSaverSe.exe
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\SuperSaverSe\SuperSaverSe\SuperSaverSe\bin\Release\SuperSaverSe.pdb
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\SuperSaverSe\SuperSaverSe\SuperSaverSe\bin\Release\Newtonsoft.Json.dll
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\SuperSaverSe\SuperSaverSe\SuperSaverSe\bin\Release\RestSharp.dll
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\SuperSaverSe\SuperSaverSe\SuperSaverSe\bin\Release\Newtonsoft.Json.xml
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\SuperSaverSe\SuperSaverSe\SuperSaverSe\bin\Release\RestSharp.xml
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\SuperSaverSe\SuperSaverSe\SuperSaverSe\obj\Release\SuperSaverSe.csprojAssemblyReference.cache
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\SuperSaverSe\SuperSaverSe\SuperSaverSe\obj\Release\SuperSaverSe.csproj.CoreCompileInputs.cache
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\SuperSaverSe\SuperSaverSe\SuperSaverSe\obj\Release\SuperSaverSe.csproj.CopyComplete
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\SuperSaverSe\SuperSaverSe\SuperSaverSe\obj\Release\SuperSaverSe.exe
+C:\Users\mariu\Documents\GitHub\Bakalauras\Praktinė dalis\SuperSaverSe\SuperSaverSe\SuperSaverSe\obj\Release\SuperSaverSe.pdb

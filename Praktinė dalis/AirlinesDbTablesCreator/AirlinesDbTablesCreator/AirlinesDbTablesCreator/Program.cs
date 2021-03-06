@@ -17,7 +17,7 @@
                 { "DestinationOutbound nvarchar(5) NOT NULL" },
                 { "ConnectionOutbound nvarchar(5)" },
 
-                { "PriceWithoutTaxesOutbound decimal(10,2) NOT NULL" },
+                { "PriceWithoutTaxesOutbound decimal(10,2)" },
                 { "FullPriceOutbound decimal(10,2)" },
                 { "TaxesOutbound decimal(10,2)" },
 
