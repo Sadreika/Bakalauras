@@ -356,17 +356,25 @@
         private void compareButton_Click(object sender, EventArgs e)
         {
             TryFillAirlineFlightsDataGridView(false);
-            CompareChartForm compareChartForm = new CompareChartForm(airlineFlightsDataGridView);
-            compareChartForm.Show();
+            //CompareChartForm compareChartForm = new CompareChartForm(airlineFlightsDataGridView);
+            //compareChartForm.Show();
         }
 
         private void intervalSearchButton_Click(object sender, EventArgs e)
         {
+            IntervalForm intervalForm = new IntervalForm(this);
+            intervalForm.Show();
+        }
+
+        public void intervalSearch(DateTimePicker startOfIntervalDateTimePicker, DateTimePicker endOfIntervalDateTimePicker, NumericUpDown differenceNumericUpDown, NumericUpDown patternNumericUpDown)
+        { 
             string flightType = OWRTcheckBox.Checked ? "R" : "O";
 
-            int pattern = 1;
-            int daysToAdd = 7;
-            int daysToSearchCount = int.Parse(arrivalDateTimePicker.Value.Subtract(departureDateTimePicker.Value).Days.ToString());
+            int pattern = (int)differenceNumericUpDown.Value;
+
+            int daysToAdd = (int)patternNumericUpDown.Value;
+
+            int daysToSearchCount = int.Parse(endOfIntervalDateTimePicker.Value.Subtract(startOfIntervalDateTimePicker.Value).Days.ToString());
 
             if (departureAirportTextBox.Text != string.Empty &&
                 arrivalAirportTextBox.Text != string.Empty && airlineTextBox.Text != string.Empty)
@@ -380,7 +388,7 @@
                 compiler.StartInfo.RedirectStandardOutput = true;
 
                 this.Enabled = false;
-                
+
                 for (int i = 0; i < daysToSearchCount; i++)
                 {
                     DateTime tempDepartureDateTime = departureDateTimePicker.Value;
@@ -401,7 +409,7 @@
 
                     departureDateTimePicker.Value = departureDateTimePicker.Value.AddDays(pattern);
                 }
-              
+
                 this.Enabled = true;
                 TryFillAirlineFlightsDataGridView(true);
             }

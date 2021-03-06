@@ -223,7 +223,7 @@ namespace Flights_Recommendation_System_GUI
             this.collectedDataButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.collectedDataButton.Location = new System.Drawing.Point(54, 83);
             this.collectedDataButton.Name = "collectedDataButton";
-            this.collectedDataButton.Size = new System.Drawing.Size(214, 30);
+            this.collectedDataButton.Size = new System.Drawing.Size(214, 29);
             this.collectedDataButton.TabIndex = 22;
             this.collectedDataButton.Text = "Rodyti surinktus duomenis";
             this.collectedDataButton.UseVisualStyleBackColor = true;
@@ -232,7 +232,7 @@ namespace Flights_Recommendation_System_GUI
             // searchButton
             // 
             this.searchButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchButton.Location = new System.Drawing.Point(1196, 34);
+            this.searchButton.Location = new System.Drawing.Point(1206, 34);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(177, 30);
             this.searchButton.TabIndex = 23;
@@ -244,7 +244,7 @@ namespace Flights_Recommendation_System_GUI
             // 
             this.filterCheckedListBox.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.filterCheckedListBox.FormattingEnabled = true;
-            this.filterCheckedListBox.Location = new System.Drawing.Point(1656, 22);
+            this.filterCheckedListBox.Location = new System.Drawing.Point(1656, 24);
             this.filterCheckedListBox.Name = "filterCheckedListBox";
             this.filterCheckedListBox.Size = new System.Drawing.Size(234, 104);
             this.filterCheckedListBox.TabIndex = 24;
@@ -253,7 +253,7 @@ namespace Flights_Recommendation_System_GUI
             // compareButton
             // 
             this.compareButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compareButton.Location = new System.Drawing.Point(1196, 83);
+            this.compareButton.Location = new System.Drawing.Point(1432, 81);
             this.compareButton.Name = "compareButton";
             this.compareButton.Size = new System.Drawing.Size(177, 29);
             this.compareButton.TabIndex = 25;
@@ -264,7 +264,7 @@ namespace Flights_Recommendation_System_GUI
             // intervalSearchButton
             // 
             this.intervalSearchButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.intervalSearchButton.Location = new System.Drawing.Point(1392, 83);
+            this.intervalSearchButton.Location = new System.Drawing.Point(1432, 33);
             this.intervalSearchButton.Name = "intervalSearchButton";
             this.intervalSearchButton.Size = new System.Drawing.Size(177, 29);
             this.intervalSearchButton.TabIndex = 26;

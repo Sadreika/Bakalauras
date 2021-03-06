@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace Flights_Recommendation_System_GUI
 {
     partial class IntervalForm
@@ -36,26 +38,32 @@ namespace Flights_Recommendation_System_GUI
             this.endOfIntervalLabel = new System.Windows.Forms.Label();
             this.searchButton = new System.Windows.Forms.Button();
             this.patternLabel = new System.Windows.Forms.Label();
-            this.patternNumericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.patternNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.searchCountLabel = new System.Windows.Forms.Label();
             this.differenceNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)(this.patternNumericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.patternNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.differenceNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // startOfIntervalDateTimePicker
             // 
+            this.startOfIntervalDateTimePicker.CustomFormat = "yyyy-MM-dd";
             this.startOfIntervalDateTimePicker.Location = new System.Drawing.Point(156, 39);
+            this.startOfIntervalDateTimePicker.MinDate = new System.DateTime(2021, 3, 6, 16, 5, 40, 862);
             this.startOfIntervalDateTimePicker.Name = "startOfIntervalDateTimePicker";
             this.startOfIntervalDateTimePicker.Size = new System.Drawing.Size(200, 22);
             this.startOfIntervalDateTimePicker.TabIndex = 0;
+            this.startOfIntervalDateTimePicker.Value = new System.DateTime(2021, 3, 6, 16, 5, 40, 862);
             // 
             // endOfIntervalDateTimePicker
             // 
+            this.endOfIntervalDateTimePicker.CustomFormat = "yyyy-MM-dd";
             this.endOfIntervalDateTimePicker.Location = new System.Drawing.Point(156, 71);
+            this.endOfIntervalDateTimePicker.MinDate = new System.DateTime(2021, 3, 6, 16, 5, 40, 863);
             this.endOfIntervalDateTimePicker.Name = "endOfIntervalDateTimePicker";
             this.endOfIntervalDateTimePicker.Size = new System.Drawing.Size(200, 22);
             this.endOfIntervalDateTimePicker.TabIndex = 1;
+            this.endOfIntervalDateTimePicker.Value = new System.DateTime(2021, 3, 6, 16, 5, 40, 863);
             // 
             // startOfIntervalLabel
             // 
@@ -86,6 +94,7 @@ namespace Flights_Recommendation_System_GUI
             this.searchButton.TabIndex = 4;
             this.searchButton.Text = "Ieškoti";
             this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // patternLabel
             // 
@@ -97,12 +106,17 @@ namespace Flights_Recommendation_System_GUI
             this.patternLabel.TabIndex = 6;
             this.patternLabel.Text = "Išvykimo laikotarpis";
             // 
-            // patternNumericUpDown1
+            // patternNumericUpDown
             // 
-            this.patternNumericUpDown1.Location = new System.Drawing.Point(236, 112);
-            this.patternNumericUpDown1.Name = "patternNumericUpDown1";
-            this.patternNumericUpDown1.Size = new System.Drawing.Size(120, 22);
-            this.patternNumericUpDown1.TabIndex = 7;
+            this.patternNumericUpDown.Location = new System.Drawing.Point(236, 112);
+            this.patternNumericUpDown.Maximum = new decimal(new int[] {
+            365,
+            0,
+            0,
+            0});
+            this.patternNumericUpDown.Name = "patternNumericUpDown";
+            this.patternNumericUpDown.Size = new System.Drawing.Size(120, 22);
+            this.patternNumericUpDown.TabIndex = 7;
             // 
             // searchCountLabel
             // 
@@ -117,6 +131,11 @@ namespace Flights_Recommendation_System_GUI
             // differenceNumericUpDown
             // 
             this.differenceNumericUpDown.Location = new System.Drawing.Point(236, 150);
+            this.differenceNumericUpDown.Maximum = new decimal(new int[] {
+            365,
+            0,
+            0,
+            0});
             this.differenceNumericUpDown.Name = "differenceNumericUpDown";
             this.differenceNumericUpDown.Size = new System.Drawing.Size(120, 22);
             this.differenceNumericUpDown.TabIndex = 9;
@@ -128,7 +147,7 @@ namespace Flights_Recommendation_System_GUI
             this.ClientSize = new System.Drawing.Size(382, 233);
             this.Controls.Add(this.differenceNumericUpDown);
             this.Controls.Add(this.searchCountLabel);
-            this.Controls.Add(this.patternNumericUpDown1);
+            this.Controls.Add(this.patternNumericUpDown);
             this.Controls.Add(this.patternLabel);
             this.Controls.Add(this.searchButton);
             this.Controls.Add(this.endOfIntervalLabel);
@@ -139,7 +158,8 @@ namespace Flights_Recommendation_System_GUI
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "IntervalForm";
             this.Text = "Paieška intervale";
-            ((System.ComponentModel.ISupportInitialize)(this.patternNumericUpDown1)).EndInit();
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.IntervalForm_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.patternNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.differenceNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -154,7 +174,7 @@ namespace Flights_Recommendation_System_GUI
         private System.Windows.Forms.Label endOfIntervalLabel;
         private System.Windows.Forms.Button searchButton;
         private System.Windows.Forms.Label patternLabel;
-        private System.Windows.Forms.NumericUpDown patternNumericUpDown1;
+        private System.Windows.Forms.NumericUpDown patternNumericUpDown;
         private System.Windows.Forms.Label searchCountLabel;
         private System.Windows.Forms.NumericUpDown differenceNumericUpDown;
     }
