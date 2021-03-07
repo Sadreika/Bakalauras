@@ -16,8 +16,16 @@
             CityList = dataFromDatabase.Rows.OfType<DataRow>().Select(x => x.Field<string>("City")).ToList();
             CountryList = dataFromDatabase.Rows.OfType<DataRow>().Select(x => x.Field<string>("Country")).ToList();
 
-            cityInfoLabel.Text = CityList[index];
-            countryInfoLabel.Text = CountryList[index];
+            if(index != -1)
+            {
+                cityInfoLabel.Text = CityList[index];
+                countryInfoLabel.Text = CountryList[index];
+            }
+            else
+            {
+                cityInfoLabel.Text = "Nerasta";
+                countryInfoLabel.Text = "Nerasta";
+            }
         }
 
         private void IATAInformationForm_Click(object sender, System.EventArgs e)

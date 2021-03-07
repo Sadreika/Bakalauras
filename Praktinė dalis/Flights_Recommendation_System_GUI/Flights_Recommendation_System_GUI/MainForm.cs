@@ -139,6 +139,7 @@
                 {
                     filterCheckedListBox.Enabled = true;
                 }
+                CalculateFlightByStopsCount();
             }
         }
         private bool TryFillAirlineFlightsDataGridView(bool isSearch)
@@ -286,35 +287,6 @@
             airlineFlightsDataGridView.Update();
             airlineFlightsDataGridView.Refresh();
         }
-        private void airlineFlightsDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            var cellSelected = airlineFlightsDataGridView.SelectedCells;
-            int columnIndex = cellSelected[0].ColumnIndex;
-            string cellValue = cellSelected[0].Value.ToString();
-
-            if (columnIndex == 1 || columnIndex == 2 || columnIndex == 3 ||
-               columnIndex == 12 || columnIndex == 13 || columnIndex == 14)
-            {
-                IATAInformationForm iATAInformationForm = new IATAInformationForm(_airportsFromDatabase, cellValue)
-                {
-                    StartPosition = FormStartPosition.Manual
-                };
-
-                var cellRectangle = airlineFlightsDataGridView.GetCellDisplayRectangle(cellSelected[0].ColumnIndex, cellSelected[0].RowIndex, true);
-
-                iATAInformationForm.Left = cellRectangle.Left;
-                iATAInformationForm.Top = cellRectangle.Bottom + 170;
-                iATAInformationForm.Show();
-            }
-
-            if (columnIndex == 4 || columnIndex == 5 || columnIndex == 6 ||
-                columnIndex == 15 || columnIndex == 16 || columnIndex == 17 ||
-                columnIndex == 23 || columnIndex == 24 || columnIndex == 25)
-            {
-                CurrencyConverterForm currencyConverterForm = new CurrencyConverterForm(this, airlineFlightsDataGridView.Rows[cellSelected[0].RowIndex].Cells[26].Value.ToString(), _currenciesFromDatabase);
-                currencyConverterForm.Show();
-            }
-        }
         public void ChangeCurrency(string newCurrency, ProgressBar convertProgressBar)
         {
             List<int> columnsIds = new List<int>() { 4, 5, 6, 15, 16, 17, 23, 24, 25 };
@@ -344,7 +316,8 @@
         private void searchButton_Click(object sender, EventArgs e)
         {
             string flightType = OWRTcheckBox.Checked ? "R" : "O";
-
+            string connectionCount = directFlightCheckBox.Checked ? "1" : "0";
+                 
             if (!ErrorNotification())
             {
                 Process compiler = new Process();
@@ -359,7 +332,7 @@
                    $"{arrivalDateTimePicker.Value.ToString("MM")}|" +
                    $"{arrivalDateTimePicker.Value.ToString("dd")}|" +
                    $"{Dictionary.TravelClassesDictionary[classComboBox.Text]}|" +
-                   $"{flightType}||0\"";
+                   $"{flightType}||{connectionCount}\"";
 
                 compiler.StartInfo.CreateNoWindow = true;
                 compiler.StartInfo.UseShellExecute = false;
@@ -373,6 +346,7 @@
                 {
                     filterCheckedListBox.Enabled = true;
                 }
+                CalculateFlightByStopsCount();
             }
         }
         private void compareButton_Click(object sender, EventArgs e)
@@ -380,6 +354,7 @@
             if (TryFillAirlineFlightsDataGridView(false))
             {
                 filterCheckedListBox.Enabled = true;
+                CalculateFlightByStopsCount();
             }
             CompareChartForm compareChartForm = new CompareChartForm(airlineFlightsDataGridView);
             compareChartForm.Show();
@@ -390,11 +365,12 @@
             {
                 IntervalForm intervalForm = new IntervalForm(this);
                 intervalForm.Show();
-            }
+            }  
         }
         public void IntervalSearch(DateTimePicker startOfIntervalDateTimePicker, DateTimePicker endOfIntervalDateTimePicker, NumericUpDown differenceNumericUpDown, NumericUpDown patternNumericUpDown)
         {
             string flightType = OWRTcheckBox.Checked ? "R" : "O";
+            string connectionCount = directFlightCheckBox.Checked ? "1" : "0";
 
             int pattern = (int)differenceNumericUpDown.Value;
 
@@ -428,7 +404,7 @@
                         $"{endOfIntervalDateTimePicker.Value.ToString("MM")}|" +
                         $"{endOfIntervalDateTimePicker.Value.ToString("dd")}|" +
                         $"{Dictionary.TravelClassesDictionary[classComboBox.Text]}|" +
-                        $"{flightType}||0\"";
+                        $"{flightType}||{connectionCount}\"";
 
                     compiler.Start();
                     compiler.WaitForExit();
@@ -441,6 +417,7 @@
                 {
                     filterCheckedListBox.Enabled = true;
                 }
+                CalculateFlightByStopsCount();
             }
         }
         public bool ErrorNotification()
@@ -468,6 +445,65 @@
             }
 
             return error;
+        }
+        public void CalculateFlightByStopsCount()
+        {
+            int directFlightCount = 0;
+
+            for(int i = 0; i < airlineFlightsDataGridView.Rows.Count - 1; i++)
+            {
+                if(airlineFlightsDataGridView.Rows[i].Cells[12].Value != null)
+                {
+                    if (airlineFlightsDataGridView.Rows[i].Cells[3].Value.ToString() == string.Empty &&
+                        airlineFlightsDataGridView.Rows[i].Cells[14].Value.ToString() == string.Empty)
+                    {
+                        directFlightCount++;
+                    }
+                }
+                else
+                {
+                    if (airlineFlightsDataGridView.Rows[i].Cells[3].Value.ToString() == string.Empty)
+                    {
+                        directFlightCount++;
+                    }
+                }
+            }
+
+            zeroConnectionLabel.Text = $" ({directFlightCount.ToString()})";
+            zeroConnectionLabel.Visible = true;
+
+            oneConnectionLabel.Text = $" ({(airlineFlightsDataGridView.Rows.Count - directFlightCount - 1).ToString()})";
+            oneConnectionLabel.Visible = true;
+        }
+
+        private void airlineFlightsDataGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var cellSelected = airlineFlightsDataGridView.SelectedCells;
+            int columnIndex = cellSelected[0].ColumnIndex;
+            string cellValue = cellSelected[0].Value.ToString();
+
+            if (columnIndex == 1 || columnIndex == 2 || columnIndex == 3 ||
+               columnIndex == 12 || columnIndex == 13 || columnIndex == 14)
+            {
+                IATAInformationForm iATAInformationForm = new IATAInformationForm(_airportsFromDatabase, cellValue)
+                {
+                    StartPosition = FormStartPosition.Manual
+                };
+
+                var cellRectangle = airlineFlightsDataGridView.GetCellDisplayRectangle(cellSelected[0].ColumnIndex, cellSelected[0].RowIndex, true);
+
+                iATAInformationForm.Left = cellRectangle.Left;
+                iATAInformationForm.Top = cellRectangle.Bottom + 170;
+                iATAInformationForm.Show();
+            }
+
+            if (columnIndex == 4 || columnIndex == 5 || columnIndex == 6 ||
+                columnIndex == 15 || columnIndex == 16 || columnIndex == 17 ||
+                columnIndex == 23 || columnIndex == 24 || columnIndex == 25)
+            {
+                CurrencyConverterForm currencyConverterForm = new CurrencyConverterForm(this, airlineFlightsDataGridView.Rows[cellSelected[0].RowIndex].Cells[26].Value.ToString(), _currenciesFromDatabase);
+                currencyConverterForm.Show();
+            }
         }
     }
 }
