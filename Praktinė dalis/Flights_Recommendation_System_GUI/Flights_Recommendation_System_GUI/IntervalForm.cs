@@ -1,5 +1,6 @@
 ﻿namespace Flights_Recommendation_System_GUI
 {
+    using System;
     using System.Windows.Forms;
     public partial class IntervalForm : Form
     {
@@ -10,8 +11,15 @@
             mainform.Enabled = false;
 
             InitializeComponent();
+            PrepareCalendar();
         }
-
+        private void PrepareCalendar()
+        {
+            startOfIntervalDateTimePicker.MinDate = DateTime.Now;
+            endOfIntervalDateTimePicker.MinDate = DateTime.Now;
+            startOfIntervalDateTimePicker.CustomFormat = "yyyy-MM-dd";
+            endOfIntervalDateTimePicker.CustomFormat = "yyyy-MM-dd";
+        }
         private void IntervalForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Mainform.Enabled = true;

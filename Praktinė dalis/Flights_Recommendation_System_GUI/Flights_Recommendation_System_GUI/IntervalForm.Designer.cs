@@ -47,21 +47,25 @@ namespace Flights_Recommendation_System_GUI
             // 
             // startOfIntervalDateTimePicker
             // 
+            this.startOfIntervalDateTimePicker.CalendarFont = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startOfIntervalDateTimePicker.CustomFormat = "yyyy-MM-dd";
+            this.startOfIntervalDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.startOfIntervalDateTimePicker.Location = new System.Drawing.Point(156, 39);
             this.startOfIntervalDateTimePicker.MinDate = new System.DateTime(2021, 3, 6, 16, 5, 40, 862);
             this.startOfIntervalDateTimePicker.Name = "startOfIntervalDateTimePicker";
-            this.startOfIntervalDateTimePicker.Size = new System.Drawing.Size(200, 22);
+            this.startOfIntervalDateTimePicker.Size = new System.Drawing.Size(227, 22);
             this.startOfIntervalDateTimePicker.TabIndex = 0;
             this.startOfIntervalDateTimePicker.Value = new System.DateTime(2021, 3, 6, 16, 5, 40, 862);
             // 
             // endOfIntervalDateTimePicker
             // 
+            this.endOfIntervalDateTimePicker.CalendarFont = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.endOfIntervalDateTimePicker.CustomFormat = "yyyy-MM-dd";
+            this.endOfIntervalDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.endOfIntervalDateTimePicker.Location = new System.Drawing.Point(156, 71);
             this.endOfIntervalDateTimePicker.MinDate = new System.DateTime(2021, 3, 6, 16, 5, 40, 863);
             this.endOfIntervalDateTimePicker.Name = "endOfIntervalDateTimePicker";
-            this.endOfIntervalDateTimePicker.Size = new System.Drawing.Size(200, 22);
+            this.endOfIntervalDateTimePicker.Size = new System.Drawing.Size(227, 22);
             this.endOfIntervalDateTimePicker.TabIndex = 1;
             this.endOfIntervalDateTimePicker.Value = new System.DateTime(2021, 3, 6, 16, 5, 40, 863);
             // 
@@ -88,7 +92,7 @@ namespace Flights_Recommendation_System_GUI
             // searchButton
             // 
             this.searchButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchButton.Location = new System.Drawing.Point(105, 192);
+            this.searchButton.Location = new System.Drawing.Point(114, 192);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(177, 29);
             this.searchButton.TabIndex = 4;
@@ -108,15 +112,25 @@ namespace Flights_Recommendation_System_GUI
             // 
             // patternNumericUpDown
             // 
-            this.patternNumericUpDown.Location = new System.Drawing.Point(236, 112);
+            this.patternNumericUpDown.Location = new System.Drawing.Point(263, 110);
             this.patternNumericUpDown.Maximum = new decimal(new int[] {
             365,
+            0,
+            0,
+            0});
+            this.patternNumericUpDown.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
             this.patternNumericUpDown.Name = "patternNumericUpDown";
             this.patternNumericUpDown.Size = new System.Drawing.Size(120, 22);
             this.patternNumericUpDown.TabIndex = 7;
+            this.patternNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // searchCountLabel
             // 
@@ -130,21 +144,31 @@ namespace Flights_Recommendation_System_GUI
             // 
             // differenceNumericUpDown
             // 
-            this.differenceNumericUpDown.Location = new System.Drawing.Point(236, 150);
+            this.differenceNumericUpDown.Location = new System.Drawing.Point(263, 148);
             this.differenceNumericUpDown.Maximum = new decimal(new int[] {
             365,
+            0,
+            0,
+            0});
+            this.differenceNumericUpDown.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
             this.differenceNumericUpDown.Name = "differenceNumericUpDown";
             this.differenceNumericUpDown.Size = new System.Drawing.Size(120, 22);
             this.differenceNumericUpDown.TabIndex = 9;
+            this.differenceNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // IntervalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(382, 233);
+            this.ClientSize = new System.Drawing.Size(400, 233);
             this.Controls.Add(this.differenceNumericUpDown);
             this.Controls.Add(this.searchCountLabel);
             this.Controls.Add(this.patternNumericUpDown);

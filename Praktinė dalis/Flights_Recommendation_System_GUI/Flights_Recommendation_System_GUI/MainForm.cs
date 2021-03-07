@@ -24,12 +24,18 @@
         public MainForm()
         {
             InitializeComponent();
+            PrepareCalendar();
             LoadAirports();
             LoadCurrencies();
             LoadAirlinesTablesNames();
             PrepareComboBoxes();
             PrepareCheckListBox();
             OWRTcheckBox.Checked = true;
+        }
+        private void PrepareCalendar()
+        {
+            arrivalDateTimePicker.MinDate = DateTime.Now;
+            departureDateTimePicker.MinDate = DateTime.Now;
         }
         public void RefreshAirportTextBox(bool isDepartureAirport)
         {
@@ -367,7 +373,6 @@
                 }
             } 
         }
-
         private void compareButton_Click(object sender, EventArgs e)
         {
             if (TryFillAirlineFlightsDataGridView(false))
@@ -377,13 +382,11 @@
             CompareChartForm compareChartForm = new CompareChartForm(airlineFlightsDataGridView);
             compareChartForm.Show();
         }
-
         private void intervalSearchButton_Click(object sender, EventArgs e)
         {
             IntervalForm intervalForm = new IntervalForm(this);
             intervalForm.Show();
         }
-
         public void intervalSearch(DateTimePicker startOfIntervalDateTimePicker, DateTimePicker endOfIntervalDateTimePicker, NumericUpDown differenceNumericUpDown, NumericUpDown patternNumericUpDown)
         { 
             string flightType = OWRTcheckBox.Checked ? "R" : "O";
@@ -407,25 +410,25 @@
 
                 this.Enabled = false;
 
-                for (int i = 0; i < daysToSearchCount; i++)
+                for (int i = 0; i < daysToSearchCount - pattern; i = i + pattern)
                 {
-                    DateTime tempDepartureDateTime = departureDateTimePicker.Value;
-                    tempDepartureDateTime = tempDepartureDateTime.AddDays(daysToAdd);
+                    endOfIntervalDateTimePicker.Value = startOfIntervalDateTimePicker.Value;
+                    endOfIntervalDateTimePicker.Value = endOfIntervalDateTimePicker.Value.AddDays(daysToAdd);
 
                     compiler.StartInfo.Arguments = $"\"{departureAirportTextBox.Text.ToUpper()}|{arrivalAirportTextBox.Text.ToUpper()}|" +
-                        $"{departureDateTimePicker.Value.ToString("yyyy")}|" +
-                        $"{departureDateTimePicker.Value.ToString("MM")}|" +
-                        $"{departureDateTimePicker.Value.ToString("dd")}|" +
-                        $"{tempDepartureDateTime.ToString("yyyy")}|" +
-                        $"{tempDepartureDateTime.ToString("MM")}|" +
-                        $"{tempDepartureDateTime.ToString("dd")}|" +
+                        $"{startOfIntervalDateTimePicker.Value.ToString("yyyy")}|" +
+                        $"{startOfIntervalDateTimePicker.Value.ToString("MM")}|" +
+                        $"{startOfIntervalDateTimePicker.Value.ToString("dd")}|" +
+                        $"{endOfIntervalDateTimePicker.Value.ToString("yyyy")}|" +
+                        $"{endOfIntervalDateTimePicker.Value.ToString("MM")}|" +
+                        $"{endOfIntervalDateTimePicker.Value.ToString("dd")}|" +
                         $"{Dictionary.TravelClassesDictionary[classComboBox.Text]}|" +
                         $"{flightType}||0\"";
 
                     compiler.Start();
                     compiler.WaitForExit();
 
-                    departureDateTimePicker.Value = departureDateTimePicker.Value.AddDays(pattern);
+                    startOfIntervalDateTimePicker.Value = startOfIntervalDateTimePicker.Value.AddDays(pattern);
                 }
 
                 this.Enabled = true;
