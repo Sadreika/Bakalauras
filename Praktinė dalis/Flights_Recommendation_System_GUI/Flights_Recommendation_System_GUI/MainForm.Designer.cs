@@ -70,6 +70,7 @@ namespace Flights_Recommendation_System_GUI
             // 
             this.departureAirportLabel.AutoSize = true;
             this.departureAirportLabel.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.departureAirportLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.departureAirportLabel.Location = new System.Drawing.Point(296, 41);
             this.departureAirportLabel.Name = "departureAirportLabel";
             this.departureAirportLabel.Size = new System.Drawing.Size(136, 17);

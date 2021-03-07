@@ -24,11 +24,10 @@
         {
             Mainform.Enabled = true;
         }
-
         private void searchButton_Click(object sender, System.EventArgs e)
         {
-            Mainform.intervalSearch(startOfIntervalDateTimePicker, endOfIntervalDateTimePicker, differenceNumericUpDown, patternNumericUpDown);
-
+            this.Enabled = false;
+            Mainform.IntervalSearch(startOfIntervalDateTimePicker, endOfIntervalDateTimePicker, differenceNumericUpDown, patternNumericUpDown);
             Mainform.Enabled = true;
             this.Close();
         }

@@ -133,9 +133,12 @@
         }
         private void collectedDataButton_Click(object sender, EventArgs e)
         {
-            if (TryFillAirlineFlightsDataGridView(true))
+            if (!ErrorNotification())
             {
-                filterCheckedListBox.Enabled = true;
+                if (TryFillAirlineFlightsDataGridView(true))
+                {
+                    filterCheckedListBox.Enabled = true;
+                }
             }
         }
         private bool TryFillAirlineFlightsDataGridView(bool isSearch)
@@ -148,7 +151,7 @@
             {
                 query = Datasave.ConstructSelectionString(airlineTextBox.Text, departureAirportTextBox.Text, arrivalAirportTextBox.Text,
                     departureDateTimePicker.Text, arrivalDateTimePicker.Text, OWRTcheckBox.Checked, classComboBox.Text, isSearch);
-                
+
                 if (Datasave.TryGetDataFromTableCustom(query, out DataTable dataFromDatabase))
                 {
                     airlineFlightsDataGridView.DataSource = dataFromDatabase;
@@ -165,7 +168,7 @@
                 {
                     query = Datasave.ConstructSelectionString(tableName.ToString(), departureAirportTextBox.Text, arrivalAirportTextBox.Text,
                         departureDateTimePicker.Text, arrivalDateTimePicker.Text, OWRTcheckBox.Checked, classComboBox.Text, isSearch);
-                    
+
                     if (Datasave.TryGetDataFromTableCustom(query, out DataTable dataFromDatabase))
                     {
                         if (dataFromDatabase.Rows.Count != 0)
@@ -342,8 +345,7 @@
         {
             string flightType = OWRTcheckBox.Checked ? "R" : "O";
 
-            if(departureAirportTextBox.Text != string.Empty &&
-                arrivalAirportTextBox.Text != string.Empty && airlineTextBox.Text != string.Empty)
+            if (!ErrorNotification())
             {
                 Process compiler = new Process();
 
@@ -371,7 +373,7 @@
                 {
                     filterCheckedListBox.Enabled = true;
                 }
-            } 
+            }
         }
         private void compareButton_Click(object sender, EventArgs e)
         {
@@ -384,11 +386,14 @@
         }
         private void intervalSearchButton_Click(object sender, EventArgs e)
         {
-            IntervalForm intervalForm = new IntervalForm(this);
-            intervalForm.Show();
+            if(!ErrorNotification())
+            {
+                IntervalForm intervalForm = new IntervalForm(this);
+                intervalForm.Show();
+            }
         }
-        public void intervalSearch(DateTimePicker startOfIntervalDateTimePicker, DateTimePicker endOfIntervalDateTimePicker, NumericUpDown differenceNumericUpDown, NumericUpDown patternNumericUpDown)
-        { 
+        public void IntervalSearch(DateTimePicker startOfIntervalDateTimePicker, DateTimePicker endOfIntervalDateTimePicker, NumericUpDown differenceNumericUpDown, NumericUpDown patternNumericUpDown)
+        {
             string flightType = OWRTcheckBox.Checked ? "R" : "O";
 
             int pattern = (int)differenceNumericUpDown.Value;
@@ -437,6 +442,32 @@
                     filterCheckedListBox.Enabled = true;
                 }
             }
+        }
+        public bool ErrorNotification()
+        {
+            bool error = false;
+
+            airlineLabel.ForeColor = System.Drawing.Color.Black;
+            departureAirportLabel.ForeColor = System.Drawing.Color.Black;
+            arrivalAirportLabel.ForeColor = System.Drawing.Color.Black;
+
+            if (airlineTextBox.Text == string.Empty)
+            {
+                airlineLabel.ForeColor = System.Drawing.Color.Red;
+                error = true;
+            }
+            if (departureAirportTextBox.Text == string.Empty)
+            {
+                departureAirportLabel.ForeColor = System.Drawing.Color.Red;
+                error = true;
+            }
+            if (arrivalAirportTextBox.Text == string.Empty)
+            {
+                arrivalAirportLabel.ForeColor = System.Drawing.Color.Red;
+                error = true;
+            }
+
+            return error;
         }
     }
 }
