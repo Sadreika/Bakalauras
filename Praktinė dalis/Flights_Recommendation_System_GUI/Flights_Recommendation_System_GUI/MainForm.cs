@@ -317,7 +317,7 @@
         {
             string flightType = OWRTcheckBox.Checked ? "R" : "O";
             string connectionCount = directFlightCheckBox.Checked ? "1" : "0";
-                 
+
             if (!ErrorNotification())
             {
                 Process compiler = new Process();
@@ -361,11 +361,11 @@
         }
         private void intervalSearchButton_Click(object sender, EventArgs e)
         {
-            if(!ErrorNotification())
+            if (!ErrorNotification())
             {
                 IntervalForm intervalForm = new IntervalForm(this);
                 intervalForm.Show();
-            }  
+            }
         }
         public void IntervalSearch(DateTimePicker startOfIntervalDateTimePicker, DateTimePicker endOfIntervalDateTimePicker, NumericUpDown differenceNumericUpDown, NumericUpDown patternNumericUpDown)
         {
@@ -450,9 +450,9 @@
         {
             int directFlightCount = 0;
 
-            for(int i = 0; i < airlineFlightsDataGridView.Rows.Count - 1; i++)
+            for (int i = 0; i < airlineFlightsDataGridView.Rows.Count - 1; i++)
             {
-                if(airlineFlightsDataGridView.Rows[i].Cells[12].Value != null)
+                if (airlineFlightsDataGridView.Rows[i].Cells[12].Value != null)
                 {
                     if (airlineFlightsDataGridView.Rows[i].Cells[3].Value.ToString() == string.Empty &&
                         airlineFlightsDataGridView.Rows[i].Cells[14].Value.ToString() == string.Empty)
@@ -475,7 +475,6 @@
             oneConnectionLabel.Text = $" ({(airlineFlightsDataGridView.Rows.Count - directFlightCount - 1).ToString()})";
             oneConnectionLabel.Visible = true;
         }
-
         private void airlineFlightsDataGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             var cellSelected = airlineFlightsDataGridView.SelectedCells;
@@ -504,6 +503,10 @@
                 CurrencyConverterForm currencyConverterForm = new CurrencyConverterForm(this, airlineFlightsDataGridView.Rows[cellSelected[0].RowIndex].Cells[26].Value.ToString(), _currenciesFromDatabase);
                 currencyConverterForm.Show();
             }
+        }
+        private void filterButton_Click(object sender, EventArgs e)
+        {
+            TryFillAirlineFlightsDataGridView(false);
         }
     }
 }
