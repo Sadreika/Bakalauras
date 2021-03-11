@@ -121,4 +121,7 @@
   <data name="rsz_excel-logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Pictures\rsz_excel-logo.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="airplane_background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Pictures\airplane_background.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

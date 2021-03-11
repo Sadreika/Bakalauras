@@ -63,6 +63,16 @@ namespace Flights_Recommendation_System_GUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap airplane_background {
+            get {
+                object obj = ResourceManager.GetObject("airplane_background", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap rsz_excel_logo {
             get {
                 object obj = ResourceManager.GetObject("rsz_excel-logo", resourceCulture);
