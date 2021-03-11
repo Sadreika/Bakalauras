@@ -69,6 +69,8 @@ namespace Flights_Recommendation_System_GUI
             this.hoursLabel = new System.Windows.Forms.Label();
             this.minutesLabel = new System.Windows.Forms.Label();
             this.chartButton = new System.Windows.Forms.Button();
+            this.excelButton = new System.Windows.Forms.Button();
+            this.mainProgressBar = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.airlineFlightsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hoursNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minutesNumericUpDown)).BeginInit();
@@ -458,12 +460,33 @@ namespace Flights_Recommendation_System_GUI
             this.chartButton.UseVisualStyleBackColor = true;
             this.chartButton.Click += new System.EventHandler(this.chartButton_Click);
             // 
+            // excelButton
+            // 
+            this.excelButton.Image = ((System.Drawing.Image)(resources.GetObject("excelButton.Image")));
+            this.excelButton.Location = new System.Drawing.Point(1286, 92);
+            this.excelButton.Name = "excelButton";
+            this.excelButton.Size = new System.Drawing.Size(30, 30);
+            this.excelButton.TabIndex = 52;
+            this.excelButton.Text = " ";
+            this.excelButton.UseVisualStyleBackColor = true;
+            this.excelButton.Click += new System.EventHandler(this.excelButton_Click);
+            // 
+            // mainProgressBar
+            // 
+            this.mainProgressBar.Location = new System.Drawing.Point(724, 96);
+            this.mainProgressBar.Name = "mainProgressBar";
+            this.mainProgressBar.Size = new System.Drawing.Size(551, 23);
+            this.mainProgressBar.TabIndex = 53;
+            this.mainProgressBar.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1902, 993);
+            this.Controls.Add(this.mainProgressBar);
+            this.Controls.Add(this.excelButton);
             this.Controls.Add(this.chartButton);
             this.Controls.Add(this.minutesLabel);
             this.Controls.Add(this.hoursLabel);
@@ -552,6 +575,8 @@ namespace Flights_Recommendation_System_GUI
         private Label hoursLabel;
         private Label minutesLabel;
         private Button chartButton;
+        private Button excelButton;
+        private ProgressBar mainProgressBar;
     }
 }
 

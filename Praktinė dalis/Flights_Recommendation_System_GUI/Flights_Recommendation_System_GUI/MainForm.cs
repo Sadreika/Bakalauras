@@ -7,7 +7,10 @@
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
+    using System.Runtime.InteropServices;
     using System.Windows.Forms;
+    using Excel = Microsoft.Office.Interop.Excel;
     public partial class MainForm : Form
     {
         public string IATAToSet { get; set; }
@@ -360,8 +363,6 @@
                 filterCheckedListBox.Enabled = true;
                 CalculateFlightByStopsCount();
             }
-            CompareChartForm compareChartForm = new CompareChartForm(airlineFlightsDataGridView);
-            compareChartForm.Show();
         }
         private void intervalSearchButton_Click(object sender, EventArgs e)
         {
@@ -517,6 +518,50 @@
         {
             CompareChartForm compareChartForm = new CompareChartForm(airlineFlightsDataGridView);
             compareChartForm.Show();
+        }
+
+        private void excelButton_Click(object sender, EventArgs e)
+        {
+            mainProgressBar.Visible = true;
+            Excel.Application excelApplication = new Excel.Application();
+            Excel.Workbook excelWorkbook = excelApplication.Workbooks.Add(Missing.Value);
+            Excel._Worksheet excelWorksheet = excelWorkbook.Sheets[1];
+            Excel.Range excelRange = excelWorksheet.UsedRange;
+
+            try
+            {
+                mainProgressBar.Maximum = airlineFlightsDataGridView.Rows.Count - 1;
+                for (int i = 0; i < airlineFlightsDataGridView.Rows.Count - 1; i++)
+                {
+                    for(int j = 1; j < airlineFlightsDataGridView.Columns.Count; j++)
+                    {
+                        try
+                        {
+                            excelRange.Cells[i + 1, j] = airlineFlightsDataGridView.Rows[i].Cells[j].Value;
+                        }
+                        catch (Exception ex)
+                        {
+                            // error message
+                        }
+                    }
+                    mainProgressBar.Increment(1);
+                }
+            }
+            catch (Exception)
+            {
+                // error message
+            }
+
+            string startupPath = Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(startupPath).Parent.FullName;
+            string finalPath = projectDirectory + @"\ExcelData\" + airlineTextBox.Text;
+
+            excelApplication.ActiveWorkbook.SaveCopyAs($"{finalPath}.xlsx");
+
+            mainProgressBar.Visible = false;
+
+            excelWorkbook.Close();
+            excelApplication.Quit();
         }
     }
 }
