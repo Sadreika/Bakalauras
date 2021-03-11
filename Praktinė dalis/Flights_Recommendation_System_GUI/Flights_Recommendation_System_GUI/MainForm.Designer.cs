@@ -64,8 +64,13 @@ namespace Flights_Recommendation_System_GUI
             this.lowestPriceTextBox = new System.Windows.Forms.TextBox();
             this.biggestPriceTextBox = new System.Windows.Forms.TextBox();
             this.filterButton = new System.Windows.Forms.Button();
-            this.travelDurationDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.hoursNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.minutesNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.hoursLabel = new System.Windows.Forms.Label();
+            this.minutesLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.airlineFlightsDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hoursNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minutesNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // airlineLabel
@@ -279,7 +284,7 @@ namespace Flights_Recommendation_System_GUI
             // 
             this.zeroConnectionLabel.AutoSize = true;
             this.zeroConnectionLabel.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.zeroConnectionLabel.Location = new System.Drawing.Point(1464, 114);
+            this.zeroConnectionLabel.Location = new System.Drawing.Point(1516, 110);
             this.zeroConnectionLabel.Name = "zeroConnectionLabel";
             this.zeroConnectionLabel.Size = new System.Drawing.Size(30, 17);
             this.zeroConnectionLabel.TabIndex = 27;
@@ -311,15 +316,15 @@ namespace Flights_Recommendation_System_GUI
             this.travelDurationLabel.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.travelDurationLabel.Location = new System.Drawing.Point(1349, 83);
             this.travelDurationLabel.Name = "travelDurationLabel";
-            this.travelDurationLabel.Size = new System.Drawing.Size(151, 17);
+            this.travelDurationLabel.Size = new System.Drawing.Size(59, 17);
             this.travelDurationLabel.TabIndex = 32;
-            this.travelDurationLabel.Text = "Kelionės trukmė (max)";
+            this.travelDurationLabel.Text = "Trukmė";
             // 
             // stropsLabel
             // 
             this.stropsLabel.AutoSize = true;
             this.stropsLabel.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stropsLabel.Location = new System.Drawing.Point(1350, 114);
+            this.stropsLabel.Location = new System.Drawing.Point(1349, 110);
             this.stropsLabel.Name = "stropsLabel";
             this.stropsLabel.Size = new System.Drawing.Size(74, 17);
             this.stropsLabel.TabIndex = 34;
@@ -328,9 +333,8 @@ namespace Flights_Recommendation_System_GUI
             // oneStopCheckBox
             // 
             this.oneStopCheckBox.AutoSize = true;
-            this.oneStopCheckBox.Enabled = false;
             this.oneStopCheckBox.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.oneStopCheckBox.Location = new System.Drawing.Point(1533, 114);
+            this.oneStopCheckBox.Location = new System.Drawing.Point(1570, 109);
             this.oneStopCheckBox.Name = "oneStopCheckBox";
             this.oneStopCheckBox.Size = new System.Drawing.Size(37, 21);
             this.oneStopCheckBox.TabIndex = 36;
@@ -340,9 +344,8 @@ namespace Flights_Recommendation_System_GUI
             // zeroStopsCheckBox
             // 
             this.zeroStopsCheckBox.AutoSize = true;
-            this.zeroStopsCheckBox.Enabled = false;
             this.zeroStopsCheckBox.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.zeroStopsCheckBox.Location = new System.Drawing.Point(1430, 113);
+            this.zeroStopsCheckBox.Location = new System.Drawing.Point(1482, 109);
             this.zeroStopsCheckBox.Name = "zeroStopsCheckBox";
             this.zeroStopsCheckBox.Size = new System.Drawing.Size(39, 21);
             this.zeroStopsCheckBox.TabIndex = 37;
@@ -353,7 +356,7 @@ namespace Flights_Recommendation_System_GUI
             // 
             this.oneConnectionLabel.AutoSize = true;
             this.oneConnectionLabel.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.oneConnectionLabel.Location = new System.Drawing.Point(1576, 115);
+            this.oneConnectionLabel.Location = new System.Drawing.Point(1602, 111);
             this.oneConnectionLabel.Name = "oneConnectionLabel";
             this.oneConnectionLabel.Size = new System.Drawing.Size(30, 17);
             this.oneConnectionLabel.TabIndex = 39;
@@ -372,18 +375,18 @@ namespace Flights_Recommendation_System_GUI
             // 
             // lowestPriceTextBox
             // 
-            this.lowestPriceTextBox.Location = new System.Drawing.Point(1533, 19);
+            this.lowestPriceTextBox.Location = new System.Drawing.Point(1482, 19);
             this.lowestPriceTextBox.MaxLength = 5;
             this.lowestPriceTextBox.Name = "lowestPriceTextBox";
-            this.lowestPriceTextBox.Size = new System.Drawing.Size(100, 22);
+            this.lowestPriceTextBox.Size = new System.Drawing.Size(151, 22);
             this.lowestPriceTextBox.TabIndex = 41;
             // 
             // biggestPriceTextBox
             // 
-            this.biggestPriceTextBox.Location = new System.Drawing.Point(1533, 50);
+            this.biggestPriceTextBox.Location = new System.Drawing.Point(1482, 50);
             this.biggestPriceTextBox.MaxLength = 5;
             this.biggestPriceTextBox.Name = "biggestPriceTextBox";
-            this.biggestPriceTextBox.Size = new System.Drawing.Size(100, 22);
+            this.biggestPriceTextBox.Size = new System.Drawing.Size(151, 22);
             this.biggestPriceTextBox.TabIndex = 42;
             // 
             // filterButton
@@ -397,17 +400,51 @@ namespace Flights_Recommendation_System_GUI
             this.filterButton.UseVisualStyleBackColor = true;
             this.filterButton.Click += new System.EventHandler(this.filterButton_Click);
             // 
-            // travelDurationDateTimePicker
+            // hoursNumericUpDown
             // 
-            this.travelDurationDateTimePicker.CustomFormat = "HH:mm";
-            this.travelDurationDateTimePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.travelDurationDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.travelDurationDateTimePicker.Location = new System.Drawing.Point(1533, 83);
-            this.travelDurationDateTimePicker.Name = "travelDurationDateTimePicker";
-            this.travelDurationDateTimePicker.ShowUpDown = true;
-            this.travelDurationDateTimePicker.Size = new System.Drawing.Size(100, 22);
-            this.travelDurationDateTimePicker.TabIndex = 44;
-            this.travelDurationDateTimePicker.Value = new System.DateTime(2021, 3, 8, 0, 0, 0, 0);
+            this.hoursNumericUpDown.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hoursNumericUpDown.Location = new System.Drawing.Point(1482, 81);
+            this.hoursNumericUpDown.Maximum = new decimal(new int[] {
+            23,
+            0,
+            0,
+            0});
+            this.hoursNumericUpDown.Name = "hoursNumericUpDown";
+            this.hoursNumericUpDown.Size = new System.Drawing.Size(39, 22);
+            this.hoursNumericUpDown.TabIndex = 45;
+            // 
+            // minutesNumericUpDown
+            // 
+            this.minutesNumericUpDown.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.minutesNumericUpDown.Location = new System.Drawing.Point(1568, 81);
+            this.minutesNumericUpDown.Maximum = new decimal(new int[] {
+            59,
+            0,
+            0,
+            0});
+            this.minutesNumericUpDown.Name = "minutesNumericUpDown";
+            this.minutesNumericUpDown.Size = new System.Drawing.Size(39, 22);
+            this.minutesNumericUpDown.TabIndex = 46;
+            // 
+            // hoursLabel
+            // 
+            this.hoursLabel.AutoSize = true;
+            this.hoursLabel.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hoursLabel.Location = new System.Drawing.Point(1527, 83);
+            this.hoursLabel.Name = "hoursLabel";
+            this.hoursLabel.Size = new System.Drawing.Size(20, 17);
+            this.hoursLabel.TabIndex = 48;
+            this.hoursLabel.Text = "h.";
+            // 
+            // minutesLabel
+            // 
+            this.minutesLabel.AutoSize = true;
+            this.minutesLabel.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.minutesLabel.Location = new System.Drawing.Point(1605, 82);
+            this.minutesLabel.Name = "minutesLabel";
+            this.minutesLabel.Size = new System.Drawing.Size(36, 17);
+            this.minutesLabel.TabIndex = 49;
+            this.minutesLabel.Text = "min.";
             // 
             // MainForm
             // 
@@ -415,7 +452,10 @@ namespace Flights_Recommendation_System_GUI
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1902, 993);
-            this.Controls.Add(this.travelDurationDateTimePicker);
+            this.Controls.Add(this.minutesLabel);
+            this.Controls.Add(this.hoursLabel);
+            this.Controls.Add(this.minutesNumericUpDown);
+            this.Controls.Add(this.hoursNumericUpDown);
             this.Controls.Add(this.filterButton);
             this.Controls.Add(this.biggestPriceTextBox);
             this.Controls.Add(this.lowestPriceTextBox);
@@ -454,6 +494,8 @@ namespace Flights_Recommendation_System_GUI
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.airlineFlightsDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hoursNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minutesNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -492,7 +534,10 @@ namespace Flights_Recommendation_System_GUI
         private TextBox lowestPriceTextBox;
         private TextBox biggestPriceTextBox;
         private Button filterButton;
-        private DateTimePicker travelDurationDateTimePicker;
+        private NumericUpDown hoursNumericUpDown;
+        private NumericUpDown minutesNumericUpDown;
+        private Label hoursLabel;
+        private Label minutesLabel;
     }
 }
 

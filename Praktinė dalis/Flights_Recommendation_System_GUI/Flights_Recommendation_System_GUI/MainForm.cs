@@ -151,7 +151,9 @@
             if (airlineTextBox.Text != string.Empty)
             {
                 query = Datasave.ConstructSelectionString(airlineTextBox.Text, departureAirportTextBox.Text, arrivalAirportTextBox.Text,
-                    departureDateTimePicker.Text, arrivalDateTimePicker.Text, OWRTcheckBox.Checked, classComboBox.Text, isSearch);
+                    departureDateTimePicker.Text, arrivalDateTimePicker.Text, OWRTcheckBox.Checked, classComboBox.Text, lowestPriceTextBox.Text,
+                    biggestPriceTextBox.Text, hoursNumericUpDown.Value.ToString(), minutesNumericUpDown.Value.ToString(),
+                    zeroStopsCheckBox.Checked, oneStopCheckBox.Checked, isSearch);
 
                 if (Datasave.TryGetDataFromTableCustom(query, out DataTable dataFromDatabase))
                 {
@@ -168,7 +170,9 @@
                 foreach (var tableName in airlineTextBox.AutoCompleteCustomSource)
                 {
                     query = Datasave.ConstructSelectionString(tableName.ToString(), departureAirportTextBox.Text, arrivalAirportTextBox.Text,
-                        departureDateTimePicker.Text, arrivalDateTimePicker.Text, OWRTcheckBox.Checked, classComboBox.Text, isSearch);
+                        departureDateTimePicker.Text, arrivalDateTimePicker.Text, OWRTcheckBox.Checked, classComboBox.Text, lowestPriceTextBox.Text,
+                    biggestPriceTextBox.Text, hoursNumericUpDown.Value.ToString(), minutesNumericUpDown.Value.ToString(),
+                    zeroStopsCheckBox.Checked, oneStopCheckBox.Checked, isSearch);
 
                     if (Datasave.TryGetDataFromTableCustom(query, out DataTable dataFromDatabase))
                     {

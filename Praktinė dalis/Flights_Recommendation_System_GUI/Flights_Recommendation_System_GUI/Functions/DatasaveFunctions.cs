@@ -104,7 +104,9 @@
             }
         }
         public string ConstructSelectionString(string airlineText, string departureAirportText, string arrivalAirportText,
-            string departureDateTimePickerText, string arrivalDateTimePickerText, bool owrtCheck, string classComboBoxText, bool isSearch)
+            string departureDateTimePickerText, string arrivalDateTimePickerText, bool owrtCheck, string classComboBoxText,
+            string lowestPriceTextBox, string biggestPriceTextBox, string hoursNumericUpDown,
+            string minutesNumericUpDown, bool zeroStopsCheckBox, bool oneStopCheckBox, bool isSearch)
         {
             string[] departureDateParts = departureDateTimePickerText.Split('-');
             string[] arrivalDateParts = arrivalDateTimePickerText.Split('-');
@@ -113,7 +115,7 @@
 
             query += $"SELECT * fROM {airlineText} WHERE ";
 
-            if(isSearch)
+            if (isSearch)
             {
                 query += $"DATEPART(yyyy, DepartureTimeOutbound) = {departureDateParts[0]} ";
                 query += $"AND DATEPART(MM, DepartureTimeOutbound) = {departureDateParts[1]} " +
@@ -130,8 +132,8 @@
                     query += "AND ArrivalTimeInbound IS NULL ";
                 }
             }
-          
-            if(!isSearch)
+
+            if (!isSearch)
             {
                 query += $"OriginOutbound = '{departureAirportText}' ";
                 query += $"AND DestinationOutbound = '{arrivalAirportText}' ";
@@ -142,13 +144,77 @@
                 {
                     query += $"AND OriginOutbound = '{departureAirportText}' ";
                 }
+
                 if (arrivalAirportText != string.Empty)
                 {
                     query += $"AND DestinationOutbound = '{arrivalAirportText}' ";
                 }
             }
 
-            query += $"AND Class = '{Dictionary.TravelClassesDictionary[classComboBoxText]}'";
+            query += $"AND Class = '{Dictionary.TravelClassesDictionary[classComboBoxText]}' ";
+
+            if (lowestPriceTextBox != string.Empty)
+            {
+                query += $"AND FullPrice > {lowestPriceTextBox} ";
+            }
+
+            if (biggestPriceTextBox != string.Empty)
+            {
+                query += $"AND FullPrice < {biggestPriceTextBox} ";
+            }
+
+            if (hoursNumericUpDown != "0" || minutesNumericUpDown != "0")
+            {
+                string dateTime = string.Empty;
+  
+                if (int.Parse(hoursNumericUpDown) > 9)
+                {
+                    dateTime += $"{hoursNumericUpDown}:";
+                }
+                else
+                {
+                    dateTime += $"0{hoursNumericUpDown}:";
+                }
+
+                if(int.Parse(minutesNumericUpDown) > 9)
+                {
+                    dateTime += $"{minutesNumericUpDown}:00";
+                }
+                else
+                {
+                    dateTime += $"0{minutesNumericUpDown}:00";
+                }
+
+                query += $"AND TravelDurationOutbound < '{dateTime}' ";
+
+                if (owrtCheck)
+                {
+                    query += $"AND TravelDurationInbound < '{dateTime}' ";
+                }
+            }
+
+            if(zeroStopsCheckBox != true || oneStopCheckBox != true)
+            {
+                if (zeroStopsCheckBox)
+                {
+                    query += "AND ConnectionOutbound = 'null' ";
+
+                    if (owrtCheck)
+                    {
+                        query += "AND ConnectionInbound = 'null' ";
+                    }
+                }
+
+                if (oneStopCheckBox)
+                {
+                    query += "AND ConnectionOutbound != 'null' ";
+
+                    if (owrtCheck)
+                    {
+                        query += "AND ConnectionInbound != 'null' ";
+                    }
+                }
+            }
 
             return query;
         }
