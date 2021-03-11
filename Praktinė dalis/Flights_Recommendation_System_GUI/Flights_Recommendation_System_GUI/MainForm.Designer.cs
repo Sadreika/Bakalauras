@@ -68,6 +68,7 @@ namespace Flights_Recommendation_System_GUI
             this.minutesNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.hoursLabel = new System.Windows.Forms.Label();
             this.minutesLabel = new System.Windows.Forms.Label();
+            this.chartButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.airlineFlightsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hoursNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minutesNumericUpDown)).BeginInit();
@@ -88,7 +89,7 @@ namespace Flights_Recommendation_System_GUI
             this.departureAirportLabel.AutoSize = true;
             this.departureAirportLabel.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.departureAirportLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.departureAirportLabel.Location = new System.Drawing.Point(257, 20);
+            this.departureAirportLabel.Location = new System.Drawing.Point(14, 62);
             this.departureAirportLabel.Name = "departureAirportLabel";
             this.departureAirportLabel.Size = new System.Drawing.Size(136, 17);
             this.departureAirportLabel.TabIndex = 1;
@@ -98,7 +99,7 @@ namespace Flights_Recommendation_System_GUI
             // 
             this.arrivalAirportLabel.AutoSize = true;
             this.arrivalAirportLabel.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.arrivalAirportLabel.Location = new System.Drawing.Point(257, 57);
+            this.arrivalAirportLabel.Location = new System.Drawing.Point(14, 99);
             this.arrivalAirportLabel.Name = "arrivalAirportLabel";
             this.arrivalAirportLabel.Size = new System.Drawing.Size(139, 17);
             this.arrivalAirportLabel.TabIndex = 2;
@@ -108,7 +109,7 @@ namespace Flights_Recommendation_System_GUI
             // 
             this.departureDateLabel.AutoSize = true;
             this.departureDateLabel.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.departureDateLabel.Location = new System.Drawing.Point(562, 20);
+            this.departureDateLabel.Location = new System.Drawing.Point(309, 62);
             this.departureDateLabel.Name = "departureDateLabel";
             this.departureDateLabel.Size = new System.Drawing.Size(98, 17);
             this.departureDateLabel.TabIndex = 3;
@@ -118,7 +119,7 @@ namespace Flights_Recommendation_System_GUI
             // 
             this.ClassLabel.AutoSize = true;
             this.ClassLabel.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ClassLabel.Location = new System.Drawing.Point(923, 20);
+            this.ClassLabel.Location = new System.Drawing.Point(310, 23);
             this.ClassLabel.Name = "ClassLabel";
             this.ClassLabel.Size = new System.Drawing.Size(42, 17);
             this.ClassLabel.TabIndex = 4;
@@ -128,7 +129,7 @@ namespace Flights_Recommendation_System_GUI
             // 
             this.arrivalDateLabel.AutoSize = true;
             this.arrivalDateLabel.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.arrivalDateLabel.Location = new System.Drawing.Point(563, 57);
+            this.arrivalDateLabel.Location = new System.Drawing.Point(310, 99);
             this.arrivalDateLabel.Name = "arrivalDateLabel";
             this.arrivalDateLabel.Size = new System.Drawing.Size(101, 17);
             this.arrivalDateLabel.TabIndex = 6;
@@ -138,7 +139,7 @@ namespace Flights_Recommendation_System_GUI
             // 
             this.OWRTcheckBox.AutoSize = true;
             this.OWRTcheckBox.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OWRTcheckBox.Location = new System.Drawing.Point(926, 47);
+            this.OWRTcheckBox.Location = new System.Drawing.Point(576, 61);
             this.OWRTcheckBox.Name = "OWRTcheckBox";
             this.OWRTcheckBox.Size = new System.Drawing.Size(130, 21);
             this.OWRTcheckBox.TabIndex = 13;
@@ -151,9 +152,9 @@ namespace Flights_Recommendation_System_GUI
             this.classComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.classComboBox.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.classComboBox.FormattingEnabled = true;
-            this.classComboBox.Location = new System.Drawing.Point(984, 17);
+            this.classComboBox.Location = new System.Drawing.Point(426, 20);
             this.classComboBox.Name = "classComboBox";
-            this.classComboBox.Size = new System.Drawing.Size(125, 24);
+            this.classComboBox.Size = new System.Drawing.Size(127, 24);
             this.classComboBox.TabIndex = 14;
             // 
             // departureAirportTextBox
@@ -161,7 +162,7 @@ namespace Flights_Recommendation_System_GUI
             this.departureAirportTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.departureAirportTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.departureAirportTextBox.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.departureAirportTextBox.Location = new System.Drawing.Point(405, 17);
+            this.departureAirportTextBox.Location = new System.Drawing.Point(162, 59);
             this.departureAirportTextBox.MaxLength = 3;
             this.departureAirportTextBox.Name = "departureAirportTextBox";
             this.departureAirportTextBox.Size = new System.Drawing.Size(125, 22);
@@ -173,7 +174,7 @@ namespace Flights_Recommendation_System_GUI
             this.arrivalAirportTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.arrivalAirportTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.arrivalAirportTextBox.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.arrivalAirportTextBox.Location = new System.Drawing.Point(405, 54);
+            this.arrivalAirportTextBox.Location = new System.Drawing.Point(162, 96);
             this.arrivalAirportTextBox.MaxLength = 3;
             this.arrivalAirportTextBox.Name = "arrivalAirportTextBox";
             this.arrivalAirportTextBox.Size = new System.Drawing.Size(125, 22);
@@ -185,7 +186,7 @@ namespace Flights_Recommendation_System_GUI
             this.airlineTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.airlineTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.airlineTextBox.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.airlineTextBox.Location = new System.Drawing.Point(104, 21);
+            this.airlineTextBox.Location = new System.Drawing.Point(162, 24);
             this.airlineTextBox.Name = "airlineTextBox";
             this.airlineTextBox.Size = new System.Drawing.Size(125, 22);
             this.airlineTextBox.TabIndex = 18;
@@ -195,10 +196,10 @@ namespace Flights_Recommendation_System_GUI
             this.departureDateTimePicker.CustomFormat = "yyyy-MM-dd";
             this.departureDateTimePicker.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.departureDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.departureDateTimePicker.Location = new System.Drawing.Point(678, 19);
+            this.departureDateTimePicker.Location = new System.Drawing.Point(425, 61);
             this.departureDateTimePicker.MinDate = new System.DateTime(2021, 2, 10, 0, 0, 0, 0);
             this.departureDateTimePicker.Name = "departureDateTimePicker";
-            this.departureDateTimePicker.Size = new System.Drawing.Size(229, 22);
+            this.departureDateTimePicker.Size = new System.Drawing.Size(128, 22);
             this.departureDateTimePicker.TabIndex = 19;
             // 
             // arrivalDateTimePicker
@@ -207,10 +208,10 @@ namespace Flights_Recommendation_System_GUI
             this.arrivalDateTimePicker.CustomFormat = "yyyy-MM-dd";
             this.arrivalDateTimePicker.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.arrivalDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.arrivalDateTimePicker.Location = new System.Drawing.Point(679, 57);
+            this.arrivalDateTimePicker.Location = new System.Drawing.Point(426, 99);
             this.arrivalDateTimePicker.MinDate = new System.DateTime(2021, 2, 10, 0, 0, 0, 0);
             this.arrivalDateTimePicker.Name = "arrivalDateTimePicker";
-            this.arrivalDateTimePicker.Size = new System.Drawing.Size(228, 22);
+            this.arrivalDateTimePicker.Size = new System.Drawing.Size(127, 22);
             this.arrivalDateTimePicker.TabIndex = 20;
             // 
             // airlineFlightsDataGridView
@@ -229,18 +230,18 @@ namespace Flights_Recommendation_System_GUI
             // collectedDataButton
             // 
             this.collectedDataButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.collectedDataButton.Location = new System.Drawing.Point(15, 57);
+            this.collectedDataButton.Location = new System.Drawing.Point(926, 19);
             this.collectedDataButton.Name = "collectedDataButton";
-            this.collectedDataButton.Size = new System.Drawing.Size(214, 29);
+            this.collectedDataButton.Size = new System.Drawing.Size(192, 25);
             this.collectedDataButton.TabIndex = 22;
-            this.collectedDataButton.Text = "Rodyti surinktus duomenis";
+            this.collectedDataButton.Text = "Pasirinktų dienų pasiūlymai";
             this.collectedDataButton.UseVisualStyleBackColor = true;
             this.collectedDataButton.Click += new System.EventHandler(this.collectedDataButton_Click);
             // 
             // searchButton
             // 
             this.searchButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchButton.Location = new System.Drawing.Point(1139, 15);
+            this.searchButton.Location = new System.Drawing.Point(724, 19);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(177, 25);
             this.searchButton.TabIndex = 23;
@@ -261,18 +262,18 @@ namespace Flights_Recommendation_System_GUI
             // compareButton
             // 
             this.compareButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compareButton.Location = new System.Drawing.Point(1139, 75);
+            this.compareButton.Location = new System.Drawing.Point(926, 51);
             this.compareButton.Name = "compareButton";
-            this.compareButton.Size = new System.Drawing.Size(177, 25);
+            this.compareButton.Size = new System.Drawing.Size(192, 25);
             this.compareButton.TabIndex = 25;
-            this.compareButton.Text = "Atlikti palyginimą";
+            this.compareButton.Text = "Visų dienų pasiūlymai";
             this.compareButton.UseVisualStyleBackColor = true;
             this.compareButton.Click += new System.EventHandler(this.compareButton_Click);
             // 
             // intervalSearchButton
             // 
             this.intervalSearchButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.intervalSearchButton.Location = new System.Drawing.Point(1139, 44);
+            this.intervalSearchButton.Location = new System.Drawing.Point(724, 51);
             this.intervalSearchButton.Name = "intervalSearchButton";
             this.intervalSearchButton.Size = new System.Drawing.Size(177, 25);
             this.intervalSearchButton.TabIndex = 26;
@@ -366,7 +367,7 @@ namespace Flights_Recommendation_System_GUI
             // 
             this.directFlightCheckBox.AutoSize = true;
             this.directFlightCheckBox.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.directFlightCheckBox.Location = new System.Drawing.Point(926, 75);
+            this.directFlightCheckBox.Location = new System.Drawing.Point(576, 98);
             this.directFlightCheckBox.Name = "directFlightCheckBox";
             this.directFlightCheckBox.Size = new System.Drawing.Size(147, 21);
             this.directFlightCheckBox.TabIndex = 40;
@@ -392,9 +393,9 @@ namespace Flights_Recommendation_System_GUI
             // filterButton
             // 
             this.filterButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.filterButton.Location = new System.Drawing.Point(1139, 106);
+            this.filterButton.Location = new System.Drawing.Point(1133, 51);
             this.filterButton.Name = "filterButton";
-            this.filterButton.Size = new System.Drawing.Size(177, 25);
+            this.filterButton.Size = new System.Drawing.Size(183, 25);
             this.filterButton.TabIndex = 43;
             this.filterButton.Text = "Filtruoti";
             this.filterButton.UseVisualStyleBackColor = true;
@@ -446,12 +447,24 @@ namespace Flights_Recommendation_System_GUI
             this.minutesLabel.TabIndex = 49;
             this.minutesLabel.Text = "min.";
             // 
+            // chartButton
+            // 
+            this.chartButton.Font = new System.Drawing.Font("Georgia", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chartButton.Location = new System.Drawing.Point(1133, 18);
+            this.chartButton.Name = "chartButton";
+            this.chartButton.Size = new System.Drawing.Size(183, 26);
+            this.chartButton.TabIndex = 50;
+            this.chartButton.Text = "Rodyti grafiką";
+            this.chartButton.UseVisualStyleBackColor = true;
+            this.chartButton.Click += new System.EventHandler(this.chartButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1902, 993);
+            this.Controls.Add(this.chartButton);
             this.Controls.Add(this.minutesLabel);
             this.Controls.Add(this.hoursLabel);
             this.Controls.Add(this.minutesNumericUpDown);
@@ -538,6 +551,7 @@ namespace Flights_Recommendation_System_GUI
         private NumericUpDown minutesNumericUpDown;
         private Label hoursLabel;
         private Label minutesLabel;
+        private Button chartButton;
     }
 }
 

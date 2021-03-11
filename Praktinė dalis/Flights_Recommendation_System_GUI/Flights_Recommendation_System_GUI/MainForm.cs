@@ -512,5 +512,11 @@
         {
             TryFillAirlineFlightsDataGridView(false);
         }
+
+        private void chartButton_Click(object sender, EventArgs e)
+        {
+            CompareChartForm compareChartForm = new CompareChartForm(airlineFlightsDataGridView);
+            compareChartForm.Show();
+        }
     }
 }

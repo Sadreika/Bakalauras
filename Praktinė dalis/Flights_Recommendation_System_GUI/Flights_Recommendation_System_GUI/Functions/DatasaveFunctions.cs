@@ -166,24 +166,9 @@
             if (hoursNumericUpDown != "0" || minutesNumericUpDown != "0")
             {
                 string dateTime = string.Empty;
-  
-                if (int.Parse(hoursNumericUpDown) > 9)
-                {
-                    dateTime += $"{hoursNumericUpDown}:";
-                }
-                else
-                {
-                    dateTime += $"0{hoursNumericUpDown}:";
-                }
 
-                if(int.Parse(minutesNumericUpDown) > 9)
-                {
-                    dateTime += $"{minutesNumericUpDown}:00";
-                }
-                else
-                {
-                    dateTime += $"0{minutesNumericUpDown}:00";
-                }
+                dateTime += int.Parse(hoursNumericUpDown) > 9 ? $"{hoursNumericUpDown}:00" : $"0{hoursNumericUpDown}:00";
+                dateTime += int.Parse(minutesNumericUpDown) > 9 ? $"{minutesNumericUpDown}:00" : $"0{minutesNumericUpDown}:00";
 
                 query += $"AND TravelDurationOutbound < '{dateTime}' ";
 
@@ -193,7 +178,7 @@
                 }
             }
 
-            if(zeroStopsCheckBox != true || oneStopCheckBox != true)
+            if (zeroStopsCheckBox != true || oneStopCheckBox != true)
             {
                 if (zeroStopsCheckBox)
                 {
