@@ -182,21 +182,21 @@
             {
                 if (zeroStopsCheckBox)
                 {
-                    query += "AND ConnectionOutbound = 'null' ";
+                    query += "AND ConnectionOutbound IS NULL ";
 
                     if (owrtCheck)
                     {
-                        query += "AND ConnectionInbound = 'null' ";
+                        query += "AND ConnectionInbound IS NULL ";
                     }
                 }
 
                 if (oneStopCheckBox)
                 {
-                    query += "AND ConnectionOutbound != 'null' ";
+                    query += "AND ConnectionOutbound IS NOT NULL ";
 
                     if (owrtCheck)
                     {
-                        query += "AND ConnectionInbound != 'null' ";
+                        query += "AND ConnectionInbound IS NOT NULL ";
                     }
                 }
             }

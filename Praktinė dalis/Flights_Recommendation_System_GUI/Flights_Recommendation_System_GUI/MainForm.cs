@@ -8,7 +8,6 @@
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using System.Runtime.InteropServices;
     using System.Windows.Forms;
     using Excel = Microsoft.Office.Interop.Excel;
     public partial class MainForm : Form
@@ -539,7 +538,7 @@
                         {
                             excelRange.Cells[i + 1, j] = airlineFlightsDataGridView.Rows[i].Cells[j].Value;
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             // error message
                         }
